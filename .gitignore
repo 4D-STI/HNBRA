@@ -21,3 +21,6 @@ tests/
 
 # Desconsiderar arquivos de dependências
 node_modules/
+
+# Desconsiderar configuração do work-space do VSCode
+*.code-workspace
