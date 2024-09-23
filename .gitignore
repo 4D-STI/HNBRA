@@ -1,0 +1,23 @@
+# Desconsiderar arquivos gerados pelo editor
+.vscode/
+*.suo
+*.ntvs.json
+*.user
+*.tmp
+*.bak
+*.orig
+*.inc
+
+# Desconsiderar arquivos de cache
+npm-cache/
+yarn-cache/
+
+# Desconsiderar arquivos de build
+build/
+dist/
+
+# Desconsiderar arquivos de testes
+tests/
+
+# Desconsiderar arquivos de dependências
+node_modules/
