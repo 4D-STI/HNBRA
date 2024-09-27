@@ -1,0 +1,4 @@
+#   ignora build do next
+
+#   ignora dependencias do projeto
+/node_modules
