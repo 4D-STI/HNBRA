@@ -83,11 +83,20 @@
 |   :---            |   :---         |  :---            |   :---
 |   Linguagem       |   Javascript   |  ECMA-262 v15    |   [ecma-international](https://ecma-international.org/publications-and-standards/standards/ecma-262/)
 |   Banco de Dados  |   SQL          | PostgreSQL 17 RC1| [postgresql](https://www.postgresql.org/)
-|   IDE             |   VSCode       | v1.93            | [vscode](https://code.visualstudio.com/Download)
+|   IDE             |   VSCode       | v1.93            | [VSCode](https://code.visualstudio.com/Download)
 |   Versionamento   |   Git          | v2.46.0          | [Git](https://git-scm.com/download/win)
 | Containerização   |   Docker       | v2.46.0          | [Dorker](https://docs.docker.com/desktop/install/windows-install/)
+| Containerização   |   WSL          | v2.2.4.0         |[WSL](https://learn.microsoft.com/pt-br/windows/wsl/install)
 | Orquestração      | Kubernetes     | v1.31            | [Kubernetes](https://kubernetes.io/pt-br/)
 | Framework         | Nextjs         | v14              | [Nextjs](https://kubernetes.io/pt-br/)
+
+<br>
+
+<details><summary>Observações</summary>
+
+* Instalar WSL
+    > powershell: `wsl --install`
+</details>
 
 
 ##### Tabela 2 - Tecnologias e Ferramentas Opcionais
@@ -112,4 +121,4 @@
 |   Runtime     |   NodeJS      |   v 20.17.0   |   [Node](https://nodejs.org/pt/download/prebuilt-installer)
 |   Front-End   |   NextJS      |   v14.2       |   [NextJS](https://nextjs.org/docs/getting-started/installation)
 |   Back-End    |   NextJS      |   v14.2       |   [Node](https://nodejs.org/pt/download/prebuilt-installer)
-|   
+| BD            |   PostgreSQL  |   v16     |   [PostgreSQL](https://www.postgresql.org/docs/)
