@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Dialog,
   DialogContent,
@@ -12,21 +11,53 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { CircleUser } from 'lucide-react';
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [open, setOpen] = useState(false); 
+
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    
+    if (/^\d*$/.test(value)) {
+      setUsername(value); 
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
+
+    if (!username || !password) {
+      setError("Preencha os campos usuário e senha.");
+    } else if (username.length > 8) {
+      setError("O usuário deve ter no máximo 8 caracteres.");
+    } else {
+      setError("Erro ao logar. Verifique suas credenciais.");
+    }
+  };
+
+  
+  const resetForm = () => {
+    setUsername("");
+    setPassword("");
+    setError(null);
   };
 
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) resetForm(); 
+      }}
+    >
       <DialogTrigger asChild>
-        <Button variant="outline">Login</Button>
+        <Button variant="outline" className="bg-blue-900 text-white">Login</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -42,8 +73,9 @@ export default function Login() {
                 type="text"
                 id="username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={handleUsernameChange}
                 required
+                maxLength={8}
                 className="col-span-3"
               />
             </div>
@@ -61,14 +93,20 @@ export default function Login() {
               />
             </div>
           </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-400 text-red-700 p-2 rounded">
+              <p className="font-light">{error}</p>
+            </div>
+          )}
+
           <DialogFooter>
-            <Button type="submit">Login</Button>
+            <Button variant="outline" type="submit" className="bg-blue-900 text-white">
+              Login
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   );
 }
-
-
-   
