@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Dialog,
   DialogContent,
@@ -10,54 +11,72 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { CircleUser } from 'lucide-react';
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { User2Icon } from "lucide-react";
+import UserValidation from '@/app/components/utils/validations/userValidation';
+import passwordValidation from "./utils/validations/passwordValidation";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false); 
+  const router = useRouter();
+  const [user, setUser] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
+  const [userErrors, setUserErrors] = useState<string[]>([]);
 
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrorMessage('');
+    setPasswordErrors([]);
+    setUserErrors([]);
 
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const userValidationErrors = UserValidation(user);
+    if (userValidationErrors.length > 0) {
+      setUserErrors(userValidationErrors);
+      return;
+    }
 
+    const passwordValidationErrors = passwordValidation(password);
+    if (passwordValidationErrors.length > 0) {
+      setPasswordErrors(passwordValidationErrors);
+      return;
+    }
+
+    console.log('valido'); 
     
-    if (/^\d*$/.test(value)) {
-      setUsername(value); 
-    }
+
+    // const response = await fetch('/api/login', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ user, password }),
+    // });
+
+    // if (response.ok) {
+    //   const data = await response.json();
+    //   localStorage.setItem('token', data.token);
+    //   handleClose();
+    //   router.push('/profile');
+    // } else {
+    //   const errorData = await response.json();
+    //   setErrorMessage(errorData.message);
+    // }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!username || !password) {
-      setError("Preencha os campos usuário e senha.");
-    } else if (username.length > 8) {
-      setError("O usuário deve ter no máximo 8 caracteres.");
-    } else {
-      setError("Erro ao logar. Verifique suas credenciais.");
-    }
-  };
-
-  
-  const resetForm = () => {
-    setUsername("");
-    setPassword("");
-    setError(null);
+  const handleClose = () => {
+    setUser('');
+    setPassword('');
+    setErrorMessage('');
+    setPasswordErrors([]);
+    setUserErrors([]);
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(isOpen) => {
-        setOpen(isOpen);
-        if (!isOpen) resetForm(); 
-      }}
-    >
+    <Dialog onOpenChange={handleClose}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-blue-900 text-white">Login</Button>
+        <Button variant="outline" className="bg-blue-900 text-white">
+          <User2Icon /> Login
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -66,19 +85,27 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Usuário
+              <Label htmlFor="user" className="text-right">
+                NIP
               </Label>
               <Input
                 type="text"
-                id="username"
-                value={username}
-                onChange={handleUsernameChange}
+                pattern="[0-9]*" 
+                id="user"
+                name="user"
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
                 required
-                maxLength={8}
                 className="col-span-3"
               />
             </div>
+            {userErrors.length > 0 && (
+              <div className="text-red-600 text-center text-sm">
+                {userErrors.map((error, index) => (
+                  <div key={index}>{error}</div>
+                ))}
+              </div>
+            )}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="password" className="text-right">
                 Senha
@@ -86,23 +113,30 @@ export default function Login() {
               <Input
                 type="password"
                 id="password"
+                name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="col-span-3"
               />
             </div>
+            {errorMessage && (
+              <div className="text-red-600 text-center text-sm">
+                {errorMessage}
+              </div>
+            )}
+            {passwordErrors.length > 0 && (
+              <div className="text-red-600 text-center text-sm">
+                {passwordErrors.map((error, index) => (
+                  <div key={index}>{error}</div>
+                ))}
+              </div>
+            )}
           </div>
-
-          {error && (
-            <div className="bg-red-50 border border-red-400 text-red-700 p-2 rounded">
-              <p className="font-light">{error}</p>
-            </div>
-          )}
-
           <DialogFooter>
             <Button variant="outline" type="submit" className="bg-blue-900 text-white">
-              Login
+              <User2Icon />
+              <span>Login</span>
             </Button>
           </DialogFooter>
         </form>
@@ -110,3 +144,4 @@ export default function Login() {
     </Dialog>
   );
 }
+
