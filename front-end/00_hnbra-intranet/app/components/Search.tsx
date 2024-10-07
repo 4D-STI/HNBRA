@@ -11,8 +11,8 @@ import {
    
   export default function CommandDemo() {
     return (
-      <Command className="rounded-lg border shadow-md md:min-w-[450px]">
-        <CommandInput placeholder="Type a command or search..." />
+      <Command className="rounded-lg border shadow-md md:min-w-[450px] bg-blue-200">
+        <CommandInput placeholder="Pesquisar..." />
       </Command>
     )
   }
