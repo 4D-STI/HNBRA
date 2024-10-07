@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/app/components/Footer"
+import Header from "./components/Header";
 
 const Rawline = localFont({
   src: "./fonts/rawline-300.ttf",
@@ -16,19 +17,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    
     <html lang="pt-br">
-      <body
-        className={`${Rawline.variable} ${Rawline.variable} antialiased`}
-      >
-        {children}
+      <body className={`${Rawline.variable} antialiased`}>
+        <Header />
+        <main className="flex-grow">{children}</main> {}
+        <Footer />
       </body>
-      <Footer/>
-
     </html>
   );
 }

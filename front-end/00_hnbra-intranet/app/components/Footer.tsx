@@ -1,9 +1,10 @@
 export default function Footer() {
     return (
-        <div>
-            
-        </div>
+        <footer className="bg-blue-800">
 
+        </footer>
+            
+     
     )
         
 }
