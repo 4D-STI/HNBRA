@@ -1,1 +1,37 @@
+# version: '3.9'
+services:
+  app:
+    container_name: hnbra-intranet
+    build: ./00_hnbra-intranet
+    ports:
+      - 3000:3000 # atenção porta healthcheck
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+      timeout: 10s
+      retries: 5
+  
+  db:
+    image: postgres:17
+    container_name: db
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      tty: true
+      stdin_open: true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
 
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "${PGADMIN_PORT:-8080}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=hnbra@hnbra.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
