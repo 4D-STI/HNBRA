@@ -15,7 +15,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User2Icon } from "lucide-react";
 import UserValidation from '@/app/components/utils/validations/userValidation';
-import passwordValidation from "./utils/validations/passwordValidation";
+import passwordValidation from "../utils/validations/passwordValidation";
 
 export default function Login() {
   const router = useRouter();
