@@ -6,7 +6,7 @@ import Slidebar from "@/app/components/sidebar/Slidebar";
 import Logo from "@/app/assets/logo_hnbra.png";
 import Search from "@/app/components/search/Search";
 import React, { useState } from 'react';
-import MobileMenu from './Mobilemenu'; 
+import MobileMenu from './mobilemenu/Mobilemenu'; 
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
