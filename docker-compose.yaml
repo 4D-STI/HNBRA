@@ -5,6 +5,8 @@ services:
     build: ./00_hnbra-intranet
     ports:
       - 3000:3000 # atenção porta healthcheck
+    depends_on:
+      - db
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
       timeout: 10s
@@ -19,6 +21,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       tty: true
       stdin_open: true
+    volumes:
+      - ./db:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s

@@ -24,3 +24,6 @@ node_modules/
 
 # Desconsiderar configuração do work-space do VSCode
 *.code-workspace
+
+# Desconsiderar banco de dados
+db/
