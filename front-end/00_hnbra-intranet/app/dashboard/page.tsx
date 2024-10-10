@@ -1,14 +1,9 @@
-export default function CrmPage() {
+import { Separator } from "@/components/ui/separator"
+import RegisterForm from "@/app/dashboard/registerForm";
+
+
+export default function RegisterPage() {
   return (
-    <div>
-      <aside>
-        <main>
-
-        </main>
-      </aside>
-      
-    </div>
-
-
-  );
+      <RegisterForm />
+  )
 }
