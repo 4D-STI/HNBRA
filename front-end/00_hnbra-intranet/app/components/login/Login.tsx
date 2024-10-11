@@ -74,7 +74,7 @@ export default function Login() {
   return (
     <Dialog onOpenChange={handleClose}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-blue-900 text-white">
+        <Button className="bg-blue-900 text-white">
           <User2Icon /> Login
         </Button>
       </DialogTrigger>
@@ -134,7 +134,7 @@ export default function Login() {
             )}
           </div>
           <DialogFooter>
-            <Button variant="outline" type="submit" className="bg-blue-900 text-white">
+            <Button type="submit" className="bg-blue-900 text-white">
               <User2Icon />
               <span>Login</span>
             </Button>
