@@ -24,8 +24,8 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`${Rawline.variable} antialiased`}>
         <Header />
-        <main className="flex-grow">{children}</main> {}
-        <Footer />
+        <main className="flex-grow">{children}</main> 
+        <Footer/>
       </body>
     </html>
   );
