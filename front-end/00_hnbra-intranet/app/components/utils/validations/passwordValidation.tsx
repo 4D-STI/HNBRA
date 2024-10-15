@@ -2,28 +2,28 @@ export default function passwordValidation(pass: string): string[] {
   const errors: string[] = [];
 
   if (!/(?=.*[A-Z])/.test(pass)) {
-    errors.push("A senha deve conter pelo menos uma letra maiúscula");
+    errors.push("Senha inválida");
     return errors; 
   }
 
 
   if (!/(?=.*\d)/.test(pass)) {
-    errors.push("A senha deve conter pelo menos um número");
+    errors.push("Senha inválida");
     return errors; 
   }
 
   if (!/(?=.*[!@#$%^&()_+{}\[\]:;<>,.?\/\\-])/.test(pass)) {
-    errors.push("A senha deve conter pelo menos um caractere especial");
+    errors.push("Senha inválida");
     return errors; 
   }
 
   if (/(.)\1{2}/.test(pass)) {
-    errors.push("A senha não pode conter o mesmo caractere três vezes consecutivas.");
+    errors.push("Senha inválida");
     return errors; 
   }
 
   if (pass.length < 6 || pass.length > 8) {
-    errors.push("A senha deve conter entre 6 e 8 caracteres");
+    errors.push("Senha inválida");
     return errors; 
   }
 

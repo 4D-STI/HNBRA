@@ -4,7 +4,7 @@ export default function UserValidation(nip_: string): string[] {
     const nip = nip_.trim();
 
     if (nip.length !== 8) {
-        errors.push("O NIP deve ter 8 caracteres.");
+        errors.push("Nip inválido.");
     }
 
     return errors;
