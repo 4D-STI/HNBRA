@@ -31,11 +31,11 @@ interface SettingsLayoutProps {
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
     <div className="flex flex-col items-center p-2 text-blue-900">
-      <div className="flex p-6">
+      <div className="flex p-2">
         <SidebarNav items={sidebarNavItems} />
 
       </div>
-      <div className="w-full flex justify-center">
+      <div className="flex justify-center">
         {children}
       </div>
     </div>
