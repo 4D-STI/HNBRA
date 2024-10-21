@@ -2,7 +2,7 @@
 FROM node:20.17-alpine3.19
 
 # definir uma pasta padrao
-WORKDIR /app-hnbra-intranet
+WORKDIR /app
 
 # copiar arquivos necessarios
 COPY package*.json .
