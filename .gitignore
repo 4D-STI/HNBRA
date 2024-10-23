@@ -27,3 +27,6 @@ node_modules/
 
 # Desconsiderar banco de dados
 db/
+
+# Desconsiderar pasta temporaria do Nextjs
+.next
