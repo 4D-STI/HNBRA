@@ -1,12 +1,12 @@
-import { Toggle } from "@/components/ui/toggle";
+// import { Toggle } from "@/components/ui/toggle";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
+  // TableCaption,
 } from "@/components/ui/table";
 import Command from "./components/Command";
 import { Eye, Plus, Download, Trash2, Filter } from "lucide-react";

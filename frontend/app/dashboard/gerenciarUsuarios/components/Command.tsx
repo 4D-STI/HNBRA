@@ -1,12 +1,12 @@
 import {
     Command,
-    CommandEmpty,
-    CommandGroup,
     CommandInput,
-    CommandItem,
-    CommandList,
-    CommandSeparator,
-    CommandShortcut,
+    // CommandEmpty,
+    // CommandGroup,
+    // CommandItem,
+    // CommandList,
+    // CommandSeparator,
+    // CommandShortcut,
   } from "@/components/ui/command"
    
   export default function CommandDemo() {

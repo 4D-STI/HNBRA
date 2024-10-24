@@ -3,7 +3,7 @@ import { ContrastIcon } from 'lucide-react';
 import Login from "@/app/components/login/Login";
 import Image from "next/image";
 import Slidebar from "@/app/components/sidebar/Slidebar";
-import Logo from "@/app/assets/logo_hnbra.png";
+import Logo from "@/public/images/logo_hnbra.png";
 import Search from "@/app/components/search/Search";
 import React, { useState } from 'react';
 import MobileMenu from './mobilemenu/Mobilemenu'; 

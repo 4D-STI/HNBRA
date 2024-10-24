@@ -118,6 +118,7 @@ export default function RegisterForm() {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Nome</Label>
               <Input
+                alt="formulario, entrada de dados: nome do usuário"
                 id="name"
                 placeholder="Insira o nome do usuário"
                 value={name}
@@ -128,6 +129,7 @@ export default function RegisterForm() {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="surname">Sobrenome</Label>
               <Input
+                alt="formulario, entrada de dados: sobrenome do usuário"
                 id="surname"
                 placeholder="Insira o sobrenome do usuário"
                 value={surname}
@@ -138,6 +140,7 @@ export default function RegisterForm() {
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="nip">NIP</Label>
               <Input
+                alt="formulario, entrada de dados: NIP (número identificado pessoal) do usuário"
                 type="text" 
                 id="nip"
                 placeholder="Insira o NIP do usuário"
@@ -235,6 +238,7 @@ export default function RegisterForm() {
               <Label htmlFor="password">Senha</Label>
               <div className="relative">
                 <Input
+                  alt="formulario, entrada de dados: senha"
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Insira a senha"
@@ -255,6 +259,7 @@ export default function RegisterForm() {
               <Label htmlFor="confirm-password">Confirme a Senha</Label>
               <div className="relative">
                 <Input
+                  alt="formulario, entrada de dados: confirmar senha"
                   id="confirm-password"
                   type={showConfirmPassword ? "text" : "password"} 
                   placeholder="Confirme a senha"

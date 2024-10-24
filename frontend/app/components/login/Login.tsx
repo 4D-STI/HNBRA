@@ -12,13 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { User2Icon } from "lucide-react";
 import UserValidation from '@/app/components/utils/validations/userValidation';
 import passwordValidation from "../utils/validations/passwordValidation";
 
 export default function Login() {
-  const router = useRouter();
+  // const router = useRouter();
   const [user, setUser] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -89,6 +89,8 @@ export default function Login() {
                 NIP
               </Label>
               <Input
+                alt="entrada de dados: identificador NIP (numero de identificação pessoal)"
+                placeholder="8 caracteres numéricos"
                 type="text"
                 pattern="[0-9]*" 
                 id="user"
@@ -111,6 +113,8 @@ export default function Login() {
                 Senha
               </Label>
               <Input
+                alt="entrada de dados: senha"
+                placeholder="6~8 caracteres"
                 type="password"
                 id="password"
                 name="password"

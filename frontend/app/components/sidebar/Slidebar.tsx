@@ -6,9 +6,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Home, Settings, User, AlignJustify } from 'lucide-react';
+import { AlignJustify } from 'lucide-react';
 
-export default function() {
+export default function SlideBar() {
   return(
 <Sheet>
   <SheetTrigger><AlignJustify/></SheetTrigger>
