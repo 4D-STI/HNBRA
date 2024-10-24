@@ -1,16 +1,36 @@
 # version: '3.9'
 services:
-  app:
-    container_name: frontend
+  app-dev:
+    container_name: app-dev
     build: ./frontend
     volumes:
-      - ./frontend:/frontend
+      - ./frontend:/app
     ports:
       - 3000:3000 # atenção porta healthcheck
     depends_on:
       - db
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+      timeout: 10s
+      retries: 5
+  
+  app-prod:
+    container_name: app-prod
+    build: ./frontend
+    # volumes:
+    #   - ./frontend:/app
+    ports:
+      - 3001:3000
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=production
+    command: npm start
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"]  # Caso utilize outra porta interna para o front, altere ela aqui também
       timeout: 10s
       retries: 5
   
