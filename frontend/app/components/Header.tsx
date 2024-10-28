@@ -39,7 +39,7 @@ export default function Header() {
                     </button>
                     <div className="hidden md:flex text-base"> 
                         <ul className="flex items-center justify-end mx-16">
-                            <li className="mr-4"><a href="#">Órgãos do governo TESTE</a></li>
+                            <li className="mr-4"><a href="#">Órgãos do governo</a></li>
                             <li className="mr-4"><a href="#">Acesso à informação</a></li>
                             <li className="mr-4"><a href="#">Legislação</a></li>
                             <li className="mr-4"><a href="#">Acessibilidade</a></li>
