@@ -1,6 +1,20 @@
 {
+  "name": "hnbra",
+  "version": "1.0.0",
+  "description": "Aplicação web intranet do Hospital Naval de Brasília",
+  "main": "index.js",
+  "scripts": {
+    "install:front": "cd ./app/frontend && npm install",
+    "install:back": "cd ./app/backend && npm install",
+    "install:apps": "npm run install:front && npm run install:back",
+    "up": "docker-compose up -d --build",
+    "down": "docker-compose down --remove-orphans",
+    "logs": "docker-compose logs -f",
+    "logs:dev": "docker logs -f app-dev",
+    "logs:prod": "docker logs -f app-prod",
+    "app-dev": "winpty docker exec -it app-dev sh"
+  },
+  "author": "devHB",
   "devDependencies": {
-    "nodemon": "^3.1.7",
-    "sharp": "^0.33.5"
   }
 }

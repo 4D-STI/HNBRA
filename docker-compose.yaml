@@ -1,38 +1,58 @@
 # version: '3.9'
 services:
-  app-dev:
-    container_name: app-dev
+  frontend-dev:
+    container_name: fe
     build: ./frontend
-    volumes:
-      - ./frontend:/app
     ports:
       - 3000:3000 # atenção porta healthcheck
+    working_dir: /frontend
+    volumes:
+      - ./frontend/app:/frontend/app
     depends_on:
-      - db
+      - be
     environment:
       - NODE_ENV=development
-    command: npm run dev
+    # command: npm run dev
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
       timeout: 10s
       retries: 5
+
+    backend-dev:
+      container_name: be
+      build: ./backend
+      ports:
+        - 3001:3001 # atenção porta healthcheck
+      working_dir: /backend
+      volumes:
+        - ./backend/app:/backend/app
+      depends_on:
+        - db
+      environment:
+        - NODE_ENV=development
+      # command: npm run dev
+      healthcheck:
+        test: ["CMD", "lsof", "-t", "-i:3001"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+        timeout: 10s
+        retries: 5
   
-  app-prod:
-    container_name: app-prod
-    build: ./frontend
-    # volumes:
-    #   - ./frontend:/app
-    ports:
-      - 3001:3000
-    depends_on:
-      - db
-    environment:
-      - NODE_ENV=production
-    command: npm start
-    healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3001"]  # Caso utilize outra porta interna para o front, altere ela aqui também
-      timeout: 10s
-      retries: 5
+  # app-prod:
+  #   container_name: app-prod
+  #   build: ./frontend
+  #   image: production
+  #   # volumes:
+  #   #   - ./frontend:/app
+  #   ports:
+  #     - 3001:3001
+  #   depends_on:
+  #     - app-dev
+  #   environment:
+  #     - NODE_ENV=production
+  #   # command: npm start
+  #   healthcheck:
+  #     test: ["CMD", "lsof", "-t", "-i:3001"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+  #     timeout: 10s
+  #     retries: 5
   
   db:
     container_name: db
