@@ -1,124 +1,99 @@
-# HNBRA - Hospital Naval de Brasília
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
-## Guia de Desenvolvimento de Sistema Digital
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
->   Este projeto é desenvolvido em conformidade ao `Boletim Técnico DCTIMBOTEC 30/002/2023`
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-### Guia de Estilo para Documentar em Markdown
+## Description
 
-<details>
-    <summary> Estruturas Recorrentes</summary>
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-<br/>
+## Project setup
 
->   *   Este guia serve como referência para futuras alterações neste documento. <br/>
->   *   Utilize os exemplos das estruturas recorrentes <br/>
-
-#####   Navegação
-
-*   Navegação interna: realizada por links apontando para os títulos
-
-```md
-[nome_do_link](#titulo_para_linkar)
+```bash
+$ pnpm install
 ```
 
-#####   Tabelas
+## Compile and run the project
 
-*   Alinhamento
+```bash
+# development
+$ pnpm run start
 
->:--    = alinhamento a esquerda <br/>
-:--:    = alinhamneto centralizado<br/>
---:     = alinhamento a direita<br/>
+# watch mode
+$ pnpm run start:dev
 
-#####   Alinhamentos
-
-| esquerda | meio | direita |
-|:---|:---:|---:|
-| estou_na_esquerda | estou_no_meio | estou_na_direita |
-| estou_na_esquerda | estou_no_meio | estou_na_direita |
-
-#####   Níveis de Citação
-
-> citação n1
->> citação n2
-> >> citação n3
-
-#####   Sumários
-
-```md
-<details>
-    <summary>Sumario</summary>
-</details>
+# production mode
+$ pnpm run start:prod
 ```
 
-</details>
+## Run tests
 
-</details>
+```bash
+# unit tests
+$ pnpm run test
 
-### Guia de Configuração do Ambiente de Desenvolvimento
+# e2e tests
+$ pnpm run test:e2e
 
-<details>
-    <summary>ATENÇÃO!</summary>
+# test coverage
+$ pnpm run test:cov
+```
 
-<br>
+## Deployment
 
->   Consultar o `Boletim Técnico DCTIMBOTEC 30/002/2023`:  para acessar a tabela completa com todas as tecnologias e ferramentas disponíveis<br/>
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 
-> As tabelas a seguir orientam quais tecnologias e ferramentas adotadas no desenvolvimento deste projeto.
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
-> Tabela 1: ferramentas de uso obrigatório<br/>
-> Tabela 2: ferramentas de uso opcional<br/>
-> Tabela 3: Frameworks recomendados
+```bash
+$ pnpm install -g mau
+$ mau deploy
+```
 
-</details>
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-###   Ferramentas e frameworks<br/>
+## Resources
 
-<details>
-    <summary>WINDOWS</summary>
+Check out a few resources that may come in handy when working with NestJS:
 
-##### Tabela 1 - Tecnologias e Ferramentas de Uso Obrigatório
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-| Escopo            | Tecnologia     | Versão | Repositório
-|   :---            |   :---         |  :---            |   :---
-|   Linguagem       |   Javascript   |  ECMA-262 v15    |   [ecma-international](https://ecma-international.org/publications-and-standards/standards/ecma-262/)
-|   Banco de Dados  |   SQL          | PostgreSQL 17 RC1| [postgresql](https://www.postgresql.org/)
-|   IDE             |   VSCode       | v1.93            | [VSCode](https://code.visualstudio.com/Download)
-|   Versionamento   |   Git          | v2.46.0          | [Git](https://git-scm.com/download/win)
-| Containerização   |   Docker       | v2.46.0          | [Dorker](https://docs.docker.com/desktop/install/windows-install/)
-| Containerização   |   WSL          | v2.2.4.0         |[WSL](https://learn.microsoft.com/pt-br/windows/wsl/install)
-| Orquestração      | Kubernetes     | v1.31            | [Kubernetes](https://kubernetes.io/pt-br/)
-| Framework         | Nextjs         | v14              | [Nextjs](https://kubernetes.io/pt-br/)
+## Support
 
-<br>
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-<details><summary>Observações</summary>
+## Stay in touch
 
-* Instalar WSL
-    > powershell: `wsl --install`
-</details>
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
+## License
 
-##### Tabela 2 - Tecnologias e Ferramentas Opcionais
-
-|   Escopo                  |   Tecnologia  |   Versão  |   Repositório
-|   ---                     |   ---         |   ---     |   ---
-|   Modelagem de Requisitos |   ?           |   ?       |   ?
-|   Gerência de Projeto     |   Bitrix      |   ?       |   ?
-|   Modelagem de Processos  |   Bizagi      |   ?       |   ?
-|   Prototipação            |   Figma       |   ?       |   ?
-|   Integração Continua     |   Github      |   ?       |   ?
-|   Qualidade e Segurança   |   SonarQube   |   ?       |   ?
-|   Testes Unitarios        |   JUnit       |   ?       |   ?
-|   Testes Automatizados    |   Selenium    |   ?       |   ?
-|   Testes de Desempenho    |   ApacheJMeter|   ?       |   ?
-|   Observabilidade         |   Swagger     |   ?       |   ?         
-
-##### Tabela 3 - Frameworks e Bibliotecas
-
-|   Escopo      |   Tecnologia  |   Versão      |   Repositório
-|   ---         |   ---         |   ---         |   ---
-|   Runtime     |   NodeJS      |   v 20.17.0   |   [Node](https://nodejs.org/pt/download/prebuilt-installer)
-|   Front-End   |   NextJS      |   v14.2       |   [NextJS](https://nextjs.org/docs/getting-started/installation)
-|   Back-End    |   NextJS      |   v14.2       |   [Node](https://nodejs.org/pt/download/prebuilt-installer)
-| BD            |   PostgreSQL  |   v16     |   [PostgreSQL](https://www.postgresql.org/docs/)
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

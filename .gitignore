@@ -1,32 +1,56 @@
-# Desconsiderar arquivos gerados pelo editor
-.vscode/
-*.suo
-*.ntvs.json
-*.user
-*.tmp
-*.bak
-*.orig
-*.inc
+# compiled output
+/dist
+/node_modules
+/build
 
-# Desconsiderar arquivos de cache
-npm-cache/
-yarn-cache/
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-# Desconsiderar arquivos de build
-build/
-dist/
+# OS
+.DS_Store
 
-# Desconsiderar arquivos de testes
-tests/
+# Tests
+/coverage
+/.nyc_output
 
-# Desconsiderar arquivos de dependências
-node_modules/
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# Desconsiderar configuração do work-space do VSCode
-*.code-workspace
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# Desconsiderar banco de dados
-db/
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
-# Desconsiderar pasta temporaria do Nextjs
-.next
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
