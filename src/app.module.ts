@@ -12,7 +12,7 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     SequelizeModule.forRoot({
-      dialect: 'mysql',
+      dialect: 'postgres',
       host: 'localhost',
       port: 3306,
       username: 'root',

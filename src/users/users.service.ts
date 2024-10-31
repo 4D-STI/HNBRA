@@ -3,11 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../model/users/users.model';
 import { Sequelize } from 'sequelize';
-import userMock from '../../test/mocks/users.mock'
+// import userMock from '../../test/mocks/users.mock'
 
 @Injectable()
 export class UsersService {
-    private userMock = userMock;
+    // private userMock = userMock;
 
     constructor(
         @InjectModel(User)
@@ -39,13 +39,13 @@ export class UsersService {
     }
 
 
-    async createMany() {
-        try {
-            await this.sequelize.transaction(async (t) => {
-                await this.userModel.bulkCreate(this.userMock, { transaction: t });
-            });
-        } catch (err) {
-            console.log(`Erro: ${err}`);
-        }
-    }
+    // async createMany() {
+    //     try {
+    //         await this.sequelize.transaction(async (t) => {
+    //             await this.userModel.bulkCreate(this.userMock, { transaction: t });
+    //         });
+    //     } catch (err) {
+    //         console.log(`Erro: ${err}`);
+    //     }
+    // }
 }
