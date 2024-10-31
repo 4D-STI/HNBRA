@@ -12,9 +12,13 @@
     "logs": "docker-compose logs -f",
     "logs:dev": "docker logs -f app-dev",
     "logs:prod": "docker logs -f app-prod",
-    "app-dev": "winpty docker exec -it app-dev sh"
+    "container:fed": "winpty docker exec -it fed sh",
+    "container:bed": "winpty docker exec -it bed sh",
+    "start:front": "cd frontend/ && npm run dev",
+    "start:back": "cd backend/sdin-hnbra/ && pnpm run start:dev"
   },
   "author": "devHB",
   "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

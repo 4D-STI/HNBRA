@@ -30,3 +30,6 @@ db/
 
 # Desconsiderar pasta temporaria do Nextjs
 .next
+
+# Desconsiderar arquivo com variaveis de ambiente
+.env

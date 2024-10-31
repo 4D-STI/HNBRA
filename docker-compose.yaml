@@ -1,7 +1,7 @@
 # version: '3.9'
 services:
-  frontend-dev:
-    container_name: fe
+  fe-dev:
+    container_name: fed
     build: ./frontend
     ports:
       - 3000:3000 # atenção porta healthcheck
@@ -9,7 +9,7 @@ services:
     volumes:
       - ./frontend/app:/frontend/app
     depends_on:
-      - be
+      - be-dev
     environment:
       - NODE_ENV=development
     # command: npm run dev
@@ -18,43 +18,27 @@ services:
       timeout: 10s
       retries: 5
 
-    backend-dev:
-      container_name: be
+  be-dev:
+      container_name: bed
       build: ./backend
       ports:
         - 3001:3001 # atenção porta healthcheck
-      working_dir: /backend
+      working_dir: ./backend
       volumes:
         - ./backend/app:/backend/app
       depends_on:
-        - db
+        - db-dev
       environment:
         - NODE_ENV=development
+      tty: true
+      stdin_open: true
       # command: npm run dev
       healthcheck:
         test: ["CMD", "lsof", "-t", "-i:3001"]  # Caso utilize outra porta interna para o front, altere ela aqui também
         timeout: 10s
         retries: 5
-  
-  # app-prod:
-  #   container_name: app-prod
-  #   build: ./frontend
-  #   image: production
-  #   # volumes:
-  #   #   - ./frontend:/app
-  #   ports:
-  #     - 3001:3001
-  #   depends_on:
-  #     - app-dev
-  #   environment:
-  #     - NODE_ENV=production
-  #   # command: npm start
-  #   healthcheck:
-  #     test: ["CMD", "lsof", "-t", "-i:3001"]  # Caso utilize outra porta interna para o front, altere ela aqui também
-  #     timeout: 10s
-  #     retries: 5
-  
-  db:
+
+  db-dev:
     container_name: db
     image: postgres:17
     ports:
@@ -69,13 +53,13 @@ services:
       timeout: 10s
       retries: 5
 
-  pgadmin:
-    image: dpage/pgadmin4
-    ports:
-      - "${PGADMIN_PORT:-8080}:80"
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=hnbra@hnbra.com
-      - PGADMIN_DEFAULT_PASSWORD=postgres
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   ports:
+  #     - "${PGADMIN_PORT:-8080}:80"
+  #   depends_on:
+  #     db-dev:
+  #       condition: service_healthy
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=hnbra@hnbra.com
+  #     - PGADMIN_DEFAULT_PASSWORD=postgres
