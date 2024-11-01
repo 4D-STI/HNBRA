@@ -1,5 +1,4 @@
-
-export default class CreateUsersDto {
+export class CreateUserDto {
     nip: number;
     firstName: string;
     lastName: string;

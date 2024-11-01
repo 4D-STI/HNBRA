@@ -1,31 +1,34 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
-// Config
+// modulo para utilizar variaveis de ambiente
 import { ConfigModule } from '@nestjs/config'
 
 // Sequelize
 import { SequelizeModule } from '@nestjs/sequelize'
+
+// modulos
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '../../.env.dev',
+      isGlobal: true,
+    }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       models: [],
-      retryAttempts: 5,
-      retryDelay: 3000,
+      retryAttempts: Number(process.env.DB_RETRY_ATTEMPTS),
+      retryDelay: Number(process.env.DB_RETRY_DELAY),
       autoLoadModels: true,
-      synchronize: true
-    }),
-    ConfigModule.forRoot({
-      envFilePath: '../../dev.env'
+      synchronize: true,
     }),
     UsersModule,
   ],

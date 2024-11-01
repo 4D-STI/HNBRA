@@ -1,51 +1,26 @@
-
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { User } from '../model/users/users.model';
-import { Sequelize } from 'sequelize';
-// import userMock from '../../test/mocks/users.mock'
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-    // private userMock = userMock;
+  create(createUserDto: CreateUserDto) {
+    return 'This action adds a new user';
+  }
 
-    constructor(
-        @InjectModel(User)
-        private userModel: typeof User,
-        private sequelize: Sequelize
-    ) { }
+  findAll() {
+    return `This action returns all users`;
+  }
 
-    async findAll(): Promise<User[]> {
-        console.log('acessou findAll');
+  findOne(id: number) {
+    return `This action returns a #${id} user`;
+  }
 
-        return this.userModel.findAll();
-    }
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${id} user`;
+  }
 
-    findOne(nip: number): Promise<User> {
-        console.log('acessou findOne');
-
-        return this.userModel.findOne({
-            where: {
-                nip,
-            },
-        });
-    }
-
-    async remove(nip: number): Promise<void> {
-        console.log('acessou remove');
-
-        const user = await this.findOne(nip);
-        await user.destroy();
-    }
-
-
-    // async createMany() {
-    //     try {
-    //         await this.sequelize.transaction(async (t) => {
-    //             await this.userModel.bulkCreate(this.userMock, { transaction: t });
-    //         });
-    //     } catch (err) {
-    //         console.log(`Erro: ${err}`);
-    //     }
-    // }
+  remove(id: number) {
+    return `This action removes a #${id} user`;
+  }
 }

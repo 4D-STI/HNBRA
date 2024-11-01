@@ -1,22 +1,13 @@
-// import { NestFactory } from '@nestjs/core';
-// import { AppModule } from './app.module';
-
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule);
-//   await app.listen(process.env.PORT ?? 3001);
-// }
-// bootstrap();
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Sequelize } from 'sequelize';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // obter porta a partir do .env
+  const configService = app.get(ConfigService)
+  const API_PORT = configService.get('API_PORT')
 
-  const sequelizeInstance = app.get(Sequelize);
-
-  await sequelizeInstance.sync(); // Sincroniza os models com o banco de dados
-  await app.listen(3001);
+  await app.listen(API_PORT);
 }
 bootstrap();
