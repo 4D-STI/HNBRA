@@ -14,13 +14,4 @@ export class AppService {
     return 'Hello World!';
   }
 
-  getAllEnvVars(id: number): string {
-    const allVars = {};
-    const keys = this.configService;
-
-    console.log(keys);
-
-    return `ID is ${id}`;
-
-  }
 }
