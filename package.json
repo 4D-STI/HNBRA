@@ -15,7 +15,8 @@
     "container:fed": "winpty docker exec -it fed sh",
     "container:bed": "winpty docker exec -it bed sh",
     "start:front": "cd frontend/ && npm run dev",
-    "start:back": "cd backend/sdin-hnbra/ && pnpm run start:dev"
+    "start:back": "cd backend/sdin-hnbra/ && pnpm run start:dev",
+    "db:reset": "cd backend/sdin-hnbra/ && pnpm run db:reset"
   },
   "author": "devHB",
   "devDependencies": {

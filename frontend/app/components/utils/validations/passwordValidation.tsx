@@ -6,7 +6,6 @@ export default function passwordValidation(pass: string): string[] {
     return errors; 
   }
 
-
   if (!/(?=.*\d)/.test(pass)) {
     errors.push("Senha inválida");
     return errors; 
@@ -29,10 +28,3 @@ export default function passwordValidation(pass: string): string[] {
 
   return errors;
 }
-
-  
-
-
-
-
-

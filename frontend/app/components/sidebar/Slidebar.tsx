@@ -1,7 +1,9 @@
+import { CardTitle } from "@/components/ui/card";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -12,14 +14,19 @@ export default function SlideBar() {
   return(
 <Sheet>
   <SheetTrigger><AlignJustify/></SheetTrigger>
-  <SheetContent side={"left"}>
+  <SheetContent side={'left'} className="data-[state=open]:animate-in">
     <SheetHeader>
-      <SheetTitle>Are you absolutely sure?</SheetTitle>
+      <SheetTitle>A Divisão de informática é a melhor!</SheetTitle>
       <SheetDescription>
         This action cannot be undone. This will permanently delete your account
         and remove your data from our servers.
       </SheetDescription>
     </SheetHeader>
+    <SheetFooter className="sm:justify-start">
+      <CardTitle className="text-red-500">
+        Este é um CardTitle do footer
+      </CardTitle >
+    </SheetFooter>
   </SheetContent>
 </Sheet>
   )
