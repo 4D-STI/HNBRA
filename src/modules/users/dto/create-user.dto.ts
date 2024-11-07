@@ -1,17 +1,19 @@
 export class CreateUserDto {
-    nip: number;
+    nip: string;
+    patent: string;
+    warName?: string;
     firstName: string;
     lastName: string;
     department: string;
-    section: string;
-    division: string;
+    section: boolean;
+    division: boolean;
     role: string;
-    status: string;
+    status: boolean;
     permission: string;
     password: string;
-    emailPersonal: string;
-    emailMb: string;
-    contactNumber: number;
+    emailPersonal?: string;
+    emailMb?: string;
+    contactNumber?: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: Date
 }

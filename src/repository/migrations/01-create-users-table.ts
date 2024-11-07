@@ -6,10 +6,20 @@ export default {
         queryInterface.createTable<Model<userType>>('users', {
 
             nip: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.STRING,
                 primaryKey: true,
                 allowNull: false,
                 unique: true
+            },
+
+            patent: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+
+            warName: {
+                type: DataTypes.STRING,
+                allowNull: true
             },
 
             firstName: {
@@ -68,7 +78,7 @@ export default {
             },
 
             contactNumber: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.STRING,
                 allowNull: true
             },
 

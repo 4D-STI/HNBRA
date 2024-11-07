@@ -4,7 +4,9 @@ export default {
     async up(queryInterface: QueryInterface) {
         await queryInterface.bulkInsert('users', [
             {
-                nip: 12345678,
+                nip: '12345678',
+                patent: 'civil',
+                warName: 'HB',
                 firstName: 'Helber',
                 lastName: 'Brito',
                 department: 'Administrativo',
@@ -21,9 +23,30 @@ export default {
                 updatedAt: new Date()
             },
             {
-                nip: 20240011,
+                nip: '22345678',
+                patent: 'civil',
+                warName: 'Brito',
+                firstName: 'Helber',
+                lastName: 'Brito',
+                department: 'Administrativo',
+                section: true,
+                division: false,
+                role: 'admin',
+                status: true,
+                permission: 'rwe',
+                password: '@Mb2024',
+                emailPersonal: 'email@email.com',
+                emailMb: 'email@mb.mil.br',
+                contactNumber: 6199887766,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                nip: '20240011',
+                patent: 'CMG',
+                warName: 'Comandante',
                 firstName: 'Sandro',
-                lastName: 'CMG',
+                lastName: 'Marinha',
                 department: 'Informática',
                 section: true,
                 division: false,
@@ -38,9 +61,11 @@ export default {
                 updatedAt: new Date()
             },
             {
-                nip: 20240012,
+                nip: '20240012',
+                patent: 'TEN',
+                warName: 'Tenente',
                 firstName: 'Luana',
-                lastName: 'TEN',
+                lastName: 'Vianna',
                 department: 'Informática',
                 section: true,
                 division: false,
@@ -55,9 +80,11 @@ export default {
                 updatedAt: new Date()
             },
             {
-                nip: 20240013,
+                nip: '20240013',
+                patent: 'SGT',
+                warName: 'Sargento',
                 firstName: 'Oriel',
-                lastName: 'SGT',
+                lastName: 'Marinha',
                 department: 'Informática',
                 section: true,
                 division: false,
@@ -72,9 +99,11 @@ export default {
                 updatedAt: new Date()
             },
             {
-                nip: 20240014,
+                nip: '20240014',
+                patent: 'MAR',
+                warName: 'Brito',
                 firstName: 'Brito',
-                lastName: 'MAR',
+                lastName: 'Marinha',
                 department: 'Informática',
                 section: true,
                 division: false,
@@ -89,9 +118,11 @@ export default {
                 updatedAt: new Date()
             },
             {
-                nip: 20240015,
+                nip: '20240015',
+                patent: 'CB',
+                warName: 'Dos Anjos',
                 firstName: 'Dos Anjos',
-                lastName: 'CB',
+                lastName: 'Marinha',
                 department: 'Informática',
                 section: true,
                 division: false,
@@ -106,9 +137,11 @@ export default {
                 updatedAt: new Date()
             },
             {
-                nip: 20240016,
+                nip: '20240016',
+                patent: 'CB',
+                warName: 'Cavalcante',
                 firstName: 'Cavalcante',
-                lastName: 'CB',
+                lastName: 'Marinha',
                 department: 'Informática',
                 section: true,
                 division: false,
@@ -123,7 +156,9 @@ export default {
                 updatedAt: new Date()
             },
             {
-                nip: 20240017,
+                nip: '20240017',
+                patent: 'Civil',
+                warName: '4D',
                 firstName: 'Lucas',
                 lastName: '4D',
                 department: 'Suporte',

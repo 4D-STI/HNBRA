@@ -1,5 +1,7 @@
 export type userType = {
-    nip: number,
+    nip: string,
+    patent: string,
+    warName?: string,
     firstName: string,
     lastName: string,
     department: string,
@@ -9,9 +11,9 @@ export type userType = {
     status: boolean,
     permission: string,
     password: string,
-    emailPersonal: string,
-    emailMb: string,
-    contactNumber: number,
+    emailPersonal?: string,
+    emailMb?: string,
+    contactNumber?: string,
     createdAt: Date,
     updatedAt: Date
 }

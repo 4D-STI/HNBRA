@@ -5,10 +5,22 @@ import { userType } from '../types/usersType';
 export class users extends Model<userType> {
     @PrimaryKey
     @Column({
-        type: DataType.DECIMAL(8, 0),
+        type: DataType.STRING,
         primaryKey: true,
     })
-    nip: Number;
+    nip: string;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    patent: string;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+    })
+    warName: string;
 
     @Column({
         type: DataType.STRING,
@@ -25,42 +37,36 @@ export class users extends Model<userType> {
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        unique: true,
     })
     department: string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        unique: true,
     })
-    section: string;
+    section: boolean;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        unique: true,
     })
-    division: string;
+    division: boolean;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        unique: true,
     })
     role: string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        unique: true,
     })
     status: string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        unique: true,
     })
     permission: string;
 
@@ -84,17 +90,14 @@ export class users extends Model<userType> {
         type: DataType.STRING,
         allowNull: true,
         unique: true,
-        validate: {
-            isEmail: true,
-        },
     })
     emailMb: string;
 
     @Column({
-        type: DataType.DECIMAL(10, 0),
+        type: DataType.STRING,
         allowNull: true,
     })
-    contactNumber: number;
+    contactNumber: string;
 
 
     @Column({

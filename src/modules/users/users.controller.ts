@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { SearchUserDto } from './dto/search-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -13,11 +14,8 @@ export class UsersController {
   }
 
   @Get()
-  read(@Query('nip') nip: string) {
-
-    if (nip) return this.usersService.findOne(nip)
-
-    return this.usersService.findAll();;
+  read(@Query() searchDto: SearchUserDto) {
+    return this.usersService.searchUsers(searchDto)
   }
 
   @Patch(':id')
