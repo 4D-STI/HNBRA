@@ -18,13 +18,13 @@ export class UsersController {
     return this.usersService.searchUsers(searchDto)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch(':nip')
+  update(@Param('nip') nip: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(nip, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @Delete(':nip')
+  remove(@Param('nip') nip: string) {
+    return this.usersService.remove(nip);
   }
 }
