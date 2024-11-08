@@ -17,7 +17,7 @@ export class UsersService {
     // pesquisar nip do usuario antes de criar
     const userToCreate = await this.searchUsers({ nip: createUserDto.nip })
 
-    if (userToCreate.length !== 0) return `Nip: ${createUserDto.nip} já está cadastrado!`
+    if (userToCreate[0]) return `Nip: ${createUserDto.nip} já está cadastrado!`
 
     try {
       await this.userRepository.create(createUserDto)
@@ -28,8 +28,10 @@ export class UsersService {
   }
 
 
-  async searchUsers(searchDto: SearchUserDto) {
+  async searchUsers(searchDto: SearchUserDto): Promise<any> {
     const where: any = {};
+    const message = `Usuário inexistente!
+    Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`
 
     for (const [key, value] of Object.entries(searchDto)) {
       if (value) {
@@ -39,14 +41,9 @@ export class UsersService {
       }
     }
 
-    const keysToUpper = Object.keys(where).map(key => key.toUpperCase())
-    console.log('WHERE -> ', keysToUpper);
-
-
     const user = await this.userRepository.findAll({ where })
 
-    if (user.length === 0) return `Usuário inexistente!
-    Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`
+    if (user.length === 0) return { error: true, message }
 
     return user;
   }
@@ -56,7 +53,7 @@ export class UsersService {
     const userToUpdate = await this.searchUsers({ nip })
 
     if (userToUpdate.length === 0) return `Usuário inexistente. NIP: ${nip} não encontrado!`
-    console.log('Usuar que sera atualizado: ', userToUpdate);
+    console.log('Usuario que sera atualizado: ', userToUpdate);
     console.log('Informações a sere, atualizadas: ', updateUserDto);
 
 

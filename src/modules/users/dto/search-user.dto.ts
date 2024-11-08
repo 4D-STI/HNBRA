@@ -1,4 +1,4 @@
-export abstract class SearchUserDto {
+export class SearchUserDto {
     nip?: string;
     firstName?: string;
     lastName?: string;
