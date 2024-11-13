@@ -1,0 +1,20 @@
+#   ignora arquivo de configuração docker
+Dokerfile
+.dockerignore
+
+#   ignora build do next
+.next
+!.next/static
+!.next/standalone
+
+#   ignora versionamento
+.git
+
+#   ignora dependencias do projeto
+/node_modules
+
+#   ignora arquivo de documentação
+README.md
+
+#   ignora logs
+npm-debug.log
