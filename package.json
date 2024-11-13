@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "install:front": "cd ./frontend && npm install",
-    "install:back": "cd ./backend/sdin-hnbra && pnpm install",
+    "install:back": "cd ./backend/sdin-hnbra && npm install",
     "install:apps": "npm run install:front && npm run install:back",
     "up": "docker-compose up -d --build",
     "down": "docker-compose down --remove-orphans",
