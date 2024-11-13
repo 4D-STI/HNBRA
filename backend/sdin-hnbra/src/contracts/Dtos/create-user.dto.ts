@@ -42,8 +42,8 @@ export class CreateUserDto {
     role: string;
 
     @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('status') })
-    @IsBoolean({ message: IS_BOOL_MSG('status') })
-    status: boolean;
+    @IsString({ message: IS_STRING_MSG('status') })
+    status: string;
 
     @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('permission') })
     @IsString({ message: IS_STRING_MSG('permission') })
