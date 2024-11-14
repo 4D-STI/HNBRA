@@ -14,8 +14,8 @@
     "logs:prod": "docker logs -f app-prod",
     "container:fed": "winpty docker exec -it fed sh",
     "container:bed": "winpty docker exec -it bed sh",
-    "start:front": "cd frontend/ && npm run dev",
-    "start:back": "cd backend/sdin-hnbra/ && npm run start:dev",
+    "front": "cd frontend/ && npm run dev",
+    "back": "cd backend/sdin-hnbra/ && npm run start:dev",
     "db:reset": "cd backend/sdin-hnbra/ && npm run db:reset",
     "db:up": "docker compose up -d db-dev"
   },
