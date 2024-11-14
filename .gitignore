@@ -32,4 +32,3 @@ node_modules/
 
 # Desconsiderar arquivo com variaveis de ambiente
 .env
-.env.dev
