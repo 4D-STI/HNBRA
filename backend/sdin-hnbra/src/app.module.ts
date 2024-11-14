@@ -11,6 +11,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { usersModule } from './modules/users/users.module';
 import { users } from './repository/models/user.model';
+import { DivisionModule } from './modules/divison/division.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { users } from './repository/models/user.model';
       }
     }),
     usersModule,
+    DivisionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
