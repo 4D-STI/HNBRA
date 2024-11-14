@@ -1,9 +1,9 @@
 import { Injectable, Inject, HttpStatus, BadRequestException } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { users } from '../../repository/models/user.model'
-import { CreateUserDto } from '../../contracts/Dtos/create-user.dto';
-import { UpdateUserDto } from '../../contracts/Dtos/update-user.dto';
-import { SearchUserDto } from '../../contracts/Dtos/search-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { SearchUserDto } from './dto/search-user.dto';
 
 @Injectable()
 export class UsersService {
