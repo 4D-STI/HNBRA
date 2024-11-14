@@ -11,8 +11,8 @@ const Rawline = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "HNBRA",
-  description: "Hospítal Naval de Brasília",
+  title: "sdin-hnbra",
+  description: "Sistema Digital Intranet do Hospital Naval de Brasília",
 };
 
 export default function RootLayout({
