@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpStatus, BadRequestException } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { users } from '../../repository/models/user.model'
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,10 +15,26 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     // pesquisar nip do usuario antes de criar
-    const userToCreate = await this.searchUsers({ nip: createUserDto.nip })
+    const user = await this.userRepository.findOne({
+      where: {
+        [Op.or]: [
+          { nip: createUserDto.nip },
+          { emailPersonal: createUserDto.emailPersonal },
+          { emailMb: createUserDto.emailMb },
+        ],
+      },
+    });
 
-    if (userToCreate[0]) {
-      throw new BadRequestException(`Nip: ${createUserDto.nip} já está cadastrado!`)
+    if (user) {
+      if (user.nip === createUserDto.nip) {
+        throw new BadRequestException(`NIP: ${createUserDto.nip} já está cadastrado!`);
+      }
+      if (user.emailPersonal === createUserDto.emailPersonal) {
+        throw new BadRequestException(`emailPessoa: ${createUserDto.emailPersonal} já está cadastrado!`);
+      }
+      if (user.emailMb === createUserDto.emailMb) {
+        throw new BadRequestException(`emailMb: ${createUserDto.emailMb} já está cadastrado!`);
+      }
     }
 
     try {
@@ -27,7 +43,8 @@ export class UsersService {
       throw new Error(`Erro ao criar usuario \r Erro: ${e}`)
     }
     // return `Usuário criado \r${JSON.stringify(createUserDto)}`;
-    return JSON.stringify(createUserDto, null, 2);
+    // return JSON.stringify(createUserDto, null, 2);
+    return this.userRepository.findOne({ where: { nip: createUserDto.nip } })
   }
 
 
@@ -64,6 +81,9 @@ export class UsersService {
 
   async update(nip: string, updateUserDto: UpdateUserDto) {
     // pesquisar nip do usuario antes de atualizar
+    if (Object.keys(updateUserDto).length === 0) {
+      throw new BadRequestException('O corpo da requisição não pode estar vazio');
+    }
     const user = await this.userRepository.findOne({ where: { nip } });
     if (!user) {
       throw new BadRequestException(`Usuário inexistente. NIP: ${nip} não encontrado!`)

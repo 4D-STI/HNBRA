@@ -53,7 +53,7 @@ export default {
             },
 
             status: {
-                type: DataTypes.BOOLEAN,
+                type: DataTypes.STRING,
                 allowNull: false
             },
 
