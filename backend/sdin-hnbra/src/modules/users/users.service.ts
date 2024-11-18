@@ -4,6 +4,7 @@ import { users } from '../../repository/models/user.model'
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -71,6 +72,36 @@ export class UsersService {
 
     return user;
   }
+
+
+  async searchUsersLogin(searchDto: LoginUserDto): Promise<any> {
+    const { nip, password } = searchDto;
+
+    if (!nip || !password) {
+      throw new BadRequestException('Login e senha são obrigatórios.');
+    }
+
+    const user = await this.userRepository.findOne({
+      where: {
+        [Op.and]: [
+          { nip: { [Op.eq]: nip } },
+          { password: { [Op.eq]: password } },
+        ],
+      },
+    });
+
+    if (!user) {
+      throw new BadRequestException(
+        `Usuário inexistente! Login informado: ${nip} ou senha incorreta!`,
+      );
+    }
+
+    return user;
+  }
+
+
+
+
 
   // async findByStatus(status: string): Promise<users[]> {
 

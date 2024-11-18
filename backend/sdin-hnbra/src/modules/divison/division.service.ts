@@ -15,4 +15,9 @@ export class DivisionService {
 
         return this.divisionModel.create({ nameDivision, status });
     }
+
+    async getDivision() {
+        return this.divisionModel.findAll();
+    }
+
 }
