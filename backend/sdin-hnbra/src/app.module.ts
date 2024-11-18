@@ -12,7 +12,7 @@ import { AppService } from './app.service';
 import { usersModule } from './modules/users/users.module';
 import { users } from './repository/models/user.model';
 import { DivisionModule } from './modules/divison/division.module';
-import { SessionModule } from './modules/divison copy/session.module';
+import { SessionModule } from './modules/session/session.module';
 import { Division } from './repository/models/division.model';
 import { Session } from './repository/models/session.model';
 

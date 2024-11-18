@@ -13,7 +13,12 @@ export class DivisionService {
         console.log("=================", nameDivision)
         console.log("=================", status)
 
-        return this.divisionModel.create({ nameDivision, status });
+        try {
+            return await this.divisionModel.create({ nameDivision, status });
+        } catch (error) {
+            console.error("Erro ao criar divisão:", error);
+            throw new BadRequestException('Erro ao criar divisão', error);
+        }
     }
 
     async getDivision() {
