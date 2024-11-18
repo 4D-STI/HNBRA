@@ -6,7 +6,7 @@ export default {
             {
                 idSession: 1,
                 idDivision: 1,
-                nameDivision: 'DEPARTAMENTO DE SAÚDE',
+                nameSession: 'SIAD',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()
@@ -14,7 +14,7 @@ export default {
             {
                 idSession: 2,
                 idDivision: 2,
-                nameDivision: 'DEPARTAMENTO DE ADMINISTRAÇÃO',
+                nameSession: 'NAC',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()
@@ -22,7 +22,7 @@ export default {
             {
                 idSession: 3,
                 idDivision: 3,
-                nameDivision: 'DEPARTAMENTO DE TECNOLOGIA',
+                nameSession: 'SERVIÇO DE MEDICINA OPERATIVA',
                 status: "invasive",
                 createdAt: new Date(),
                 updatedAt: new Date()

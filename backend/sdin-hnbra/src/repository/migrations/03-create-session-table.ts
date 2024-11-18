@@ -17,7 +17,7 @@ export default {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'table_divison',
+                    model: 'table_division',
                     key: 'idDivision',
                 },
                 onUpdate: 'CASCADE',
