@@ -8,5 +8,6 @@ import { Division } from 'src/repository/models/division.model';
     imports: [SequelizeModule.forFeature([Division])],
     controllers: [DivisionController],
     providers: [DivisionService],
+    exports: [SequelizeModule],
 })
 export class DivisionModule { }
