@@ -6,6 +6,7 @@ import { UpdateUserDto } from '../users/dto/update-user.dto';
 import { UpdateSessionDto } from './dto/update-session';
 import { Op } from 'sequelize';
 import { SearchUserDto } from '../users/dto/search-user.dto';
+import { SearchSessionDto } from './dto/search-session.dto';
 
 
 @Injectable()
@@ -35,53 +36,69 @@ export class SessionService {
         return this.sessionRepository.create({ idDivision, nameSession, status });
     }
 
-    //   async update(updateSessionDTo: UpdateSessionDto) {
-    //     // pesquisar nip do usuario antes de atualizar
-    //     if (Object.keys(updateSessionDTo).length === 0) {
-    //       throw new BadRequestException('O corpo da requisição não pode estar vazio');
-    //     }
-    //     const user = await this.sessionRepository.findOne({ where: { idSession: updateSessionDTo.idSession } });
-    //     if (!user) {
-    //       throw new BadRequestException(`Seção/divisão inexistente. idSession: ${updateSessionDTo.idSession} não encontrado!`)
-    //     }
-    //     const userToUpdate = await this.searchSession({ nip })
 
-    //     console.log('Usuario que sera atualizado: ', userToUpdate);
-    //     console.log('Informações a sere, atualizadas: ', updateUserDto);
+    async updateSession(updateSessionDto: UpdateSessionDto) {
+        if (!updateSessionDto || Object.keys(updateSessionDto).length === 0) {
+            throw new BadRequestException('O corpo da requisição não pode estar vazio');
+        }
+        const division = await this.devisionRepository.findOne({
+            where: {
+                idDivision: updateSessionDto.idDivision
+            },
+        });
 
-    //     try {
-    //       await this.userRepository.update(updateUserDto, { where: { nip } })
-    //     } catch (e) {
-    //       throw new Error(`Erro ao atualizar usuário: ${e}`)
-    //     }
-    //     return `Usuário NIP: ${nip} foi atualizado com sucesso!`;
-    //   }
+        if (division === null) {
+            throw new BadRequestException(`idDivision: ${updateSessionDto.idDivision} departamento não encontrado!`);
+        }
+
+        const session = await this.sessionRepository.findOne({
+            where: { idSession: updateSessionDto.idSession }
+        });
+
+        if (!session) {
+            throw new BadRequestException(
+                `Seção/divisão inexistente. idSession: ${updateSessionDto.idSession} não encontrado!`
+            );
+        }
+
+        console.log('Sessão que será atualizada: ', session);
+        console.log('Informações a serem atualizadas: ', updateSessionDto);
+
+        try {
+            await this.sessionRepository.update(updateSessionDto, {
+                where: { idSession: updateSessionDto.idSession }
+            });
+
+            return `Seção/divisão idSession: ${updateSessionDto.idSession} foi atualizada com sucesso!`;
+        } catch (e) {
+            throw new Error(`Erro ao atualizar sessão: ${e.message}`);
+        }
+    }
 
 
 
-    // async searchSession(searchDto: SearchUserDto): Promise<any> {
-    //     const where: any = {};
-    //     const message = `Usuário inexistente!
-    // Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`
 
-    //     // searchDto.status.toUpperCase()
+    async searchSession(searchDto: SearchSessionDto): Promise<any> {
+        const where: any = {};
+        const message = `Seção/divisão inexistente!
+    Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`
 
-    //     for (const [key, value] of Object.entries(searchDto)) {
-    //         if (value) {
-    //             where[key] = {
-    //                 [Op.iLike]: `%${value}%` // Case-insensitive LIKE comparison
-    //             };
-    //         }
-    //     }
+        for (const [key, value] of Object.entries(searchDto)) {
+            if (value) {
+                where[key] = {
+                    [Op.iLike]: `%${value}%`
+                };
+            }
+        }
 
-    //     const user = await this.userRepository.findAll({ where })
+        const user = await this.sessionRepository.findAll({ where })
 
-    //     if (user.length === 0) {
-    //         throw new BadRequestException(message)
-    //     }
+        if (user.length === 0) {
+            throw new BadRequestException(message)
+        }
 
-    //     return user;
-    // }
+        return user;
+    }
 
 
 
