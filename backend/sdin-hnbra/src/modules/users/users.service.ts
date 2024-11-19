@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +16,7 @@ export class UsersService {
 
 
   async create(createUserDto: CreateUserDto) {
-    // pesquisar nip do usuario antes de criar
+    // Pesquisar NIP do usuário antes de criar
     const user = await this.userRepository.findOne({
       where: {
         [Op.or]: [
@@ -38,16 +39,23 @@ export class UsersService {
       }
     }
 
-    try {
-      await this.userRepository.create(createUserDto)
-    } catch (e) {
-      throw new Error(`Erro ao criar usuario \r Erro: ${e}`)
-    }
-    // return `Usuário criado \r${JSON.stringify(createUserDto)}`;
-    // return JSON.stringify(createUserDto, null, 2);
-    return this.userRepository.findOne({ where: { nip: createUserDto.nip } })
-  }
+    // Criptografar a senha antes de salvar no banco de dados
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
 
+    // Atualiza a senha no DTO para salvar no banco
+    createUserDto.password = hashedPassword;
+
+    try {
+      // Criar o usuário no banco de dados
+      await this.userRepository.create(createUserDto);
+    } catch (e) {
+      throw new Error(`Erro ao criar usuário. Erro: ${e}`);
+    }
+
+    // Retornar o usuário recém-criado
+    return this.userRepository.findOne({ where: { nip: createUserDto.nip } });
+  }
 
   async searchUsers(searchDto: SearchUserDto): Promise<any> {
     const where: any = {};
@@ -99,7 +107,9 @@ export class UsersService {
     return user;
   }
 
-
+  async findByEmail(emailPersonal: string): Promise<any | null> {
+    return this.userRepository.findOne({ where: { emailPersonal } });
+  }
 
 
 

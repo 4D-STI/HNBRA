@@ -2,10 +2,8 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Session } from 'src/repository/models/session.model';
 import { Division } from 'src/repository/models/division.model';
-import { UpdateUserDto } from '../users/dto/update-user.dto';
 import { UpdateSessionDto } from './dto/update-session';
 import { Op } from 'sequelize';
-import { SearchUserDto } from '../users/dto/search-user.dto';
 import { SearchSessionDto } from './dto/search-session.dto';
 
 

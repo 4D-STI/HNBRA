@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestException, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -15,6 +16,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   getUsers(
     @Query() searchDto: SearchUserDto
     // @Param() any: any
@@ -29,7 +31,6 @@ export class UsersController {
 
   @Get('login')
   getLogin(@Body() loginUser: LoginUserDto) {
-    console.log("adjbsaiudgasudgauidgsa")
     return this.usersService.searchUsersLogin(loginUser);
   }
 
