@@ -2,29 +2,33 @@ import { QueryInterface } from "sequelize";
 
 export default {
     async up(queryInterface: QueryInterface) {
-        await queryInterface.bulkInsert('table_division', [
+        await queryInterface.bulkInsert('table_session', [
             {
-                nameDivision: 'DEPARTAMENTO DE SAÚDE',
+                idDivision: 1,
+                nameSession: 'SIAD',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
-                nameDivision: 'DEPARTAMENTO DE ADMINISTRAÇÃO',
+                idDivision: 2,
+                nameSession: 'NAC',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
-                nameDivision: 'DEPARTAMENTO DE TECNOLOGIA',
+                idDivision: 3,
+                nameSession: 'SERVIÇO DE MEDICINA OPERATIVA',
                 status: "invasive",
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
-        ]);
+
+        ])
     },
 
     async down(queryInterface: QueryInterface) {
-        await queryInterface.bulkDelete('table_division', null, {});
+        await queryInterface.bulkDelete('table_session', null, {})
     }
-};
+}

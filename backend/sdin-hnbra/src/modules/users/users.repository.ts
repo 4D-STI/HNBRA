@@ -1,19 +1,32 @@
-// // user.repository.ts
-// import { Injectable } from '@nestjs/common';
-// import { InjectModel } from '@nestjs/sequelize';
-// import { User } from '../../repository/models/user.model';
-// import { Model } from 'sequelize-typescript';
+import { EntityRepository, Repository } from 'typeorm';
+// import { users } from '../repository/models/user.model';
+import { users } from '../../repository/models/user.model';
+import { Injectable } from '@nestjs/common';
 
-// @Injectable()
-// export class
-//     UsersRepository {
-//     constructor(@InjectModel(User) private userRepository: typeof Model<User>) { }
+@EntityRepository(users)
+@Injectable()
+export class UsersRepository extends Repository<users> {
 
-//     async findAll(): Promise<User[] | null> {
-//         return this.userRepository.findAll();
-//         // return null
+    // Método para buscar um usuário por NIP
+    async findByNip(nip: string): Promise<users | undefined> {
+        return this.findOne({ where: { nip } });
+    }
 
-//     }
+    // Método para buscar um usuário por email
+    async findByEmail(email: string): Promise<users | undefined> {
+        return this.findOne({ where: [{ emailPersonal: email }, { emailMb: email }] });
+    }
 
-//     // Outros métodos para CRUD
-// }
+    // Método para criar um novo usuário
+    async createUser(nip: string, emailPersonal: string, emailMb: string, password: string): Promise<users> {
+        const user = this.create({ nip, emailPersonal, emailMb, password });
+        return this.save(user);
+    }
+
+    // Método para verificar se o email já está registrado
+    async emailExists(email: string): Promise<boolean> {
+        const user = await this.findByEmail(email);
+        return !!user;
+    }
+
+}

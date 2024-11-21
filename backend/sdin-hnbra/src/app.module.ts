@@ -12,6 +12,10 @@ import { AppService } from './app.service';
 import { usersModule } from './modules/users/users.module';
 import { users } from './repository/models/user.model';
 import { DivisionModule } from './modules/divison/division.module';
+import { SessionModule } from './modules/session/session.module';
+import { Division } from './repository/models/division.model';
+import { Session } from './repository/models/session.model';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -26,7 +30,7 @@ import { DivisionModule } from './modules/divison/division.module';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_DATABASE_DEV || 'sdin-hnbra-dev',
-      models: [users],
+      models: [users, Division, Session],
       retryAttempts: Number(process.env.DB_RETRY_ATTEMPTS) || 5,
       retryDelay: Number(process.env.DB_RETRY_DELAY) || 1000,
       autoLoadModels: true,
@@ -40,6 +44,8 @@ import { DivisionModule } from './modules/divison/division.module';
     }),
     usersModule,
     DivisionModule,
+    SessionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
