@@ -115,44 +115,52 @@ export default function RegisterForm() {
       <CardContent>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
+
+            {/* NOME */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Nome</Label>
               <Input
-                alt="formulario, entrada de dados: nome do usuário"
-                id="name"
+                alt="formulario de cadastro de usuário: campo para inserir nome do usuário"
+                id="create_user_form_firstname"
                 placeholder="Insira o nome do usuário"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
+
+            {/* SOBRENOME */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="surname">Sobrenome</Label>
               <Input
-                alt="formulario, entrada de dados: sobrenome do usuário"
-                id="surname"
+                alt="formulario de cadastro de usuário: campo para inserir sobrenome do usuário"
+                id="create_user_form_lastname"
                 placeholder="Insira o sobrenome do usuário"
                 value={surname}
                 onChange={(e) => setSurname(e.target.value)}
                 required
               />
             </div>
+
+            {/* NIP */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="nip">NIP</Label>
               <Input
-                alt="formulario, entrada de dados: NIP (número identificado pessoal) do usuário"
+                alt="formulario de cadastro de usuário: campo para inserir NIP (número identificador pessoal) do usuário"
                 type="text" 
-                id="nip"
+                id="create_user_form_nip"
                 placeholder="Insira o NIP do usuário"
                 value={nip}
                 onChange={(e) => setNip(e.target.value)}
                 required
               />
             </div>
+
+            {/* DEPARTAMENTO */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="department">Departamento</Label>
               <Select onValueChange={setDepartment}>
-                <SelectTrigger id="department">
+                <SelectTrigger id="create_user_form_department">
                   <SelectValue placeholder="Selecione o departamento" />
                 </SelectTrigger>
                 <SelectContent position="popper">
@@ -163,10 +171,12 @@ export default function RegisterForm() {
                 </SelectContent>
               </Select>
             </div>
+
+            {/* SEÇÃO */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="section">Seção</Label>
               <Select onValueChange={setSection}>
-                <SelectTrigger id="section">
+                <SelectTrigger id="create_user_form_section">
                   <SelectValue placeholder="Selecione a seção" />
                 </SelectTrigger>
                 <SelectContent position="popper">
@@ -177,10 +187,12 @@ export default function RegisterForm() {
                 </SelectContent>
               </Select>
             </div>
+
+            {/* CARGO */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="cargo">Cargo</Label>
               <Select onValueChange={setCargo}>
-                <SelectTrigger id="cargo">
+                <SelectTrigger id="create_user_form_role">
                   <SelectValue placeholder="Selecione o cargo" />
                 </SelectTrigger>
                 <SelectContent position="popper">
@@ -189,10 +201,12 @@ export default function RegisterForm() {
                 </SelectContent>
               </Select>
             </div>
+
+            {/* STATUS */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="status">Status</Label>
               <Select onValueChange={setStatus}>
-                <SelectTrigger id="status">
+                <SelectTrigger id="create_user_form_status">
                   <SelectValue placeholder="Selecione o status" />
                 </SelectTrigger>
                 <SelectContent position="popper">
@@ -201,45 +215,49 @@ export default function RegisterForm() {
                 </SelectContent>
               </Select>
             </div>
+
+            {/* PERMISSÕES */}
             <div className="flex flex-col space-y-1.5 col-span-2">
               <Label>Permissões</Label>
               <div className="flex space-x-6 p-2">
                 <div className="flex items-center">
                   <Checkbox
-                    id="read"
+                    id="create_user_form_pemission_read"
                     onCheckedChange={() => handlePermissionChange('read')}
                   />
                   <Label htmlFor="read" className="ml-2">Ler</Label>
                 </div>
                 <div className="flex items-center">
                   <Checkbox
-                    id="delete"
+                    id="create_user_form_pemission_delete"
                     onCheckedChange={() => handlePermissionChange('delete')}
                   />
                   <Label htmlFor="delete" className="ml-2">Excluir</Label>
                 </div>
                 <div className="flex items-center">
                   <Checkbox
-                    id="add"
+                    id="create_user_form_pemission_add"
                     onCheckedChange={() => handlePermissionChange('add')}
                   />
                   <Label htmlFor="add" className="ml-2">Adicionar</Label>
                 </div>
                 <div className="flex items-center">
                   <Checkbox
-                    id="download"
+                    id="create_user_form_pemission_download"
                     onCheckedChange={() => handlePermissionChange('download')}
                   />
                   <Label htmlFor="download" className="ml-2">Baixar</Label>
                 </div>
               </div>
             </div>
+            
+            {/* SENHA */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Senha</Label>
               <div className="relative">
                 <Input
-                  alt="formulario, entrada de dados: senha"
-                  id="password"
+                  alt="formulario de cadastro de usuário: campo para inserir senha"
+                  id="create_user_form_password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Insira a senha"
                   value={password}
@@ -255,12 +273,14 @@ export default function RegisterForm() {
                 </button>
               </div>
             </div>
+
+            {/* CONFIRMAR SENHA */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="confirm-password">Confirme a Senha</Label>
               <div className="relative">
                 <Input
-                  alt="formulario, entrada de dados: confirmar senha"
-                  id="confirm-password"
+                  alt="formulario de cadastro de usuário: campo para inserir confirmar senha"
+                  id="create_user_form_confirm_password"
                   type={showConfirmPassword ? "text" : "password"} 
                   placeholder="Confirme a senha"
                   value={confirmPassword}
@@ -283,9 +303,21 @@ export default function RegisterForm() {
           {successMessage && (
             <div className="text-green-600 text-sm mt-2">{successMessage}</div> 
           )}
+
+          {/* FOOTER - BOTÕES */}
           <CardFooter className="flex justify-between mt-4">
-            <Button variant="outline">Cancelar</Button>
-            <Button variant="outline" type="submit" className="bg-blue-900 text-white">
+            
+            {/* BOTÃO CANCELAR */}
+            <Button 
+            id="create_user_form_cancel_button"
+            variant="outline">Cancelar</Button>
+
+            {/* BOTÃO FAZER CADASTRO */}
+            <Button
+            id="create_user_form_register_button"
+             variant="outline"
+             type="submit"
+             className="bg-blue-900 text-white">
               Fazer Cadastro
             </Button>
           </CardFooter>
