@@ -15,8 +15,8 @@ import { UsersRepository } from './users.repository';
     UsersRepository,
   ],
   exports: [
-    UsersService, // Exporte o UsersService para uso em outros módulos
-    ...usersProviders, // Exporte o USERS_REPOSITORY para uso em outros módulos
+    UsersService,
+    ...usersProviders,
     UsersRepository,
   ],
 })

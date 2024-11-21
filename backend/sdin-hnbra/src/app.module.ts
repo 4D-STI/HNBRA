@@ -15,6 +15,7 @@ import { DivisionModule } from './modules/divison/division.module';
 import { SessionModule } from './modules/session/session.module';
 import { Division } from './repository/models/division.model';
 import { Session } from './repository/models/session.model';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { Session } from './repository/models/session.model';
     usersModule,
     DivisionModule,
     SessionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
