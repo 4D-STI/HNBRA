@@ -101,7 +101,7 @@ export class SessionService {
 
 
 
-    async getDivision() {
+    async getSession() {
         return this.sessionRepository.findAll();
     }
 

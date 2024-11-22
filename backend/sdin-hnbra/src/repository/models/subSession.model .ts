@@ -1,18 +1,24 @@
-import { Table, Column, Model, PrimaryKey, DataType, Unique } from 'sequelize-typescript';
-import { DivisionType } from 'src/repository/types/divisionType';
+import { Table, Column, Model, PrimaryKey, DataType, Unique, ForeignKey } from 'sequelize-typescript';
+import { Session } from './session.model';
+import { SubSessionType } from '../types/subSessionType ';
 
-@Table({ tableName: 'table_division' })
-export class Division extends Model<DivisionType> {
+@Table({ tableName: 'table_sub_session' })
+export class SubSession extends Model<SubSessionType> {
     @PrimaryKey
     @Column({ autoIncrement: true, type: DataType.INTEGER })
-    idDivision: number;
+    idSubSession: number;
+
+
+    @ForeignKey(() => Session)
+    @Column
+    idSession: number;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
         validate: { len: [2, 100] }
     })
-    nameDivision: string;
+    nameSubSession: string;
 
     @Column({
         type: DataType.STRING,
@@ -33,5 +39,4 @@ export class Division extends Model<DivisionType> {
         defaultValue: DataType.NOW,
     })
     updatedAt: Date;
-
 }

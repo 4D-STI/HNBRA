@@ -1,7 +1,7 @@
-export type SessionType = {
+export type SubSessionType = {
+    idSubSession: number,
     idSession: number,
-    idDivision: number,
-    nameSession: string,
+    nameSubSession: string,
     status: string,
     createdAt: Date,
     updatedAt: Date

@@ -1,9 +1,9 @@
 import { DataTypes, Model, QueryInterface, DATE, Sequelize } from "sequelize";
-import { divisionType } from "../types/divisionType";
+import { DivisionType } from "../types/divisionType";
 
 export default {
     async up(queryInterface: QueryInterface, sequelize: Sequelize) {
-        queryInterface.createTable<Model<divisionType>>('table_division', {
+        queryInterface.createTable<Model<DivisionType>>('table_division', {
 
             idDivision: {
                 type: DataTypes.INTEGER,

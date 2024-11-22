@@ -15,7 +15,7 @@ export class SessionController {
 
     @Get()
     async getAllSession() {
-        return this.sessionService.getDivision();
+        return this.sessionService.getSession();
     }
     @Put()
     async updateSession(@Body() updateSessionDto: UpdateSessionDto) {

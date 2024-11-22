@@ -4,8 +4,8 @@ export default {
     async up(queryInterface: QueryInterface) {
         await queryInterface.bulkInsert('table_session', [
             {
-                idDivision: 1,
-                nameSession: 'SIAD',
+                idDivision: 2,
+                nameSession: 'DIVISÃO DE INTENDÊNCIA',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()
