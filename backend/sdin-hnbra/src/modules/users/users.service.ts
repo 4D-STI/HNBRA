@@ -1,9 +1,11 @@
-import { Injectable, Inject, HttpStatus, BadRequestException } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { users } from '../../repository/models/user.model'
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -14,22 +16,46 @@ export class UsersService {
 
 
   async create(createUserDto: CreateUserDto) {
-    // pesquisar nip do usuario antes de criar
-    const userToCreate = await this.searchUsers({ nip: createUserDto.nip })
+    // Pesquisar NIP do usuário antes de criar
+    const user = await this.userRepository.findOne({
+      where: {
+        [Op.or]: [
+          { nip: createUserDto.nip },
+          { emailPersonal: createUserDto.emailPersonal },
+          { emailMb: createUserDto.emailMb },
+        ],
+      },
+    });
 
-    if (userToCreate[0]) {
-      throw new BadRequestException(`Nip: ${createUserDto.nip} já está cadastrado!`)
+    if (user) {
+      if (user.nip === createUserDto.nip) {
+        throw new BadRequestException(`NIP: ${createUserDto.nip} já está cadastrado!`);
+      }
+      if (user.emailPersonal === createUserDto.emailPersonal) {
+        throw new BadRequestException(`emailPessoa: ${createUserDto.emailPersonal} já está cadastrado!`);
+      }
+      if (user.emailMb === createUserDto.emailMb) {
+        throw new BadRequestException(`emailMb: ${createUserDto.emailMb} já está cadastrado!`);
+      }
     }
+
+    // Criptografar a senha antes de salvar no banco de dados
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
+
+    // Atualiza a senha no DTO para salvar no banco
+    createUserDto.password = hashedPassword;
 
     try {
-      await this.userRepository.create(createUserDto)
+      // Criar o usuário no banco de dados
+      await this.userRepository.create(createUserDto);
     } catch (e) {
-      throw new Error(`Erro ao criar usuario \r Erro: ${e}`)
+      throw new Error(`Erro ao criar usuário. Erro: ${e}`);
     }
-    // return `Usuário criado \r${JSON.stringify(createUserDto)}`;
-    return JSON.stringify(createUserDto, null, 2);
-  }
 
+    // Retornar o usuário recém-criado
+    return this.userRepository.findOne({ where: { nip: createUserDto.nip } });
+  }
 
   async searchUsers(searchDto: SearchUserDto): Promise<any> {
     const where: any = {};
@@ -55,6 +81,38 @@ export class UsersService {
     return user;
   }
 
+
+  async searchUsersLogin(searchDto: LoginUserDto): Promise<any> {
+    const { nip, password } = searchDto;
+
+    if (!nip || !password) {
+      throw new BadRequestException('Login e senha são obrigatórios.');
+    }
+
+    const user = await this.userRepository.findOne({
+      where: {
+        [Op.and]: [
+          { nip: { [Op.eq]: nip } },
+          { password: { [Op.eq]: password } },
+        ],
+      },
+    });
+
+    if (!user) {
+      throw new BadRequestException(
+        `Usuário inexistente! Login informado: ${nip} ou senha incorreta!`,
+      );
+    }
+
+    return user;
+  }
+
+  async findByEmail(emailPersonal: string): Promise<any | null> {
+    return this.userRepository.findOne({ where: { emailPersonal } });
+  }
+
+
+
   // async findByStatus(status: string): Promise<users[]> {
 
   //   return users.findAll({ where: { status } });
@@ -64,6 +122,9 @@ export class UsersService {
 
   async update(nip: string, updateUserDto: UpdateUserDto) {
     // pesquisar nip do usuario antes de atualizar
+    if (Object.keys(updateUserDto).length === 0) {
+      throw new BadRequestException('O corpo da requisição não pode estar vazio');
+    }
     const user = await this.userRepository.findOne({ where: { nip } });
     if (!user) {
       throw new BadRequestException(`Usuário inexistente. NIP: ${nip} não encontrado!`)

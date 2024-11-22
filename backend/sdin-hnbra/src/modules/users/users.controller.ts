@@ -1,42 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestException, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
-  read(
-    @Query() searchDto: SearchUserDto,
-    @Param() any: any
+  @UseGuards(JwtAuthGuard)
+  getUsers(
+    @Query() searchDto: SearchUserDto
+    // @Param() any: any
   ) {
-    console.log('param -> ', any);
+    console.log('param -> ');
 
-    if (any) return `Esta rota não aceita "PARAM". Realize a busca por "QUERY"`
+    // if (any) return `Esta rota não aceita "PARAM". Realize a busca por "QUERY"`
 
     return this.usersService.searchUsers(searchDto)
   }
 
-  @Get('any')
-  readWithParam(
-    @Param(':any') any: any
-  ) {
-    console.log('param -> ', any);
 
-    return `Esta rota não aceita "PARAM". Realize a busca por "QUERY"`
-
+  @Get('login')
+  getLogin(@Body() loginUser: LoginUserDto) {
+    return this.usersService.searchUsersLogin(loginUser);
   }
 
+
+  // @Get()
+  // readWithParam(
+  //   @Param(':any') any: any
+  // ) {
+  //   console.log('param -> ', any);
+
+  //   return `Esta rota não aceita "PARAM". Realize a busca por "QUERY"`
+
+  // }
+
   @Patch(':nip')
-  update(
+  updateUser(
     @Param('nip') nip: string,
     @Body() updateUserDto: UpdateUserDto
   ) {
