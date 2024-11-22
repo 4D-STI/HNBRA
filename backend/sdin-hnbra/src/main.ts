@@ -5,6 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // Configura CORS
+  app.enableCors();
   // obter porta a partir do .env
   const configService = app.get(ConfigService)
   const API_PORT = configService.get('API_PORT')
