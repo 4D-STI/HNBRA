@@ -1,11 +1,11 @@
 import { DataTypes, Model, QueryInterface, DATE, Sequelize } from "sequelize";
-import { SessionType } from "../types/sessionType";
+import { SubSessionType } from "../types/subSessionType ";
 
 export default {
     async up(queryInterface: QueryInterface, sequelize: Sequelize) {
-        queryInterface.createTable<Model<SessionType>>('table_session', {
+        queryInterface.createTable<Model<SubSessionType>>('table_sub_session', {
 
-            idSession: {
+            idSubSession: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
@@ -13,18 +13,18 @@ export default {
                 unique: true
             },
 
-            idDivision: {
+            idSession: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'table_division',
-                    key: 'idDivision',
+                    model: 'table_session',
+                    key: 'idSession',
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
             },
 
-            nameSession: {
+            nameSubSession: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
@@ -44,5 +44,5 @@ export default {
             }
         })
     },
-    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('table_session') }
+    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('table_sub_session') }
 }

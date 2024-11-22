@@ -1,4 +1,4 @@
-export type divisionType = {
+export type DivisionType = {
     idDivision: number,
     nameDivision: string,
     status: string,

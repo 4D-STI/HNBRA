@@ -1,9 +1,9 @@
 import { Table, Column, Model, PrimaryKey, DataType, Unique, ForeignKey } from 'sequelize-typescript';
-import { sessionType } from '../types/sessionType';
+import { SessionType } from '../types/sessionType';
 import { Division } from './division.model';
 
 @Table({ tableName: 'table_session' })
-export class Session extends Model<sessionType> {
+export class Session extends Model<SessionType> {
     @PrimaryKey
     @Column({ autoIncrement: true, type: DataType.INTEGER })
     idSession: number;
