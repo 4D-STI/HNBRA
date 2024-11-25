@@ -17,6 +17,7 @@ import { Division } from './repository/models/division.model';
 import { Session } from './repository/models/session.model';
 import { AuthModule } from './modules/auth/auth.module';
 import { SubSessionModule } from './modules/subSession/sub-session.module';
+import { FileModule } from './modules/file/file.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { SubSessionModule } from './modules/subSession/sub-session.module';
     SessionModule,
     AuthModule,
     SubSessionModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
