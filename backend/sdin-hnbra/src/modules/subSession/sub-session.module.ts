@@ -13,5 +13,6 @@ import { SessionModule } from '../session/session.module';
     ],
     controllers: [SubSessionController],
     providers: [SubSessionService],
+    exports: [SequelizeModule],
 })
 export class SubSessionModule { }
