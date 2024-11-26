@@ -2,7 +2,7 @@ import { QueryInterface } from "sequelize";
 
 export default {
     async up(queryInterface: QueryInterface) {
-        await queryInterface.bulkInsert('users', [
+        await queryInterface.bulkInsert('Users', [
             {
                 nip: '12345678',
                 idPatent: 1,
@@ -163,6 +163,6 @@ export default {
     },
 
     async down(queryInterface: QueryInterface) {
-        await queryInterface.bulkDelete('users', null, {})
+        await queryInterface.bulkDelete('Users', null, {})
     }
 }
