@@ -1,5 +1,5 @@
-'use client'
 // import { Toggle } from "@/components/ui/toggle";
+'use client'
 
 // Componentes shadcn/ui
 import {
@@ -14,41 +14,16 @@ import {
 import Command from "./components/Command";
 
 // Mock de usuarios
-import users_mock, { IUser } from "../utils/mocks/users_mock"
+// import users_mock from "../utils/mocks/users_mock"
 
 // Componentes de icones
 import { Eye, Plus, Download, Trash2, Filter } from "lucide-react";
+import useGetAllUsers from "./helpers/dataFetch";
 
-import axios from "axios"
-import { useState, useEffect } from "react";
-
-// Variaveis
-const API_URL_BASE = 'https://localhost:3002'
 
 export default function ListUsers() {
 
-    // requisição para buscar lista de usuarios
-    const [users, setUsers] = useState<IUser[]>([])
-
-    useEffect(() => {
-      // Requisição
-      const fetchUsers = async () => {
-        try {
-          const response = await axios.get(`${API_URL_BASE}/users`)
-          console.log('DATA -> ', response.data);
-          
-          setUsers(response.data)
-        } catch (error) {
-          console.log('Erro ao buscar usuários: ', error);
-                  
-        }
-      }
-
-      fetchUsers()
-    }, []);
-
-
-
+  const {users} = useGetAllUsers()
 
   return (
     <div className="p-2">
@@ -101,7 +76,7 @@ export default function ListUsers() {
               <TableHead 
               className="text-gray-50 text-left w-1/5"
               >
-                Ações
+                Permissões
               </TableHead>
             </
             TableRow>
@@ -109,31 +84,31 @@ export default function ListUsers() {
 
           {/* Body */}
           <TableBody>
-            {users.map((user, index) => (
-              <TableRow key={index} className="hover:bg-gray-100">
-                <TableCell className="px-4 text-left">{user.nome}</TableCell>
+            {users?.map((user, index) => (
+              <TableRow key={index} className="hover:bg-gray-100" style={{ whiteSpace: 'nowrap' }}>
+                <TableCell className="px-4 text-left ">{user.firstName + " " + user.lastName}</TableCell>
                 <TableCell className="px-4 text-left">{user.nip}</TableCell>
-                <TableCell className="px-4 text-left">{user.departamento}</TableCell>
-                <TableCell className="px-4 text-left">{user.secao}</TableCell>
-                <TableCell className="px-4 text-left">{user.status}</TableCell>
+                <TableCell className="px-4 text-left">{user.departament ? 'true' : 'false'}</TableCell>
+                <TableCell className="px-4 text-left">{user.section ? 'true' : 'false'}</TableCell>
+                <TableCell className="px-4 text-left">{user.status ? 'true' : 'false'}</TableCell>
                 <TableCell className="px-4 text-left">
                   <div className="flex space-x-4 justify-start">
-                    {user.permissoes.includes("read") && (
+                    {user.permission.includes("r") && (
                       <button>
                         <Eye />
                       </button>
                     )}
-                    {user.permissoes.includes("delete") && (
+                    {user.permission.includes("e") && (
                       <button>
                         <Trash2 />
                       </button>
                     )}
-                    {user.permissoes.includes("add") && (
+                    {user.permission.includes("w") && (
                       <button>
                         <Plus />
                       </button>
                     )}
-                    {user.permissoes.includes("download") && (
+                    {user.permission.includes("w") && (
                       <button>
                         <Download />
                       </button>
