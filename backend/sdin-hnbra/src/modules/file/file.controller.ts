@@ -1,4 +1,4 @@
-import { Controller, Post, Param, UseInterceptors, UploadedFile, Body, Get, Res, NotFoundException, Put } from '@nestjs/common';
+import { Controller, Post, Param, UseInterceptors, UploadedFile, Body, Get, Res, NotFoundException, Put, Delete } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 import { File } from 'src/repository/models/file.model';
@@ -45,7 +45,11 @@ export class FileController {
             idSubSession, description, nameFile, status);
     }
 
-
+    @Delete(':id')
+    async deleteFile(@Param('id') id: number): Promise<{ message: string }> {
+        await this.fileService.deleteFile(id);
+        return { message: 'Arquivo excluído com sucesso.' };
+    }
 
     @Get()
     async getAllSession() {

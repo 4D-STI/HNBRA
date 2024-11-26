@@ -4,7 +4,7 @@ import { File } from 'src/repository/models/file.model';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { SubSession } from 'src/repository/models/subSession.model ';
-import { Inject } from '@nestjs/common';
+import { Session } from 'src/repository/models/session.model';
 
 @Injectable()
 export class FileService {
@@ -13,16 +13,19 @@ export class FileService {
         private readonly fileModel: typeof File,
         @InjectModel(SubSession)
         private readonly subSessionModel: typeof SubSession,
+        @InjectModel(Session)
+        private readonly sessionModel: typeof Session,
     ) { }
 
     private async ensureDirectoryExists(idSubSession: number): Promise<string> {
         const subSession = await this.subSessionModel.findByPk(idSubSession);
+        const session = await this.sessionModel.findByPk(subSession.idSession);
 
         if (!subSession) {
-            throw new Error('SubSession not found');
+            throw new Error('Subção/divisão não existe.');
         }
 
-        const directoryPath = path.join(__dirname, '..', 'uploads', subSession.nameSubSession);
+        const directoryPath = path.join(__dirname, '..', 'uploads', session.nameSession, subSession.nameSubSession);
 
         await fs.ensureDir(directoryPath);
 
@@ -62,7 +65,6 @@ export class FileService {
 
         const uniqueFileName = this.generateUniqueFileName(directoryPath, file.originalname);
 
-        // Caminho final do arquivo
         const filePath = path.join(directoryPath, uniqueFileName);
 
         fs.writeFileSync(filePath, file.buffer);
@@ -118,5 +120,23 @@ export class FileService {
 
     async getAllFile() {
         return this.fileModel.findAll();
+    }
+
+    async deleteFile(idFile: number): Promise<void> {
+        const file = await this.fileModel.findByPk(idFile);
+
+        if (!file) {
+            throw new BadRequestException('Arquivo não encontrado.');
+        }
+
+        try {
+            if (fs.existsSync(file.path)) {
+                await fs.remove(file.path);
+            }
+        } catch (err) {
+            throw new BadRequestException('Erro ao excluir o arquivo do sistema de arquivos.');
+        }
+
+        await file.destroy();
     }
 }

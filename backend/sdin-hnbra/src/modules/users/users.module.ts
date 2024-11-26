@@ -4,21 +4,21 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { usersProviders } from './users.provider';
 import { DatabaseModule } from '../../bd/db.module';
-import { UsersRepository } from './users.repository';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Patent } from 'src/repository/models/patent.model';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, SequelizeModule.forFeature([Patent])],
   controllers: [UsersController],
   providers: [
     UsersService,
     ...usersProviders,
-    UsersRepository,
   ],
   exports: [
     UsersService,
     ...usersProviders,
-    UsersRepository,
+
   ],
 })
 
-export class usersModule { }
+export class UsersModule { }
