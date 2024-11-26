@@ -3,7 +3,7 @@ import { UserType } from "src/repository/types/usersType";
 
 export default {
     async up(queryInterface: QueryInterface, sequelize: Sequelize) {
-        queryInterface.createTable<Model<UserType>>('users', {
+        queryInterface.createTable<Model<UserType>>('Users', {
 
             nip: {
                 type: DataTypes.STRING,
@@ -83,5 +83,5 @@ export default {
             }
         })
     },
-    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('users') }
+    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('Users') }
 }
