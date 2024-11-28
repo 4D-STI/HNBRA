@@ -32,6 +32,12 @@ export class File extends Model<fileType> {
 
     @Column({
         type: DataType.STRING,
+        allowNull: false,
+    })
+    nomeSubSession: string;
+
+    @Column({
+        type: DataType.STRING,
         allowNull: true,
     })
     description: string;

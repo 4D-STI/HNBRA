@@ -5,6 +5,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { SubSession } from 'src/repository/models/subSession.model ';
 import { Session } from 'src/repository/models/session.model';
+import { where } from 'sequelize';
 
 @Injectable()
 export class FileService {
@@ -25,7 +26,7 @@ export class FileService {
             throw new Error('Subção/divisão não existe.');
         }
 
-        const directoryPath = path.join(__dirname, '..', 'uploads', session.nameSession, subSession.nameSubSession);
+        const directoryPath = path.join(__dirname, '..', '..', '..', 'arquivosPDFs', 'uploads', subSession.nameSubSession, session.nameSession,);
 
         await fs.ensureDir(directoryPath);
 
@@ -42,7 +43,16 @@ export class FileService {
         return file;
     }
 
+    private removeAcento(text: string): string {
+        text = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        text = text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+        text = text.replace(/ /g, "_");
+        return text;
+    }
+
     private generateUniqueFileName(directoryPath: string, originalName: string): string {
+        originalName = Buffer.from(originalName, 'latin1').toString('utf8');
+        originalName = this.removeAcento(originalName);
         const ext = path.extname(originalName);
         const baseName = path.basename(originalName, ext);
         let uniqueName = originalName;
@@ -69,9 +79,11 @@ export class FileService {
 
         fs.writeFileSync(filePath, file.buffer);
 
+        const subSession = await this.subSessionModel.findByPk(idSubSession);
         const savedFile = await this.fileModel.create({
             idSubSession,
             path: filePath,
+            nomeSubSession: subSession.nameSubSession,
             nameFile: uniqueFileName,
             description,
             status: true,
@@ -120,6 +132,20 @@ export class FileService {
 
     async getAllFile() {
         return this.fileModel.findAll();
+    }
+
+    async getAllFileSubSession(nomeSubSession: string) {
+        nomeSubSession = nomeSubSession.toUpperCase();
+        const subSession = await this.subSessionModel.findOne({
+            where: {
+                nameSubSession: nomeSubSession,
+            },
+        });
+
+        if (!subSession) {
+            throw new BadRequestException('Subsessão não encontrada.');
+        }
+        return this.fileModel.findAll({ where: { nomeSubSession: nomeSubSession } });
     }
 
     async deleteFile(idFile: number): Promise<void> {
