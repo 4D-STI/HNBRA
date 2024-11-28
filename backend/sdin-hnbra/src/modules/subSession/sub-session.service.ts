@@ -133,7 +133,7 @@ export class SubSessionService {
 
 
     async getSubSession() {
-        return this.subSessionRepository.findAll();
+        return this.subSessionRepository.findAll({ order: [['nameSubSession', 'ASC']], });
     }
 
 }
