@@ -1,11 +1,11 @@
 import { DataTypes, Model, QueryInterface, DATE, Sequelize } from "sequelize";
-import { fileType } from "../types/fileType ";
+import { UserPermissionType } from "../types/userPermissionType ";
 
 export default {
     async up(queryInterface: QueryInterface, sequelize: Sequelize) {
-        queryInterface.createTable<Model<fileType>>('tabela_file', {
+        queryInterface.createTable<Model<UserPermissionType>>('table_user_permission', {
 
-            idFile: {
+            idPermission: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
@@ -17,32 +17,30 @@ export default {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'table_sub_session',
-                    key: 'idSubSession',
+                    model: 'table_session',
+                    key: 'idSession',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+            },
+            nip: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                references: {
+                    model: 'Users',
+                    key: 'nip',
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
             },
 
-            path: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            nameFile: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            description: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            nomeSubSession: {
+            permission: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
             status: {
-                type: DataTypes.STRING,
-                allowNull: true
+                type: DataTypes.BOOLEAN,
+                allowNull: false
             },
             createdAt: {
                 type: DATE,
@@ -52,8 +50,12 @@ export default {
             updatedAt: {
                 type: DATE
                 , allowNull: false
+            },
+            expireAt: {
+                type: DATE
+                , allowNull: false
             }
         })
     },
-    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('tabela_file') }
+    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('table_user_permission') }
 }

@@ -3,6 +3,7 @@ export type fileType = {
     idSubSession: number,
     path: string,
     nameFile: string,
+    nomeSubSession: string,
     description: string,
     status: boolean,
     createdAt: Date,
