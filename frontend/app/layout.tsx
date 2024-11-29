@@ -23,9 +23,20 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${Rawline.variable} antialiased`}>
+      <header id="layout-default-header-container" className="">
+        {/* header padrao */}
         <Header />
-        <main className="flex-grow bg-gray-100 w-creen h-screen">{children}</main> 
+      </header>
+          {/* body dinamico */}
+          <main
+            id="layout-default-main-content"
+            className="flex-grow bg-blue-100 w-creen h-screen">
+            {children}
+          </main>
+      <footer id="layout-default-footer-container">
+        {/* footer padrão */}
         <Footer/>
+      </footer>
       </body>
     </html>
   );
