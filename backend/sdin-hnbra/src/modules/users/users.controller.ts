@@ -31,10 +31,11 @@ export class UsersController {
   }
 
 
-  @Get('login')
-  getLogin(@Body() loginUser: LoginUserDto) {
-    return this.usersService.searchUsersLogin(loginUser);
-  }
+  // @Get('login')
+  //SWAGGER NAO ACEITA BODY PARA REQUIÇÃO GET HTTP(LOGIN IMPLEMENTADO NO AUTH SERVICE)
+  // getLogin(@Body() loginUser: LoginUserDto) {
+  //   return this.usersService.searchUsersLogin(loginUser);
+  // }
 
 
   // @Get()
