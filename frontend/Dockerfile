@@ -9,6 +9,6 @@ COPY . .
 # FROM build AS development
 # WORKDIR /frontend
 ENV NODE_ENV development
-EXPOSE 3000
+EXPOSE 3001
 # VOLUME /app
 CMD ["npm", "run", "dev"]
