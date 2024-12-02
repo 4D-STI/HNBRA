@@ -1,44 +1,88 @@
 export interface IUser {
-    nome: string;
     nip: string;
-    departamento: string;
-    secao: string;
-    status: string;
-    permissoes: string[];
+    patent: string;
+    warName: string;
+    contactNumber: string;
+    departament: string;
+    emailMb: string;
+    emailPersonal: string;
+    firstName: string;
+    lastName: string;
+    role: string;
+    division: boolean;
+    section: boolean;
+    status: boolean;
+    permission: string[];
 };
 
 const users: IUser[] = [
     {
-        nome: "Manoel Barbosa de Sena Neto",
+        firstName: "Manoel",
+        lastName: " Barbosa de Sena Neto",
         nip: "098675654",
-        departamento: "Administração",
-        secao: "Seção de Informática",
-        status: "Ativo",
-        permissoes: ["read", "delete", "download"],
+        departament: "Administração",
+        section: true,
+        status: true,
+        permission: ["read", "delete", "download"],
+        contactNumber: "6199887766",
+        division: false,
+        emailMb: "email@mb.mil.br",
+        emailPersonal: "email@email.com",
+        patent: "civil",
+        role: "admin",
+        warName: "devManoel"
+
     },
     {
-        nome: "Maria da Silva",
-        nip: "123456789",
-        departamento: "Saúde",
-        secao: "Serviço de medicina operativa",
-        status: "Ativo",
-        permissoes: ["read", "add"],
+        firstName: "Manoel",
+        lastName: " Barbosa de Sena Neto",
+        nip: "098675654",
+        departament: "Administração",
+        section: true,
+        status: true,
+        permission: ["read", "delete", "download"],
+        contactNumber: "6199887766",
+        division: false,
+        emailMb: "email@mb.mil.br",
+        emailPersonal: "email@email.com",
+        patent: "civil",
+        role: "admin",
+        warName: "devManoel"
+
     },
     {
-        nome: "João Oliveira",
-        nip: "987654321",
-        departamento: "Diretoria",
-        secao: "Conselho Técnico",
-        status: "Inativo",
-        permissoes: ["read", "delete"],
+        firstName: "Manoel",
+        lastName: " Barbosa de Sena Neto",
+        nip: "098675654",
+        departament: "Administração",
+        section: true,
+        status: true,
+        permission: ["read", "delete", "download"],
+        contactNumber: "6199887766",
+        division: false,
+        emailMb: "email@mb.mil.br",
+        emailPersonal: "email@email.com",
+        patent: "civil",
+        role: "admin",
+        warName: "devManoel"
+
     },
     {
-        nome: "Ana Clara",
-        nip: "456123789",
-        departamento: "Administração",
-        secao: "Seção de esportes",
-        status: "Ativo",
-        permissoes: ["read", "add", "download", "delete"],
+        firstName: "Manoel",
+        lastName: " Barbosa de Sena Neto",
+        nip: "098675654",
+        departament: "Administração",
+        section: true,
+        status: true,
+        permission: ["read", "delete", "download"],
+        contactNumber: "6199887766",
+        division: false,
+        emailMb: "email@mb.mil.br",
+        emailPersonal: "email@email.com",
+        patent: "civil",
+        role: "admin",
+        warName: "devManoel"
+
     },
 ];
 
