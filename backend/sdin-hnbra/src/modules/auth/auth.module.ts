@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
-import { usersModule } from '../users/users.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { usersModule } from '../users/users.module';
       secret: 'SECRET_KEY',
       signOptions: { expiresIn: '1h' },
     }),
-    usersModule,
+    UsersModule,
   ],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],

@@ -22,7 +22,7 @@ export class DivisionService {
     }
 
     async getDivision() {
-        return this.divisionModel.findAll();
+        return this.divisionModel.findAll({ order: [['nameDivision', 'ASC']], });
     }
 
 }

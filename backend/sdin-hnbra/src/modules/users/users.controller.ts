@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
@@ -16,6 +17,7 @@ export class UsersController {
   }
 
   @Get()
+  @ApiBearerAuth()
   // @UseGuards(JwtAuthGuard)
   getUsers(
     @Query() searchDto: SearchUserDto
@@ -29,10 +31,11 @@ export class UsersController {
   }
 
 
-  @Get('login')
-  getLogin(@Body() loginUser: LoginUserDto) {
-    return this.usersService.searchUsersLogin(loginUser);
-  }
+  // @Get('login')
+  //SWAGGER NAO ACEITA BODY PARA REQUIÇÃO GET HTTP(LOGIN IMPLEMENTADO NO AUTH SERVICE)
+  // getLogin(@Body() loginUser: LoginUserDto) {
+  //   return this.usersService.searchUsersLogin(loginUser);
+  // }
 
 
   // @Get()

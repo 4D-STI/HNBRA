@@ -1,6 +1,6 @@
 
 import { Sequelize } from 'sequelize-typescript';
-import { users } from '../repository/models/user.model';
+import { Users } from '../repository/models/user.model';
 
 export const databaseProviders = [
     {
@@ -14,7 +14,7 @@ export const databaseProviders = [
                 password: 'postgres',
                 database: 'sdin-hnbra-dev',
             });
-            sequelize.addModels([users]);
+            sequelize.addModels([Users]);
             await sequelize.sync();
             return sequelize;
         },
