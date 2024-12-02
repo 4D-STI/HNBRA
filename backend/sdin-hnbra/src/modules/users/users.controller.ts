@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
@@ -16,6 +17,7 @@ export class UsersController {
   }
 
   @Get()
+  @ApiBearerAuth()
   // @UseGuards(JwtAuthGuard)
   getUsers(
     @Query() searchDto: SearchUserDto

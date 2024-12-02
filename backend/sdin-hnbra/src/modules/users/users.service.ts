@@ -1,17 +1,23 @@
 import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { Op } from 'sequelize';
-import { users } from '../../repository/models/user.model'
+import { Users } from '../../repository/models/user.model'
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDtoResponse } from './dto/create-user-response.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Patent } from 'src/repository/models/patent.model';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('USERS_REPOSITORY')
-    private userRepository: typeof users
+    private userRepository: typeof Users,
+
+    @InjectModel(Patent)
+    private readonly patentRepository: typeof Patent,
   ) { }
 
 
@@ -54,8 +60,41 @@ export class UsersService {
     }
 
     // Retornar o usuário recém-criado
-    return this.userRepository.findOne({ where: { nip: createUserDto.nip } });
+    const userCreate = this.userRepository.findOne({ where: { nip: createUserDto.nip } });
+    // const patent = this.patentRepository.findOne({ where: { idPatent: createUserDto.idPatent } })
+    // console.log('--------------------------------------', (await patent).patent)
+    const response = this.createUserResponse(await userCreate)
+    return response;
   }
+
+
+
+  async createUserResponse(createUserDto: Users): Promise<CreateUserDtoResponse> {
+    // Busca os dados do usuário e da patente em paralelo para otimizar performance
+    const [user, patent] = await Promise.all([
+      this.userRepository.findOne({ where: { nip: createUserDto.nip } }),
+      this.patentRepository.findOne({ where: { idPatent: createUserDto.idPatent } }),
+    ]);
+
+    // Monta a resposta com os dados obtidos
+    const response: CreateUserDtoResponse = {
+      nip: user?.nip || null,
+      patent: patent?.patent || null,
+      warName: user?.warName || null,
+      firstName: user?.firstName || null,
+      lastName: user?.lastName || null,
+      role: user?.role || null,
+      status: user?.status || null,
+      permission: user?.permission || null,
+      password: user?.password || null,
+      emailPersonal: user?.emailPersonal || null,
+      emailMb: user?.emailMb || null,
+      contactNumber: user?.contactNumber || null,
+    };
+
+    return response;
+  }
+
 
   async searchUsers(searchDto: SearchUserDto): Promise<any> {
     const where: any = {};
@@ -104,7 +143,10 @@ export class UsersService {
       );
     }
 
-    return user;
+    const response = this.createUserResponse(await user)
+    return response;
+
+    // return user;
   }
 
   async findByEmail(emailPersonal: string): Promise<any | null> {
@@ -139,7 +181,12 @@ export class UsersService {
     } catch (e) {
       throw new Error(`Erro ao atualizar usuário: ${e}`)
     }
-    return `Usuário NIP: ${nip} foi atualizado com sucesso!`;
+    const userCreate = this.userRepository.findOne({ where: { nip: nip } });
+    // return `Usuário NIP: ${nip} foi atualizado com sucesso!`;
+    const response = this.createUserResponse(await userCreate)
+    return response;
+
+
   }
 
   async remove(nip: string) {

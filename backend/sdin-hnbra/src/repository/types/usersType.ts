@@ -1,12 +1,9 @@
-export type userType = {
+export type UserType = {
     nip: string,
-    patent: string,
+    idPatent: number,
     warName?: string,
     firstName: string,
     lastName: string,
-    department: string,
-    section: boolean,
-    division: boolean,
     role: string,
     status: string,
     permission: string,
