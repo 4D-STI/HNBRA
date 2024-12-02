@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -11,14 +11,16 @@ import {
 
 export function CarouselDemo() {
   return (
-    <Carousel className="w-full max-w-xs ml-4 mt-1">
+    <Carousel className="ml-14 mr-14">
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 3 }).map((_, index) => (
           <CarouselItem key={index}>
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
+            <div className="">
+              <Card className="">
+                <CardContent className="flex items-center justify-center h-80">
+                  <span className="text-4xl font-semibold">
+                    Banner Bolado  {index + 1}
+                  </span>
                 </CardContent>
               </Card>
             </div>
