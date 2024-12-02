@@ -12,7 +12,7 @@ export default {
             },
             {
                 idSession: 1,
-                nameSubSession: 'OBTENÇÃO',
+                nameSubSession: 'OBTENCAO',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()

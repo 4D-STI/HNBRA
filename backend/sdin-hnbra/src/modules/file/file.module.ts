@@ -4,6 +4,7 @@ import { FileController } from './file.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { File } from 'src/repository/models/file.model';
 import { SubSessionModule } from '../subSession/sub-session.module';
+import { FileValidator } from './validator/file.service.validator';
 
 @Module({
     imports: [
@@ -11,6 +12,7 @@ import { SubSessionModule } from '../subSession/sub-session.module';
         SubSessionModule,  // Importa o SubSessionModule para resolver dependências
     ],
     controllers: [FileController],
-    providers: [FileService],
+    providers: [FileService, FileValidator],
+    exports: [FileService]
 })
 export class FileModule { }
