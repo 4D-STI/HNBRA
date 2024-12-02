@@ -10,7 +10,7 @@
     "up": "docker-compose up -d --build",
     "down": "docker-compose down --remove-orphans",
     "logs": "docker-compose logs -f",
-    "logs:dev": "docker logs -f app-dev",
+    "logs:dev": "docker logs -f app-dev -p 3005",
     "logs:prod": "docker logs -f app-prod",
     "container:fed": "winpty docker exec -it fed sh",
     "container:bed": "winpty docker exec -it bed sh",
