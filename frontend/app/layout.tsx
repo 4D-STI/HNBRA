@@ -11,8 +11,8 @@ const Rawline = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "HNBRA",
-  description: "Hospítal Naval de Brasília",
+  title: "sdin-hnbra",
+  description: "Sistema Digital Intranet do Hospital Naval de Brasília",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`${Rawline.variable} antialiased`}>
         <Header />
-        <main className="flex-grow">{children}</main> 
+        <main className="flex-grow bg-gray-100 w-creen h-screen">{children}</main> 
         <Footer/>
       </body>
     </html>

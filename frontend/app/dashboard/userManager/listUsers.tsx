@@ -1,4 +1,7 @@
+'use client'
 // import { Toggle } from "@/components/ui/toggle";
+
+// Componentes shadcn/ui
 import {
   Table,
   TableBody,
@@ -9,53 +12,44 @@ import {
   // TableCaption,
 } from "@/components/ui/table";
 import Command from "./components/Command";
+
+// Mock de usuarios
+import users_mock, { IUser } from "../utils/mocks/users_mock"
+
+// Componentes de icones
 import { Eye, Plus, Download, Trash2, Filter } from "lucide-react";
 
-interface User {
-  nome: string;
-  nip: string;
-  departamento: string;
-  secao: string;
-  status: string;
-  permissoes: string[];
-}
+import axios from "axios"
+import { useState, useEffect } from "react";
 
-const users: User[] = [
-  {
-    nome: "Manoel Barbosa de Sena Neto",
-    nip: "098675654",
-    departamento: "Administração",
-    secao: "Seção de Informática",
-    status: "Ativo",
-    permissoes: ["read", "delete", "download"],
-  },
-  {
-    nome: "Maria da Silva",
-    nip: "123456789",
-    departamento: "Saúde",
-    secao: "Serviço de medicina operativa",
-    status: "Ativo",
-    permissoes: ["read", "add"],
-  },
-  {
-    nome: "João Oliveira",
-    nip: "987654321",
-    departamento: "Diretoria",
-    secao: "Conselho Técnico",
-    status: "Inativo",
-    permissoes: ["read", "delete"],
-  },
-  {
-    nome: "Ana Clara",
-    nip: "456123789",
-    departamento: "Administração",
-    secao: "Seção de esportes",
-    status: "Ativo",
-    permissoes: ["read", "add", "download", "delete"],
-  },
-];
+// Variaveis
+const API_URL_BASE = 'https://localhost:3002'
 
 export default function ListUsers() {
+
+    // requisição para buscar lista de usuarios
+    const [users, setUsers] = useState<IUser[]>([])
+
+    useEffect(() => {
+      // Requisição
+      const fetchUsers = async () => {
+        try {
+          const response = await axios.get(`${API_URL_BASE}/users`)
+          console.log('DATA -> ', response.data);
+          
+          setUsers(response.data)
+        } catch (error) {
+          console.log('Erro ao buscar usuários: ', error);
+                  
+        }
+      }
+
+      fetchUsers()
+    }, []);
+
+
+
+
   return (
     <div className="p-2">
       <div className="flex flex-col md:flex-row items-center justify-center mb-4">
@@ -68,18 +62,52 @@ export default function ListUsers() {
         </div>
       </div>
 
+      {/* Tabela */}
       <div className="overflow-x-auto">
         <Table className="min-w-full">
+          {/* Header */}
           <TableHeader className="bg-blue-900 text-gray-50">
             <TableRow>
-              <TableHead className="text-gray-50 text-left w-1/5">Nome</TableHead>
-              <TableHead className="text-gray-50 text-left w-1/5">NIP</TableHead>
-              <TableHead className="text-gray-50 text-left w-1/5">Departamento</TableHead>
-              <TableHead className="text-gray-50 text-left w-1/5">Seção</TableHead>
-              <TableHead className="text-gray-50 text-left w-1/5">Status</TableHead>
-              <TableHead className="text-gray-50 text-left w-1/5">Ações</TableHead>
-            </TableRow>
+              <TableHead 
+              className="text-gray-50 text-left w-1/5"
+              >
+                Nome
+              </TableHead>
+              
+              <TableHead 
+              className="text-gray-50 text-left w-1/5"
+              >
+                NIP
+              </TableHead>
+              
+              <TableHead 
+              className="text-gray-50 text-left w-1/5"
+              >
+                Departamento
+              </TableHead>
+              
+              <TableHead 
+              className="text-gray-50 text-left w-1/5"
+              >
+                Seção
+              </TableHead>
+              
+              <TableHead 
+              className="text-gray-50 text-left w-1/5"
+              >
+                Status
+              </TableHead>
+              
+              <TableHead 
+              className="text-gray-50 text-left w-1/5"
+              >
+                Ações
+              </TableHead>
+            </
+            TableRow>
           </TableHeader>
+
+          {/* Body */}
           <TableBody>
             {users.map((user, index) => (
               <TableRow key={index} className="hover:bg-gray-100">

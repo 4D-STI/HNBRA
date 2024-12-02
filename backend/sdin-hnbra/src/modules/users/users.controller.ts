@@ -18,7 +18,7 @@ export class UsersController {
 
   @Get()
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   getUsers(
     @Query() searchDto: SearchUserDto
     // @Param() any: any

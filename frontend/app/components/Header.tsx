@@ -7,6 +7,7 @@ import Logo from "@/public/images/logo_hnbra.png";
 import Search from "@/app/components/search/Search";
 import React, { useState } from 'react';
 import MobileMenu from './mobilemenu/Mobilemenu'; 
+import Link from 'next/link';
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +20,14 @@ export default function Header() {
         <header className="shadow-sm text-blue-900 bg-white">
             <div id="container" className="container max-w-screen-xl mx-auto p-2">
                 <div id="container-top" className="flex justify-between items-center p-2">
-                    <div id="container-logo-titulo" className="flex items-center">
-                        <Image src={Logo} alt="Logo" className="w-10 h-16" />
-                        <h1 className="text-xl px-4">Marinha do Brasil</h1>
-                    </div>
+
+                    <Link href={"/"}>
+                        <div id="container-logo-titulo" className="flex items-center">
+                                <Image src={Logo} alt="Logo" className="w-10 h-16"/>
+                            <h1 className="text-xl px-4">Marinha do Brasil</h1>
+                        </div>
+                    </Link>
+
                     <button className="md:hidden focus:outline-none" onClick={toggleMenu}>
                         <svg
                             className="w-6 h-6"
@@ -37,6 +42,7 @@ export default function Header() {
                             )}
                         </svg>
                     </button>
+                    
                     <div className="hidden md:flex text-base"> 
                         <ul className="flex items-center justify-end mx-16">
                             <li className="mr-4"><a href="#">Órgãos do governo</a></li>
@@ -60,7 +66,6 @@ export default function Header() {
                         <Slidebar />
                     </div>
                     <div id="container-titulo-2" className="flex flex-col px-4">
-                        <h2 className="text-xl font-bold">HNBRA</h2>
                         <p className="text-xl">Hospital Naval De Brasília</p>
                     </div>
                     <div className="flex items-end ml-auto">
