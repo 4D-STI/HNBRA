@@ -2,16 +2,16 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
-import { users } from 'src/repository/models/user.model';
+import { Users } from 'src/repository/models/user.model';
 
 @Injectable()
 export class AuthService {
     constructor(
-        @Inject('USERS_REPOSITORY') private readonly usersRepository: typeof users,
+        @Inject('USERS_REPOSITORY') private readonly usersRepository: typeof Users,
         private readonly jwtService: JwtService,
     ) { }
 
-    async findByEmail(emailMb: string): Promise<users | null> {
+    async findByEmail(emailMb: string): Promise<Users | null> {
         return this.usersRepository.findOne({ where: { emailMb } });
     }
 

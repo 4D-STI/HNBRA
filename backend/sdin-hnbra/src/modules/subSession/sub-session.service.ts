@@ -18,15 +18,34 @@ export class SubSessionService {
         private readonly sessionRepository: typeof Session,
     ) { }
 
+    removeAccents(str: string): string {
+        return str
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[çÇ]/g, 'c');
+    }
+
     async createSubSession(idSession: number, nameSubSession: string, status: string) {
-        console.log("=================", nameSubSession)
-        console.log("=================", status)
+        nameSubSession = Buffer.from(nameSubSession, 'latin1').toString('utf8');
+        nameSubSession = this.removeAccents(nameSubSession)
+        nameSubSession = nameSubSession.toUpperCase();
 
         const session = await this.sessionRepository.findOne({
             where: {
                 idSession: idSession
             },
         });
+        const subSessionExist = await this.subSessionRepository.findOne({
+            where: {
+                nameSubSession: nameSubSession,
+                idSession: idSession, // Adiciona a condição do idSession
+            }
+        });
+        console.log(subSessionExist);
+        if (subSessionExist) {
+            throw new BadRequestException(`nameSubSession: ${nameSubSession} já está cadastrado para a mesma seção!`);
+        }
+
 
         if (session === null) {
             throw new BadRequestException(`idSession: ${idSession} seção/divisão não encontrado!`);
@@ -37,6 +56,9 @@ export class SubSessionService {
 
 
     async updateSubSession(updateSubSessionDto: UpdateSubSessionDto) {
+        updateSubSessionDto.nameSubSession = Buffer.from(updateSubSessionDto.nameSubSession, 'latin1').toString('utf8');
+        updateSubSessionDto.nameSubSession = this.removeAccents(updateSubSessionDto.nameSubSession)
+        updateSubSessionDto.nameSubSession = updateSubSessionDto.nameSubSession.toUpperCase();
         if (!updateSubSessionDto || Object.keys(updateSubSessionDto).length === 0) {
             throw new BadRequestException('O corpo da requisição não pode estar vazio');
         }
@@ -45,6 +67,16 @@ export class SubSessionService {
                 idSession: updateSubSessionDto.idSession
             },
         });
+        const subSessionExist = await this.subSessionRepository.findOne({
+            where: {
+                nameSubSession: updateSubSessionDto.nameSubSession,
+                idSession: updateSubSessionDto.idSession,
+            }
+        });
+        console.log(subSessionExist);
+        if (subSessionExist) {
+            throw new BadRequestException(`nameSubSession: ${updateSubSessionDto.nameSubSession} já está cadastrado para a mesma seção!`);
+        }
 
         if (sessionUpDate === null) {
             throw new BadRequestException(`idSession: ${updateSubSessionDto.idSubSession} departamento não encontrado!`);
@@ -101,7 +133,7 @@ export class SubSessionService {
 
 
     async getSubSession() {
-        return this.subSessionRepository.findAll();
+        return this.subSessionRepository.findAll({ order: [['nameSubSession', 'ASC']], });
     }
 
 }

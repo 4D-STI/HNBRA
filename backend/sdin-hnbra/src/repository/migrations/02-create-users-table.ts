@@ -1,9 +1,9 @@
 import { DataTypes, Model, QueryInterface, DATE, Sequelize } from "sequelize";
-import { userType } from "src/repository/types/usersType";
+import { UserType } from "src/repository/types/usersType";
 
 export default {
     async up(queryInterface: QueryInterface, sequelize: Sequelize) {
-        queryInterface.createTable<Model<userType>>('users', {
+        queryInterface.createTable<Model<UserType>>('Users', {
 
             nip: {
                 type: DataTypes.STRING,
@@ -12,9 +12,15 @@ export default {
                 unique: true
             },
 
-            patent: {
-                type: DataTypes.STRING,
-                allowNull: false
+            idPatent: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'table_patent',
+                    key: 'idPatent',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
             },
 
             warName: {
@@ -31,22 +37,6 @@ export default {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-
-            department: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-
-            section: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false
-            },
-
-            division: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false
-            },
-
             role: {
                 type: DataTypes.STRING,
                 allowNull: false
@@ -93,5 +83,5 @@ export default {
             }
         })
     },
-    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('users') }
+    async down(queryInterface: QueryInterface) { await queryInterface.dropTable('Users') }
 }

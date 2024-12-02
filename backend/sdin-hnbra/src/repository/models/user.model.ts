@@ -1,8 +1,11 @@
-import { Table, Column, Model, DataType, PrimaryKey } from 'sequelize-typescript';
-import { userType } from '../types/usersType';
+import { Table, Column, Model, DataType, PrimaryKey, ForeignKey } from 'sequelize-typescript';
+import { UserType } from '../types/usersType';
+import { Patent } from './patent.model';
 
-@Table
-export class users extends Model<userType> {
+@Table({
+    timestamps: true,
+})
+export class Users extends Model<UserType> {
     @PrimaryKey
     @Column({
         type: DataType.STRING,
@@ -10,11 +13,13 @@ export class users extends Model<userType> {
     })
     nip: string;
 
+    @ForeignKey(() => Patent)
     @Column({
-        type: DataType.STRING,
+        type: DataType.INTEGER,
         allowNull: false,
     })
-    patent: string;
+    idPatent: number;
+
 
     @Column({
         type: DataType.STRING,
@@ -33,24 +38,6 @@ export class users extends Model<userType> {
         allowNull: false,
     })
     lastName: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    department: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    section: boolean;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    division: boolean;
 
     @Column({
         type: DataType.STRING,
@@ -98,20 +85,5 @@ export class users extends Model<userType> {
         allowNull: true,
     })
     contactNumber: string;
-
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    createdAt: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    updatedAt: Date;
 
 }
