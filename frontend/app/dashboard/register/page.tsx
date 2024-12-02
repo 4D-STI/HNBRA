@@ -1,10 +1,9 @@
 // import { Separator } from "@/components/ui/separator"
+import RegisterForm from "@/app/dashboard/registerForm";
+
+
 export default function RegisterPage() {
   return (
-      <div>
-        <h1>
-          DASHBOARD
-        </h1>
-      </div>
+      <RegisterForm />
   )
 }

@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 const sidebarNavItems = [
   {
     title: "Cadastro",
-    href: "/dashboard",
+    href: "/dashboard/register",
   },
   {
     title: "Gerenciar usuários",
-    href: "/dashboard/gerenciarUsuarios",
+    href: "/dashboard/userManager",
   },
   {
     title: "Gerenciar administradores",
