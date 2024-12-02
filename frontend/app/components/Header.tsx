@@ -3,7 +3,7 @@ import { ContrastIcon } from 'lucide-react';
 import Login from "@/app/components/login/Login";
 import Image from "next/image";
 import Slidebar from "@/app/components/sidebar/Slidebar";
-import Logo from "@/public/images/logo_hnbra.png";
+import Logo from "@/public/images/logo_hnbra_distintivo_naval.jpg";
 import Search from "@/app/components/search/Search";
 import React, { useState } from 'react';
 import MobileMenu from './mobilemenu/Mobilemenu'; 
@@ -23,7 +23,7 @@ export default function Header() {
 
                     <Link href={"/"}>
                         <div id="container-logo-titulo" className="flex items-center">
-                                <Image src={Logo} alt="Logo" className="w-10 h-16"/>
+                                <Image src={Logo} alt="Logo" className="w-12 h-16"/>
                             <h1 className="text-xl px-4">Marinha do Brasil</h1>
                         </div>
                     </Link>
