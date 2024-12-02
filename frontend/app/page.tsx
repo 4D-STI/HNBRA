@@ -13,6 +13,8 @@ import Image from 'next/image'
 // assets
 import Fragatas from '@/public/images/2_fragatas_navegando.jpg'
 import SupportSvg from '@/public/images/support_img_svg.svg'
+import { AccordionDemo } from './components/utils/shadcn_demo_components/accordion';
+import { CardWithForm } from './components/utils/shadcn_demo_components/card_with_push';
 
 
 export default function Home() {
@@ -78,21 +80,25 @@ export default function Home() {
       </div>
 
       {/* C3 - praça padrão, anuncios */}
-      <div id='c-3-container' className='flex bg-red-300 w-full h-full'>
+      <div id='c-3-container' className='flex bg-red-300 w-full h-auto'>
 
         {/* praça padrão */}
-        <div id="anuncios-multimidia" className="w-4/12 h-full bg-red-100">
-          Praça padrão
+        <div id="anuncios-multimidia" className="w-4/12 bg-red-100">
+          <span>
+            Praça padrão
+          </span>
+
+          <CardWithForm/>
         </div>
 
         {/* anuncios multimidia */}
-        <div id="anuncios-multimidia" className="w-4/12 h-full bg-green-100">
+        <div id="anuncios-multimidia" className="w-4/12 bg-green-00">
           Anuncios Multimidia
         </div>
 
         {/* anuncios textos*/}
-        <div id="anuncios-multimidia" className="w-4/12 h-full bg-red-100">
-          Anuncios de texto
+        <div id="anuncios-multimidia" className="flex-col items-center w-4/12 h-full bg-red-100">
+          <AccordionDemo/>
         </div>
 
 
