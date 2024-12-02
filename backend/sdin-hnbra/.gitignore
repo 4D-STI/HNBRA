@@ -3,6 +3,7 @@
 /node_modules
 /build
 /arquivosPDFs
+/PDFs
 
 # Logs
 logs
