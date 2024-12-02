@@ -4,13 +4,13 @@ export default {
     async up(queryInterface: QueryInterface) {
         await queryInterface.bulkInsert('table_division', [
             {
-                nameDivision: 'DEPARTAMENTO DE SAÚDE',
+                nameDivision: 'DEPARTAMENTO DE SAUDE',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()
             },
             {
-                nameDivision: 'DEPARTAMENTO DE ADMINISTRAÇÃO',
+                nameDivision: 'DEPARTAMENTO DE ADMINISTRACAO',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()

@@ -5,7 +5,7 @@ export default {
         await queryInterface.bulkInsert('table_session', [
             {
                 idDivision: 2,
-                nameSession: 'DIVISÃO DE INTENDÊNCIA',
+                nameSession: 'DIVISAO DE INTENDENCIA',
                 status: "active",
                 createdAt: new Date(),
                 updatedAt: new Date()
@@ -19,7 +19,7 @@ export default {
             },
             {
                 idDivision: 3,
-                nameSession: 'SERVIÇO DE MEDICINA OPERATIVA',
+                nameSession: 'SERVICO DE MEDICINA OPERATIVA',
                 status: "invasive",
                 createdAt: new Date(),
                 updatedAt: new Date()
