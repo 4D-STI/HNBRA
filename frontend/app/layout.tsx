@@ -30,10 +30,10 @@ export default function RootLayout({
           {/* body dinamico */}
           <main
             id="layout-default-main-content"
-            className="flex-grow overflow-y-auto bg-blue-100 w-creen h-screen">
+            className="flex-grow flex-shrink overflow-y-auto bg-blue-100 w-screen h-screen">
             {children}
           </main>
-      <footer id="layout-default-footer-container">
+      <footer id="layout-default-footer-container" className="min-h-24">
         {/* footer padrão */}
         <Footer/>
       </footer>

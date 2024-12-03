@@ -80,26 +80,31 @@ export default function Home() {
       </div>
 
       {/* C3 - praça padrão, anuncios */}
-      <div id='c-3-container' className='flex bg-red-300 w-full h-auto'>
+      <div id='c-3-container' className='flex flex-col flex-grow flex-shrink w-full h-2/6'>
 
-        {/* praça padrão */}
-        <div id="anuncios-multimidia" className="w-4/12 bg-red-100">
-          <span>
-            Praça padrão
-          </span>
+        <div id='c-3-content-container' className='flex h-full'>
+          {/* praça padrão */}
+          <div id="praca-padrao" className="w-4/12 ml-8">
+            <span>
+              Praça padrão
+            </span>
 
-          <CardWithForm/>
+            <CardWithForm/>
+          </div>
+
+          {/* anuncios multimidia */}
+          <div id="anuncios-multimidia" className="w-4/12">
+            Anuncios Multimidia
+            <CardWithForm/>
+            
+          </div>
+
+          {/* anuncios textos*/}
+          <div id="anuncios-texto" className="flex-col items-center w-4/12">
+            <AccordionDemo/>
+          </div>
         </div>
 
-        {/* anuncios multimidia */}
-        <div id="anuncios-multimidia" className="w-4/12 bg-green-00">
-          Anuncios Multimidia
-        </div>
-
-        {/* anuncios textos*/}
-        <div id="anuncios-multimidia" className="flex-col items-center w-4/12 h-full bg-red-100">
-          <AccordionDemo/>
-        </div>
 
 
       </div>
