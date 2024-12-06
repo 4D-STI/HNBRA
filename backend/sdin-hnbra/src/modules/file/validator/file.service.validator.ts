@@ -67,7 +67,7 @@ export class FileValidator {
     }
 
     async existsFile(idFile: number) {
-        const file = await this.fileRepository.findByPk(idFile);
+        const file = await this.fileRepository.findOne({ where: { idFile: idFile, status: 'true' } });
         if (!file) {
             throw new BadRequestException('Arquivo não encontrado.')
         }

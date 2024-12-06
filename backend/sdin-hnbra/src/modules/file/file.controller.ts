@@ -1,8 +1,9 @@
-import { Controller, Post, Param, UseInterceptors, UploadedFile, Body, Get, Res, NotFoundException, Put, Delete, Query } from '@nestjs/common';
+import { Controller, Post, Param, UseInterceptors, UploadedFile, Body, Get, Res, NotFoundException, Put, Delete, Query, BadRequestException } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 import { File } from 'src/repository/models/file.model';
 import { Response } from 'express';
+import * as path from 'path';
 import { ApiBody, ApiConsumes, ApiOperation, ApiQuery } from '@nestjs/swagger';
 
 @Controller('files')
@@ -10,7 +11,21 @@ export class FileController {
     constructor(private readonly fileService: FileService) { }
 
     @Post(':idSubSession/upload')
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(
+        FileInterceptor('file', {
+            fileFilter: (req, file, callback) => {
+                // Permitir apenas arquivos PDF e imagens JPEG/JPG/PNG
+                const allowedExtensions = /pdf|odp|doc|xls|txt|zip/;
+                const extname = path.extname(file.originalname).toLowerCase();
+
+                if (!allowedExtensions.test(extname)) {
+                    return callback(new BadRequestException(`Somente arquivos de extensão, ${allowedExtensions}`), false);
+                }
+
+                callback(null, true); // Aceitar o arquivo
+            },
+        }),
+    )
     @ApiConsumes('multipart/form-data') // Indica que o endpoint consome arquivos
     @ApiOperation({ summary: 'Upload de arquivo PDF' })
     @ApiBody({

@@ -5,6 +5,7 @@ import { FileValidator } from './validator/file.service.validator';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { SubSession } from 'src/repository/models/subSession.model ';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class FileService {
@@ -24,9 +25,15 @@ export class FileService {
     }
 
     async uploadFile(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
+        if (file.size > 5206700) {
+            throw new Error('Tamanho do arquivo não suportado.')
+        }
+        const fileNameExist = await this.fileModel.findOne({ where: { nameFile: this.fileValidator.removeAcento(file.originalname), idSubSession: idSubSession, status: 'true' } });
         const subSession = await this.fileValidator.existsSubSession(idSubSession);
         const directoryPath = await this.fileValidator.ensureDirectoryExists(idSubSession);
-
+        if (fileNameExist) {
+            throw new BadRequestException('Arquivo com mesmo nome cadastrado.')
+        }
         if (!fs.existsSync(directoryPath)) {
             fs.mkdirSync(directoryPath, { recursive: true });
         }
@@ -93,16 +100,17 @@ export class FileService {
     }
 
     async getAllFileSubSession(nomeSubSession: string) {
+        nomeSubSession = this.fileValidator.removeAcento(nomeSubSession);
         const subSession = await this.subSessionModel.findOne({
             where: {
-                nameSubSession: nomeSubSession,
+                nameSubSession: { [Op.iLike]: `%${nomeSubSession}%` },
             },
         });
 
         if (!subSession) {
             throw new BadRequestException('Subsessão não encontrada.');
         }
-        return this.fileModel.findAll({ where: { nomeSubSession: nomeSubSession }, order: [['nameFile', 'ASC']] });
+        return this.fileModel.findAll({ where: { nomeSubSession: { [Op.iLike]: `%${nomeSubSession}%` }, status: "true" }, order: [['nameFile', 'ASC']] });
     }
 
     async deleteFile(idFile: number): Promise<void> {
@@ -112,10 +120,12 @@ export class FileService {
             if (fs.existsSync(file.path)) {
                 await fs.remove(file.path);
             }
+            await this.fileModel.update({ status: false }, { where: { idFile: file.idFile } })
         } catch (err) {
             throw new BadRequestException('Erro ao excluir o arquivo do sistema de arquivos.');
         }
 
-        await file.destroy();
+
+        // await file.destroy();
     }
 }
