@@ -8,37 +8,16 @@ import {NavigationMenuDemo} from '@/app/components/utils/shadcn_demo_components/
 import { CarouselDemo } from './components/utils/shadcn_demo_components/carousel';
 import {Button} from '@/components/ui/button'
 // react
-import { useState } from 'react';
-import Image from 'next/image'
-// assets
-import Fragatas from '@/public/images/2_fragatas_navegando.jpg'
-import SupportSvg from '@/public/images/support_img_svg.svg'
 import { AccordionDemo } from './components/utils/shadcn_demo_components/accordion';
 import { CardWithForm } from './components/utils/shadcn_demo_components/card_with_push';
+import Link from 'next/link';
 
 
 export default function Home() {
   
-  const [isOpen, setIsOpen] = useState(true)
-  
-  const toggle = () => {
-    setIsOpen(!isOpen);
-    console.log(isOpen);
-    
-  }
-
-
   return (
     
     <>
-
-      {/* <Image
-        alt='imagem de fundo de 2 fragatas manobrando'
-        src={Fragatas}
-        // fill={true}
-        objectFit='cover'
-        className=''
-      /> */}
 
       {/* C1 - atalhos, navegação, suporte */}
       <div id="c-1-container" className="flex h-20 max-w-screen p-2 items-center justify-center mx-auto relative">
@@ -55,6 +34,18 @@ export default function Home() {
         </div>
 
         <NavigationMenuDemo/>
+
+        <div id="container-userManager-link" className="py-2 px-8 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
+        <Link href="/dashboard/userManager">
+          <p>Gerenciamento de Usuários</p>
+        </Link>
+      </div>
+
+      <div id="container-userManager-link" className="py-2 px-8 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
+        <Link href="/dashboard/filesManagement">
+          <p>Gerenciamento de Arquivos</p>
+        </Link>
+      </div>
 
       </div>
 

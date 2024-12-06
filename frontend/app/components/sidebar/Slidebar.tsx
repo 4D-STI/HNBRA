@@ -1,57 +1,40 @@
 // shadcn - sheet
 import {
   Sheet,
+  // SheetOverlay,
+  SheetTrigger,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
-import { CardTitle } from "@/components/ui/card";
+import { AccordionDemo } from '@/app/components/utils/shadcn_demo_components/accordion';
 // icone
 import { AlignJustify } from 'lucide-react';
-import Link from "next/link";
+import LinkSlideBar from "./components/LinkCustom";
+// mock do mapeamento de links da pagina home do hnbra-intranet
+import {internalUseLinks} from './utils/links_mapping'
 
 export default function SlideBar() {
   return(
-<Sheet>
-  <SheetTrigger>
-    {/* icone do menu */}
-    <AlignJustify/>
-  </SheetTrigger>
-  
-  {/* conteudo */}
-  <SheetContent side={'left'} className="data-[state=open]:animate-in">
-    {/* header */}
-    <SheetHeader>
-      <SheetTitle>A Divisão de informática é a melhor!</SheetTitle>
-      <SheetDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
-      </SheetDescription>
-    </SheetHeader>
+    <Sheet>
+      <SheetTrigger className="p-2">
+        {/* icone do menu */}
+        <AlignJustify/>
+      </SheetTrigger>
+      
+      {/* conteudo */}
+      <SheetContent side={'left'} className="flex flex-col data-[state=open]:animate-in ">
+        <AccordionDemo/>
 
-    
-    {/* footer */}
-    <SheetFooter className="flex sm:justify-start">
-      <CardTitle className="text-red-500">
-        Este é um CardTitle do footer
-      </CardTitle >
-    </SheetFooter>
+        {/* header */}
+        <SheetHeader id="slidebar-tittle-1-menu-principal"> 
+          <SheetTitle>Uso Interno</SheetTitle>
+        </SheetHeader>      
 
-    <div id="container-dashboard-link" className="py-2 px-8 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
-        <Link href="/dashboard">
-          <p>Ir para Dashboard</p>
-        </Link>
-    </div>
-
-      <div id="container-userManager-link" className="py-2 px-8 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
-        <Link href="/dashboard/gerenciarUsuarios">
-          <p>Ir para Gerenciamento de Usuários</p>
-        </Link>
-      </div>
-  </SheetContent>
-</Sheet>
+          { internalUseLinks.map((link, index) => 
+              <LinkSlideBar key={index} text={link.name}/>
+          )}     
+      </SheetContent>
+    </Sheet>
   )
 };

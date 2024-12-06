@@ -23,8 +23,16 @@ export default function Header() {
 
                     <Link href={"/"}>
                         <div id="container-logo-titulo" className="flex items-center">
-                                <Image src={Logo} alt="Logo" className="w-12 h-16"/>
-                            <h1 className="text-xl px-4">Marinha do Brasil</h1>
+                                <Image
+                                    src={Logo}
+                                    alt="Logo"
+                                    className="w-16 h-22"
+                                    priority
+                                />
+                                <h1 
+                                    className="text-3xl px-4 font-bold"
+                                > Marinha do Brasil
+                                </h1>
                         </div>
                     </Link>
 
@@ -62,11 +70,14 @@ export default function Header() {
                 <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
 
                 <div id="container-low" className="flex md:flex-row items-center p-2">
-                    <div id="container-menu" className='flex p-2 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer'>
+                    <div id="container-menu" className='flex hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer'>
                         <Slidebar />
                     </div>
                     <div id="container-titulo-2" className="flex flex-col px-4">
-                        <p className="text-xl">Hospital Naval De Brasília</p>
+                        <p
+                            className="text-3xl"
+                        >Hospital Naval De Brasília
+                        </p>
                     </div>
                     <div className="flex items-end ml-auto">
                         <Search />
