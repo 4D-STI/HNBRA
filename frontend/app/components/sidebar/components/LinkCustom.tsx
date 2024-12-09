@@ -5,15 +5,18 @@ import idTextConverter from "./id_text_converter"
 
 export type linkCustom = {
   text: string,
-  key: number
+  key: number,
+  href: string
 }
 
-function LinkSlideBar({text, key}: linkCustom) {
+function LinkSlideBar({text, key, href}: linkCustom) {
   const textNormalized = idTextConverter(text)
+  console.log('LINK: ', href);
+  
     return (
         <Link
         id={`link-dashboard-${key}`}
-        href="/dashboard"
+        href={`${href}`}
         className="hover:bg-blue-300 transition duration-200 rounded-full"
       >
         
