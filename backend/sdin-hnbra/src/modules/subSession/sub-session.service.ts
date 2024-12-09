@@ -22,7 +22,8 @@ export class SubSessionService {
         return str
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[çÇ]/g, 'c');
+            .replace(/[çÇ]/g, 'c')
+            .replace(/ /g, "_");
     }
 
     async createSubSession(idSession: number, nameSubSession: string, status: string) {
@@ -110,6 +111,7 @@ export class SubSessionService {
 
 
     async searchSession(searchDto: SearchSubSessionDto): Promise<any> {
+        searchDto.nameSubSession = this.removeAccents(searchDto.nameSubSession).toUpperCase();
         const where: any = {};
         const message = `SubSeção inexistente!
     Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`

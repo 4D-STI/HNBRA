@@ -11,7 +11,6 @@ export type linkCustom = {
 
 function LinkSlideBar({text, key, href}: linkCustom) {
   const textNormalized = idTextConverter(text)
-  console.log('LINK: ', href);
   
     return (
         <Link
