@@ -22,10 +22,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={`${Rawline.variable} antialiased`}>
-        <Header />
-        <main className="flex-grow bg-gray-100 w-creen h-screen">{children}</main> 
-        <Footer/>
+      <body className={`${Rawline.variable} antialiased h-screen flex flex-col`}>
+        <header id="layout-default-header-container" className="">
+          {/* header padrao */}
+          <Header />
+        </header>
+            {/* body dinamico */}
+            <main
+              id="layout-default-main-content"
+              className="flex-grow flex-shrink overflow-y-auto bg-blue-100 w-screen h-screen">
+              {children}
+            </main>
+        <footer id="layout-default-footer-container" className="min-h-24">
+          {/* footer padrão */}
+          <Footer/>
+        </footer>
       </body>
     </html>
   );

@@ -1,33 +1,40 @@
-import { CardTitle } from "@/components/ui/card";
+// shadcn - sheet
 import {
   Sheet,
+  // SheetOverlay,
+  SheetTrigger,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
+import { AccordionDemo } from '@/app/components/utils/shadcn_demo_components/accordion';
+// icone
 import { AlignJustify } from 'lucide-react';
+import LinkSlideBar from "./components/LinkCustom";
+// mock do mapeamento de links da pagina home do hnbra-intranet
+import {internalUseLinks} from './utils/links_mapping'
 
 export default function SlideBar() {
   return(
-<Sheet>
-  <SheetTrigger><AlignJustify/></SheetTrigger>
-  <SheetContent side={'left'} className="data-[state=open]:animate-in">
-    <SheetHeader>
-      <SheetTitle>A Divisão de informática é a melhor!</SheetTitle>
-      <SheetDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
-      </SheetDescription>
-    </SheetHeader>
-    <SheetFooter className="sm:justify-start">
-      <CardTitle className="text-red-500">
-        Este é um CardTitle do footer
-      </CardTitle >
-    </SheetFooter>
-  </SheetContent>
-</Sheet>
+    <Sheet>
+      <SheetTrigger className="p-2">
+        {/* icone do menu */}
+        <AlignJustify/>
+      </SheetTrigger>
+      
+      {/* conteudo */}
+      <SheetContent side={'left'} className="flex flex-col data-[state=open]:animate-in ">
+        <AccordionDemo/>
+
+        {/* header */}
+        <SheetHeader id="slidebar-tittle-1-menu-principal"> 
+          <SheetTitle>Uso Interno</SheetTitle>
+        </SheetHeader>      
+
+          { internalUseLinks.map((link, index) => 
+              <LinkSlideBar key={index} text={link.name}/>
+          )}     
+      </SheetContent>
+    </Sheet>
   )
 };
