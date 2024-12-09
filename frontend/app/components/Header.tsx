@@ -76,7 +76,7 @@ export default function Header() {
                     <div id="container-titulo-2" className="flex flex-col px-4">
                         <p
                             className="text-3xl"
-                        >Hospital Naval De Brasília
+                        >Hospital Naval de Brasília
                         </p>
                     </div>
                     <div className="flex items-end ml-auto">

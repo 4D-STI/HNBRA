@@ -4,8 +4,8 @@ import {
   // SheetOverlay,
   SheetTrigger,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
+  // SheetHeader,
+  // SheetTitle,
 } from "@/components/ui/sheet"
 import { AccordionDemo } from '@/app/components/utils/shadcn_demo_components/accordion';
 // icone
@@ -24,16 +24,8 @@ export default function SlideBar() {
       
       {/* conteudo */}
       <SheetContent side={'left'} className="flex flex-col data-[state=open]:animate-in ">
-        <AccordionDemo/>
-
-        {/* header */}
-        <SheetHeader id="slidebar-tittle-1-menu-principal"> 
-          <SheetTitle>Uso Interno</SheetTitle>
-        </SheetHeader>      
-
-          { internalUseLinks.map((link, index) => 
-              <LinkSlideBar key={index} text={link.name}/>
-          )}     
+        {/* componente dos menus do sideBar */}
+        <AccordionDemo />   
       </SheetContent>
     </Sheet>
   )
