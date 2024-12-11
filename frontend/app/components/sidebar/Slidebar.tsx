@@ -7,12 +7,9 @@ import {
   // SheetHeader,
   // SheetTitle,
 } from "@/components/ui/sheet"
-import { AccordionDemo } from '@/app/components/utils/shadcn_demo_components/accordion';
+import { AccordionSideBar } from '@/app/components/utils/shadcn_demo_components/accordion_sidebar';
 // icone
 import { AlignJustify } from 'lucide-react';
-import LinkSlideBar from "./components/LinkCustom";
-// mock do mapeamento de links da pagina home do hnbra-intranet
-import {internalUseLinks} from './utils/links_mapping'
 
 export default function SlideBar() {
   return(
@@ -25,7 +22,7 @@ export default function SlideBar() {
       {/* conteudo */}
       <SheetContent side={'left'} className="flex flex-col data-[state=open]:animate-in ">
         {/* componente dos menus do sideBar */}
-        <AccordionDemo />   
+        <AccordionSideBar />
       </SheetContent>
     </Sheet>
   )
