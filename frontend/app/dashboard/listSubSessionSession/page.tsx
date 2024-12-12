@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ListSubSessionSession from "./mover";
 import { SubSessionType } from "@/app/types/subSessionType ";
 
@@ -11,6 +11,7 @@ export default function SubSessionPage() {
     const searchParams = useSearchParams();
     const item = searchParams.get("item");
     const teste = searchParams.get("teste");
+    const router = useRouter();
 
     if (!item) {
         return <div>Erro: Parâmetro 'item' não fornecido.</div>;
@@ -43,7 +44,12 @@ export default function SubSessionPage() {
     return (
         <div id="div-list-file">
             <h1 className="text-2xl font-bold mb-4">Lista de Arquivos {(teste ?? "").replace(/_/g, " ")}</h1>
-            <a href="/dashboard/listSession">voltar</a>
+            <button
+                className="text-blue-500 underline mb-4"
+                onClick={() => router.back()} // Navegar para a página anterior
+            >
+                voltar
+            </button>
             <ListSubSessionSession subSessions={subSessions} />
         </div>
     );
