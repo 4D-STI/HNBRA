@@ -99,7 +99,18 @@ export class FileService {
         return this.fileModel.findAll();
     }
 
-    async getAllFileSubSession(nomeSubSession: string) {
+    async getAllFileSubSession(nomeSubSession: string, idSubSession: number) {
+        if (idSubSession) {
+            const subSessionSession = await this.subSessionModel.findOne({
+                where: {
+                    idSubSession: idSubSession,
+                },
+            });
+            if (!subSessionSession) {
+                throw new BadRequestException('Subsessão não encontrada.');
+            }
+            return this.fileModel.findAll({ where: { idSubSession: subSessionSession.idSubSession, status: "true" } })
+        }
         nomeSubSession = this.fileValidator.removeAcento(nomeSubSession);
         const subSession = await this.subSessionModel.findOne({
             where: {

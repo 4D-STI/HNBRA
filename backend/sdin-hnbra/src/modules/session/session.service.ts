@@ -102,7 +102,7 @@ export class SessionService {
 
 
     async getSession() {
-        return this.sessionRepository.findAll({ order: [['nameSession', 'ASC']], });
+        return this.sessionRepository.findAll({ where: { status: "active" }, order: [['nameSession', 'ASC']], });
     }
 
 }

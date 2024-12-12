@@ -30,7 +30,7 @@ interface SettingsLayoutProps {
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
-    <div className="flex flex-col items-center p-2 text-blue-900">
+    <div id="dashboard-min-content-container" className="flex flex-col items-center p-2">
       <div className="flex p-2">
         <SidebarNav items={sidebarNavItems} />
 

@@ -117,8 +117,9 @@ export class FileController {
         description: 'Name of the sub-session to retrieve files for',
         example: 'OBTENÇÃO',
     })
-    async getAllFilesSubSession(@Query('nomeSubSession') nomeSubSession: string) {
-        return this.fileService.getAllFileSubSession(nomeSubSession);
+    async getAllFilesSubSession(@Query('nomeSubSession') nomeSubSession: string,
+        @Query('idSubSession') idSubSession: number) {
+        return this.fileService.getAllFileSubSession(nomeSubSession, idSubSession);
     }
 
 }

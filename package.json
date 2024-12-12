@@ -10,21 +10,19 @@
     "up": "docker-compose up -d --build",
     "down": "docker-compose down --remove-orphans",
     "logs": "docker-compose logs -f",
-    "logs:dev": "docker logs -f app-dev",
+    "logs:dev": "docker logs -f app-dev -p 3005",
     "logs:prod": "docker logs -f app-prod",
     "container:fed": "winpty docker exec -it fed sh",
     "container:bed": "winpty docker exec -it bed sh",
     "front": "cd frontend/ && npm run dev",
     "back": "cd backend/sdin-hnbra/ && npm run start:dev",
     "db:reset": "cd backend/sdin-hnbra/ && npm run db:reset",
-    "db:up": "docker compose up -d db-dev"
+    "db:up": "docker compose up -d db-dev --build"
   },
   "author": "devHB",
   "devDependencies": {
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
     "npm-run-all": "^4.1.5"
-  },
-  "dependencies": {
   }
 }

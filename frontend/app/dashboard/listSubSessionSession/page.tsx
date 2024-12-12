@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSearchParams } from "next/navigation";
-import ListSubSessionSession from "../mover";
+import ListSubSessionSession from "./mover";
 import { SubSessionType } from "@/app/types/subSessionType ";
 
 
