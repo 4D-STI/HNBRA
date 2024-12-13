@@ -18,7 +18,7 @@ function ShortcutsOtherApps() {
                 >
                     <Button
                         key={index}
-                        className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 border-2 border-blue-800 rounded-full'
+                        className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 border-2 border-blue-800 rounded-full shadow-lg mt-2'
                     >
 
                         <Link
@@ -27,13 +27,13 @@ function ShortcutsOtherApps() {
                         >
                             <Image
                                 alt={`logo_${index}`}
-                                src={ app.icon_path_jpg || app.icon_path_svg || DEFAULT_ICON}
+                                src={ app.icon_path_svg || app.icon_path_jpg || DEFAULT_ICON}
                                 width={100}
                                 height={100}
                             />
                         </Link>
                     </Button>
-                    <span className='font-bold text-black text-xs text-wrap mt-1'>
+                    <span className='font-bold text-black text-xs text-wrap mt-1 text-center'>
                         {app.name.toUpperCase()}
                     </span>
                 </div>
