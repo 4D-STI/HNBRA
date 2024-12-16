@@ -15,6 +15,8 @@ export default function ListPage() {
         return <div>Erro: Parâmetro 'item' não fornecido.</div>;
     }
 
+    // busca a rela dos links na api
+    // 
     const fetchData = async () => {
         const res = await fetch(`${apiBack}/files/nameSub?nomeSubSession=${item}`, {
             cache: "no-store",

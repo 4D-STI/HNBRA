@@ -3,6 +3,7 @@ import SessionList from "./session";
 import { SessionType } from "@/app/types/sessionType";
 
 export default async function SubSessionPage() {
+    //lista todas as seções
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     const res = await fetch(`${apiBack}/session`, {
         cache: 'no-store'

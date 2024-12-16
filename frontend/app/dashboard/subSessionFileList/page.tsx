@@ -6,6 +6,7 @@ import FileList from "../listSubSessionSession/file";
 import { File } from "../../types/file";
 
 export default function ListPage() {
+    //Lista SubSession a partir de nome ou id
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     const searchParams = useSearchParams();
     const router = useRouter();

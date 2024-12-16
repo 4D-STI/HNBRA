@@ -4,6 +4,7 @@ import { SubSessionType } from "@/app/types/subSessionType ";
 
 export default async function SubSessionPage() {
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
+    // busca a api a rela dos ids das sessões
     const res = await fetch(`${apiBack}/subSession`, {
         cache: 'no-store'
     });
@@ -18,7 +19,7 @@ export default async function SubSessionPage() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold mb-4">Lista de Arquivos</h1>
+            <h1 className="text-2xl font-bold mb-4">Lista de Subseção</h1>
             <SubSessionList subSessions={subSession} />
         </div>
     );
