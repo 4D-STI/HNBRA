@@ -8,20 +8,22 @@ import {
   // CarouselNext,
   // CarouselPrevious,
 } from "@/components/ui/carousel"
-import Banner_20_portas from '@/public/images/banner/0/banner_20_portas.png'
+// import Banner_20_portas_edited from '@/public/images/banner/0/banner_20_portas_edited.png'
+// import Banner_novembro_azul from '@/public/images/banner/1/banner_novembro_azul.jpg'
+import Banner_novembro_azul from '@/public/images/banner/2/banner_novembro_azul_edited.png'
 
 const ALT_1_BANNER = 'Banner da marinha do brasil. 20 portas de entradas para a marinha'
 
 export function CarouselDemo() {
   return (
-    <Carousel className="ml-14 mr-14">
+    <Carousel className="container mx-auto px-24">
       <CarouselContent>
         {Array.from({ length: 3 }).map((_, index) => (
           <CarouselItem key={index}>
             <Image
-              src={Banner_20_portas}
+              src={Banner_novembro_azul}
               alt={ALT_1_BANNER}
-              width={720}
+              width={864}
               className="rounded-xl"
             />
           </CarouselItem>
