@@ -1,6 +1,6 @@
   const mainMenu = [
-    {name: 'Dashboard', title: 'Menu Principal', href: '/dashboard'},
-    {name: 'Organograma', title: 'Menu Principal', href: '#'},
+    {name: 'Dashboard',title: 'Menu Principal',href: '/dashboard'},
+    {name: 'Organograma', title: 'Menu Principal', href: '/pdf/organograma.pdf'},
     {name: 'Diretores', title: 'Menu Principal', href: '#'},
     {name: 'Carta de Serviços ao Usuário', title: 'Menu Principal', href: '#'},
     {name: 'Diretores', title: 'Menu Principal', href: '#'},
