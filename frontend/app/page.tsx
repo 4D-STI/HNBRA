@@ -6,10 +6,9 @@ import { Grip } from 'lucide-react';
 // shadcn: navigation-menu
 import {NavigationMenuDemo} from '@/app/components/utils/shadcn_demo_components/navigation-menu'
 import { CarouselDemo } from './components/utils/shadcn_demo_components/carousel';
-import {Button} from '@/components/ui/button'
 // react
-import { AccordionDemo } from './components/utils/shadcn_demo_components/accordion';
 import { CardWithForm } from './components/utils/shadcn_demo_components/card_with_push';
+import ShortcutsOtherApps from '@/app/components/shortcuts/ShortcutsOtherApps'
 import Link from 'next/link';
 
 
@@ -51,27 +50,21 @@ export default function Home() {
 
 
       {/* C2 - banner, botoes atalhos */}
-      <div id='c-2-container' className='flex w-full h-96'>
+      <div id='c-2-container' className='flex flex-row h-96 mt-2 items-center'>
         
-        {/* container - banner carousel */}
-        <div id='carousel-container' className='flex items-center w-1/2 h-full'>
-          <CarouselDemo/>
+        {/* container - botões atalhos */}
+        <div id='files-container' className='grid grid-cols-9  w-1/2 content-stretch px-8 ml-8'>
+          <ShortcutsOtherApps/>
         </div>
 
-        {/* container - botões atalhos */}
-        <div id='files-container' className='grid grid-cols-3  w-1/2 content-stretch p-4'>
-          {Array.from({length:9}).map((_, index) => (
-            <Button key={index} className='flex items-start bg-blue-200 hover:bg-blue-300 h-34 border-2 border-blue-800 rounded-3xl m-2'>
-              <span className='font-bold text-black text-base'>
-                Botão lindo {index+1}
-              </span>
-            </Button>
-          ))}
+        {/* container - banner carousel */}
+        <div id='carousel-container' className='flex flex-row w-1/2 rounded-xl container mx-auto '>
+          <CarouselDemo/>
         </div>
       </div>
 
       {/* C3 - praça padrão, anuncios */}
-      <div id='c-3-container' className='flex flex-col flex-grow flex-shrink w-full h-2/6'>
+      <div id='c-3-container' className='flex flex-col flex-grow flex-shrink w-full h-2/6 mt-4'>
 
         <div id='c-3-content-container' className='flex h-full'>
           {/* praça padrão */}
@@ -92,7 +85,7 @@ export default function Home() {
 
           {/* anuncios textos*/}
           <div id="anuncios-texto" className="flex-col items-center w-4/12">
-            <AccordionDemo/>
+            Anuncios de textos
           </div>
         </div>
 

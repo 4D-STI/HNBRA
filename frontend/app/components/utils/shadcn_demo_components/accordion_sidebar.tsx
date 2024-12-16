@@ -6,8 +6,8 @@ import {
   } from "@/components/ui/accordion"
   import LinkSlideBar from '@/app/components/sidebar/components/LinkCustom'
   // links data
-  import * as sideBarLinks from '@/app/components/sidebar/utils/links_mapping'
-  
+  import * as sideBarLinks from '@/app/components/sidebar/utils/sidebar_data'
+
   export function AccordionSideBar() {
     return (
       
@@ -21,7 +21,8 @@ import {
             {
               title.ref.map((link, linkIndex) => (
                 <AccordionContent key={linkIndex}>
-                  <LinkSlideBar key={linkIndex} href={`${link.href}`} text={`${link.name}`}/>
+                  {/* TODO: Tratamento de erro caso arquivo indisponivel */}
+                  <LinkSlideBar key={linkIndex} href={`${link.href}`} text={`${link.name}`} target={`blank`}/>
                 </AccordionContent>
               ) )
 
