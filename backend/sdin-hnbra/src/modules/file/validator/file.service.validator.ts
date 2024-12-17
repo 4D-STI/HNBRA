@@ -75,6 +75,15 @@ export class FileValidator {
         return file;
     }
 
+    async existsFileName(name: string) {
+        const file = await this.fileRepository.findOne({ where: { nameFile: name, status: 'true' } });
+        if (!file) {
+            throw new BadRequestException('Arquivo não encontrado.')
+        }
+
+        return file;
+    }
+
 
 
 

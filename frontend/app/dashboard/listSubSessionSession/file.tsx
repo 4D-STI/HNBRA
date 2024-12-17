@@ -29,9 +29,15 @@ export default function FileList({ files }: FileListProps) {
     const filesPerPage = 15;
     const totalPages = Math.ceil(files.length / filesPerPage);
 
-    const handleDownload = (idFile: number) => {
+    const handleDownload = (idFile: number, previewOnly?: boolean) => {
+        // const fileUrl = `${process.env.NEXT_PUBLIC_API_BACK}/files/${idFile}/download/`;
+        const fileUrl = `/api/files/${idFile}/download/`;
         console.log("Iniciando download...");
-        window.location.href = `${process.env.NEXT_PUBLIC_API_BACK}/files/${idFile}/download/`;
+        if (previewOnly) {
+            window.open(fileUrl, "_blank");
+        } else {
+            window.location.href = fileUrl
+        }
     };
 
     const handlePageChange = (page: number) => {
@@ -65,7 +71,7 @@ export default function FileList({ files }: FileListProps) {
                             <TableCell className="text-left px-4 py-2">{file.nameFile.slice(0, -4)}</TableCell>
                             <TableCell
                                 className="text-left px-4 py-2 text-blue-600 cursor-pointer hover:underline"
-                                onClick={() => handleDownload(file.idFile)}
+                                onClick={() => handleDownload(file.idFile, file.previewOnly)}
                             >
                                 {file.description}
                             </TableCell>

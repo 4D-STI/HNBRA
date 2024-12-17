@@ -7,7 +7,7 @@ import {
   // SheetHeader,
   // SheetTitle,
 } from "@/components/ui/sheet"
-import { AccordionDemo } from '@/app/components/utils/shadcn_demo_components/accordion_sidebar';
+import { AccordionSideBar } from '@/app/components/utils/shadcn_demo_components/accordion_sidebar';
 // icone
 import { AlignJustify } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export default function SlideBar() {
       {/* conteudo */}
       <SheetContent side={'left'} className="flex flex-col data-[state=open]:animate-in ">
         {/* componente dos menus do sideBar */}
-        <AccordionDemo />
+        <AccordionSideBar />
       </SheetContent>
     </Sheet>
   )

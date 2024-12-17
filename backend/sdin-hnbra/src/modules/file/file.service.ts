@@ -24,6 +24,11 @@ export class FileService {
         return this.fileValidator.existsFile(idFile);
     }
 
+    async viewFile(name: string): Promise<File | null> {
+
+        return this.fileValidator.existsFileName(name);
+    }
+
     async uploadFile(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
         if (file.size > 5206700) {
             throw new Error('Tamanho do arquivo não suportado.')

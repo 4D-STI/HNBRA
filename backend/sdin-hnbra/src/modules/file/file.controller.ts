@@ -5,6 +5,7 @@ import { File } from 'src/repository/models/file.model';
 import { Response } from 'express';
 import * as path from 'path';
 import { ApiBody, ApiConsumes, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { createReadStream } from 'fs';
 
 @Controller('files')
 export class FileController {
@@ -15,7 +16,7 @@ export class FileController {
         FileInterceptor('file', {
             fileFilter: (req, file, callback) => {
                 // Permitir apenas arquivos PDF e imagens JPEG/JPG/PNG
-                const allowedExtensions = /pdf|odp|doc|xls|txt|zip/;
+                const allowedExtensions = /pdf|odp|doc|xls|txt|zip|aao/;
                 const extname = path.extname(file.originalname).toLowerCase();
 
                 if (!allowedExtensions.test(extname)) {
@@ -63,8 +64,29 @@ export class FileController {
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
+        // res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
+
+        // const stream = createReadStream(file.path);
+        // stream.pipe(res);
 
         return res.sendFile(file.path);
+    }
+
+    @Get(':idFile/view')
+    async viewFile(@Param('idFile') name: string, @Res() res: Response) {
+        const file = await this.fileService.viewFile(name);
+        if (!file) {
+            throw new NotFoundException('File not found');
+        }
+
+        res.setHeader('Content-Type', 'application/pdf');
+        // res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
+        res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
+
+        const stream = createReadStream(file.path);
+        stream.pipe(res);
+
+        // return res.sendFile(file.path);
     }
 
 

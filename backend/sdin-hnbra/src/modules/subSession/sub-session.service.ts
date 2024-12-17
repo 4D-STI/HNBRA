@@ -126,7 +126,7 @@ export class SubSessionService {
 
 
     async getSubSession() {
-        return this.subSessionRepository.findAll({ order: [['nameSubSession', 'ASC']], });
+        return this.subSessionRepository.findAll({ where: { status: "active" }, order: [['nameSubSession', 'ASC']], });
     }
 
 }

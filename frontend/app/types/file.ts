@@ -8,4 +8,5 @@ export interface File {
     status: boolean;
     createdAt: string;
     updatedAt: string;
+    previewOnly?: boolean;
 }
