@@ -12,7 +12,7 @@ export class Division extends Model<DivisionType> {
         allowNull: false,
         validate: { len: [2, 100] }
     })
-    nameDivision: string;
+    nameDepartament: string;
 
     @Column({
         type: DataType.STRING,
