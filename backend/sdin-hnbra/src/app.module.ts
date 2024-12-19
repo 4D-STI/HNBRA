@@ -15,7 +15,7 @@ import { DivisionModule } from './modules/divison/division.module';
 import { SessionModule } from './modules/session/session.module';
 import { Division } from './repository/models/division.model';
 import { Session } from './repository/models/session.model';
-import { AuthModule } from './modules/auth/auth.module';
+// import { AuthModule } from './modules/auth/auth.module';
 import { SubSessionModule } from './modules/SubSession/sub-session.module';
 import { FileModule } from './modules/file/file.module';
 import { PatentModule } from './modules/patent/patent.module';
@@ -49,7 +49,7 @@ import { UserPermissionModule } from './modules/userPermission/user-permission.m
     UsersModule,
     DivisionModule,
     SessionModule,
-    AuthModule,
+    // AuthModule,
     SubSessionModule,
     FileModule,
     PatentModule,
