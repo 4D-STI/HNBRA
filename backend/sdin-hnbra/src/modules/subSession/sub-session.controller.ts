@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Put, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, BadRequestException, Query } from '@nestjs/common';
 import { SubSessionService } from './sub-session.service';
 import { CreateSubSessionDto } from './dto/create-sub-session';
 import { SubSession } from 'src/repository/models/subSession.model ';
@@ -16,6 +16,11 @@ export class SubSessionController {
     @Get()
     async getAllSubSession() {
         return this.subSessionService.getSubSession();
+    }
+
+    @Get('/session')
+    async getAllSubSessionSession(@Query('idSession') idSession: number) {
+        return this.subSessionService.searchSession(idSession);
     }
 
     @Put()

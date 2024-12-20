@@ -1,5 +1,5 @@
 
-export interface JwtPayload {
-    nip: string;
-    email: string;
-}
+// export interface JwtPayload {
+//     nip: string;
+//     email: string;
+// }

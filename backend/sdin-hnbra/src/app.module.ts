@@ -15,7 +15,7 @@ import { DivisionModule } from './modules/divison/division.module';
 import { SessionModule } from './modules/session/session.module';
 import { Division } from './repository/models/division.model';
 import { Session } from './repository/models/session.model';
-import { AuthModule } from './modules/auth/auth.module';
+// import { AuthModule } from './modules/auth/auth.module';
 import { SubSessionModule } from './modules/SubSession/sub-session.module';
 import { FileModule } from './modules/file/file.module';
 import { PatentModule } from './modules/patent/patent.module';
@@ -33,7 +33,7 @@ import { UserPermissionModule } from './modules/userPermission/user-permission.m
       port: Number(process.env.DB_PORT) || 5432,
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_DATABASE_DEV || 'sdin-hnbra-dev',
+      database: process.env.DB_DATABASE_DEV || 'sdin-hnbra',
       models: [Users, Division, Session],
       retryAttempts: Number(process.env.DB_RETRY_ATTEMPTS) || 5,
       retryDelay: Number(process.env.DB_RETRY_DELAY) || 1000,
@@ -49,7 +49,7 @@ import { UserPermissionModule } from './modules/userPermission/user-permission.m
     UsersModule,
     DivisionModule,
     SessionModule,
-    AuthModule,
+    // AuthModule,
     SubSessionModule,
     FileModule,
     PatentModule,

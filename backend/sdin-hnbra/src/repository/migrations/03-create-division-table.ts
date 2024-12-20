@@ -13,7 +13,7 @@ export default {
                 unique: true
             },
 
-            nameDivision: {
+            nameDepartament: {
                 type: DataTypes.STRING,
                 allowNull: false
             },

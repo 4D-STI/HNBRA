@@ -8,51 +8,52 @@ services:
     working_dir: /frontend
     volumes:
       - ./frontend/app:/frontend/app
-    depends_on:
-      - be-dev
+    # depends_on:
+    #   - be-dev
     environment:
       - NODE_ENV=development
     # command: npm run dev
     healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+      test: [ "CMD", "lsof", "-t", "-i:3000" ] # Caso utilize outra porta interna para o front, altere ela aqui também
       timeout: 10s
       retries: 5
 
-  be-dev:
-      container_name: bed
-      build: ./backend
-      ports:
-        - 3001:3001 # atenção porta healthcheck
-      working_dir: ./backend
-      volumes:
-        - ./backend/app:/backend/app
-      depends_on:
-        - db-dev
-      environment:
-        - NODE_ENV=development
-      tty: true
-      stdin_open: true
-      # command: npm run dev
-      healthcheck:
-        test: ["CMD", "lsof", "-t", "-i:3001"]  # Caso utilize outra porta interna para o front, altere ela aqui também
-        timeout: 10s
-        retries: 5
+  # be-dev:
+  #   container_name: bed
+  #   build: ./backend
+  #   ports:
+  #     - 3001:3001 # atenção porta healthcheck
+  #   working_dir: ./backend
+  #   volumes:
+  #     - ./backend/app:/backend/app
+  #   depends_on:
+  #     - db-dev
+  #   environment:
+  #     - NODE_ENV=development
+  #   tty: true
+  #   stdin_open: true
+  #   # command: npm run dev
+  #   healthcheck:
+  #     test: [ "CMD", "lsof", "-t", "-i:3001" ] # Caso utilize outra porta interna para o front, altere ela aqui também
+  #     timeout: 10s
+  #     retries: 5
 
   db-dev:
     container_name: db-dev
     image: postgres:17
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - ./bd/tmp:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       tty: true
       stdin_open: true
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 10s
       retries: 5
-
   # pgadmin:
   #   image: dpage/pgadmin4
   #   ports:
