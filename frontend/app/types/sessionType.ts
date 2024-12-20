@@ -1,6 +1,7 @@
-export type DivisionType = {
+export type SessionType = {
+    idSession: number,
     idDivision: number,
-    nameDepartament: string,
+    nameSession: string,
     status: string,
     createdAt: Date,
     updatedAt: Date

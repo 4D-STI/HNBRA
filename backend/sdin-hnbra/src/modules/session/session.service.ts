@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Session } from 'src/repository/models/session.model';
 import { Division } from 'src/repository/models/division.model';
 import { UpdateSessionDto } from './dto/update-session';
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { SearchSessionDto } from './dto/search-session.dto';
 
 
@@ -102,7 +102,17 @@ export class SessionService {
 
 
     async getSession() {
-        return this.sessionRepository.findAll({ order: [['nameSession', 'ASC']], });
+        // return this.sessionRepository.findAll({ where: { status: "active" }, order: [['nameSession', 'ASC']], });
+        return await this.sessionRepository.findAll({
+            where: {
+                status: "active",
+                idSession: {
+                    [Op.in]: Sequelize.literal(`(SELECT "idSession" FROM table_sub_session)`)
+                }
+            },
+            order: [['nameSession', 'ASC']]
+        });
+
     }
 
 }

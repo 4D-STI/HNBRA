@@ -7,8 +7,8 @@ export class DivisionController {
     constructor(private readonly divisionService: DivisionService) { }
 
     @Post()
-    async create(@Body() createDivision: { nameDivision: string; status: string }): Promise<Division> {
-        return this.divisionService.createDivision(createDivision.nameDivision, createDivision.status);
+    async create(@Body() createDivision: { nameDepartament: string; status: string }): Promise<Division> {
+        return this.divisionService.createDivision(createDivision.nameDepartament, createDivision.status);
     }
 
     @Get()

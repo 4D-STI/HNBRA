@@ -110,21 +110,12 @@ export class SubSessionService {
 
 
 
-    async searchSession(searchDto: SearchSubSessionDto): Promise<any> {
-        searchDto.nameSubSession = this.removeAccents(searchDto.nameSubSession).toUpperCase();
+    async searchSession(idSession: number): Promise<any> {
         const where: any = {};
         const message = `SubSeção inexistente!
     Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`
 
-        for (const [key, value] of Object.entries(searchDto)) {
-            if (value) {
-                where[key] = {
-                    [Op.iLike]: `%${value}%`
-                };
-            }
-        }
-
-        const user = await this.sessionRepository.findAll({ where })
+        const user = await this.subSessionRepository.findAll({ where: { idSession: idSession, status: 'active' } })
 
         if (user.length === 0) {
             throw new BadRequestException(message)
@@ -135,7 +126,7 @@ export class SubSessionService {
 
 
     async getSubSession() {
-        return this.subSessionRepository.findAll({ order: [['nameSubSession', 'ASC']], });
+        return this.subSessionRepository.findAll({ where: { status: "active" }, order: [['nameSubSession', 'ASC']], });
     }
 
 }
