@@ -32,3 +32,6 @@ node_modules/
 
 # Desconsiderar arquivo com variaveis de ambiente
 .env
+
+# Desconsiderando arquivos do Docker
+bd/
