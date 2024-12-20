@@ -1,5 +1,6 @@
 const organograma = 'ORGANOGRAMA.PDF'
 const cartaServico = 'CARTA-SERVICO-25ABR202.PDF'
+const acoesProgromas = 'Acoes-e-Programas-Servico-Social-Hospitalar_SAS-H_AGO2024.pdf'
 const ramais = 'LISTA_RAMAIS_HNBRA-03DEZ.PDF'
 const tomadaDeContaTCE = 'CIRC-8-2022-TCE-057.ZIP'
 const regimetoInterno = 'REGIMENTOINTERNO.pdf'
@@ -43,14 +44,14 @@ const mainMenu = [
   { name: 'Heráldica', title: 'Menu Principal', href: '#' },
   { name: 'Alterar Senha do Zimbra', title: 'Menu Principal', href: '#' },
   { name: 'Relação Usuários Zimbra', title: 'Menu Principal', href: '#' },
-  { name: 'Ações e Programas', title: 'Menu Principal', href: '/dashboard/subSessionFileList?item=ACOES_E_PROGRAMAS' },
+  { name: 'Ações e Programas', title: 'Menu Principal', href: `/api/files/${acoesProgromas}/view ` },
   { name: 'Ramais HNBra', title: 'Menu Principal', href: `/api/files/${ramais}/view` },
 ]
 
 const internalUse = [
-  { name: 'Modelos', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=10&teste=MODELOS' }, //ITEM = ID
+  { name: 'Modelos', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=11&teste=Modelos' }, //ITEM = ID
   { name: 'Tomada de Contas Especial (TCE)', title: 'Uso Interno', href: `/api/files/${tomadaDeContaTCE}/view` }, //ALTERAR, PENSAR DE QUE FORMA IRA FAZER? TALVEZ OUTRO ENDPOIN
-  { name: 'Ordens Internas', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=ORDENS_INTERNAS' },
+  { name: 'Ordens Internas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=10&teste=ORDEM%20INTERENAS' },
   { name: 'Regimento Interno', title: 'Uso Interno', href: `/api/files/${regimetoInterno}/view` },
   { name: 'Regulamento', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=REGULAMENTO' },
   { name: 'Licitações e Contratos', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=LICITACOES_E_CONTRATOS' },
@@ -58,8 +59,8 @@ const internalUse = [
   { name: 'Execução Financeira', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=EXECUCAO_FINANCEIRA' },
   { name: 'Portarias', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=PORTARIAS' },
   { name: 'Gestoria Patrimonial', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=GESTORIA_PATRIMONIAL' },
-  { name: 'Plano de Aplicação de Recursos (PAR)', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=PLANO_DE_APLICACAO_DE_RECURSOS_(PAR)' },
-  { name: 'Transparência e Prestação de Contas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=10&teste=TRANSPARENCIA_E_PRESTAÇÃO_DE_CONTAS' }, //ITEM = ID
+  { name: 'Plano de Aplicação de Recursos (PAR)', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=PLANO_DE_APLICACAO_DE_RECURSOS' },
+  { name: 'Transparência e Prestação de Contas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=12&teste=TRANSPARENCIA_E_PRESTAÇÃO_DE_CONTAS' }, //ITEM = ID
   { name: 'Publicações', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=PUBLICACOES' },
   { name: 'Relação Nominal', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=RELACAO_NOMINAL' },
 ]

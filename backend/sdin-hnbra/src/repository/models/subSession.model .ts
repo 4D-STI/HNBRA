@@ -16,7 +16,7 @@ export class SubSession extends Model<SubSessionType> {
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        validate: { len: [2, 100] }
+        validate: { len: [2, 255] }
     })
     nameSubSession: string;
 

@@ -27,9 +27,8 @@ export class SubSessionService {
     }
 
     async createSubSession(idSession: number, nameSubSession: string, status: string) {
-        nameSubSession = Buffer.from(nameSubSession, 'latin1').toString('utf8');
-        nameSubSession = this.removeAccents(nameSubSession)
-        nameSubSession = nameSubSession.toUpperCase();
+        // nameSubSession = Buffer.from(nameSubSession, 'latin1').toString('utf8');
+        // nameSubSession = this.removeAccents(nameSubSession)
 
         const session = await this.sessionRepository.findOne({
             where: {
@@ -57,9 +56,8 @@ export class SubSessionService {
 
 
     async updateSubSession(updateSubSessionDto: UpdateSubSessionDto) {
-        updateSubSessionDto.nameSubSession = Buffer.from(updateSubSessionDto.nameSubSession, 'latin1').toString('utf8');
-        updateSubSessionDto.nameSubSession = this.removeAccents(updateSubSessionDto.nameSubSession)
-        updateSubSessionDto.nameSubSession = updateSubSessionDto.nameSubSession.toUpperCase();
+        // updateSubSessionDto.nameSubSession = Buffer.from(updateSubSessionDto.nameSubSession, 'latin1').toString('utf8');
+        // updateSubSessionDto.nameSubSession = this.removeAccents(updateSubSessionDto.nameSubSession)
         if (!updateSubSessionDto || Object.keys(updateSubSessionDto).length === 0) {
             throw new BadRequestException('O corpo da requisição não pode estar vazio');
         }
@@ -115,7 +113,7 @@ export class SubSessionService {
         const message = `SubSeção inexistente!
     Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`
 
-        const user = await this.subSessionRepository.findAll({ where: { idSession: idSession, status: 'active' } })
+        const user = await this.subSessionRepository.findAll({ where: { idSession: idSession, status: 'active' }, order: [['idSubSession', 'ASC']] })
 
         if (user.length === 0) {
             throw new BadRequestException(message)
