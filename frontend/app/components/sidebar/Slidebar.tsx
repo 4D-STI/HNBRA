@@ -12,13 +12,13 @@ import { AccordionSideBar } from '@/app/components/utils/shadcn_demo_components/
 import { AlignJustify } from 'lucide-react';
 
 export default function SlideBar() {
-  return(
+  return (
     <Sheet>
       <SheetTrigger className="p-2">
         {/* icone do menu */}
-        <AlignJustify/>
+        <AlignJustify />
       </SheetTrigger>
-      
+
       {/* conteudo */}
       <SheetContent side={'left'} className="flex flex-col data-[state=open]:animate-in ">
         {/* componente dos menus do sideBar */}

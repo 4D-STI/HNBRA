@@ -7,5 +7,6 @@ export type fileType = {
     description: string,
     status: boolean,
     createdAt: Date,
-    updatedAt: Date
+    updatedAt: Date,
+    previewOnly?: boolean;
 }

@@ -24,6 +24,11 @@ export class FileService {
         return this.fileValidator.existsFile(idFile);
     }
 
+    async viewFile(name: string): Promise<File | null> {
+
+        return this.fileValidator.existsFileName(name);
+    }
+
     async uploadFile(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
         if (file.size > 5206700) {
             throw new Error('Tamanho do arquivo não suportado.')
@@ -99,7 +104,18 @@ export class FileService {
         return this.fileModel.findAll();
     }
 
-    async getAllFileSubSession(nomeSubSession: string) {
+    async getAllFileSubSession(nomeSubSession: string, idSubSession: number) {
+        if (idSubSession) {
+            const subSessionSession = await this.subSessionModel.findOne({
+                where: {
+                    idSubSession: idSubSession,
+                },
+            });
+            if (!subSessionSession) {
+                throw new BadRequestException('Subsessão não encontrada.');
+            }
+            return this.fileModel.findAll({ where: { idSubSession: subSessionSession.idSubSession, status: "true" } })
+        }
         nomeSubSession = this.fileValidator.removeAcento(nomeSubSession);
         const subSession = await this.subSessionModel.findOne({
             where: {

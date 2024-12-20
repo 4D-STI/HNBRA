@@ -9,12 +9,12 @@ export class DivisionService {
         private readonly divisionModel: typeof Division,
     ) { }
 
-    async createDivision(nameDivision: string, status: string) {
-        console.log("=================", nameDivision)
+    async createDivision(nameDepartament: string, status: string) {
+        console.log("=================", nameDepartament)
         console.log("=================", status)
 
         try {
-            return await this.divisionModel.create({ nameDivision, status });
+            return await this.divisionModel.create({ nameDepartament: nameDepartament, status });
         } catch (error) {
             console.error("Erro ao criar divisão:", error);
             throw new BadRequestException('Erro ao criar divisão', error);
@@ -22,7 +22,7 @@ export class DivisionService {
     }
 
     async getDivision() {
-        return this.divisionModel.findAll({ order: [['nameDivision', 'ASC']], });
+        return this.divisionModel.findAll({ order: [['nameDepartament', 'ASC']], });
     }
 
 }

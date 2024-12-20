@@ -7,9 +7,9 @@ const IS_EMPTY_MSG = (attr) => `O atributo ${attr} deve ser vazio`
 
 export class CreateDivisionDto {
 
-    @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('nomeDivision') })
-    @IsString({ message: IS_STRING_MSG('nomeDivision') })
-    nameDivision: string;
+    @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('nameDepartament') })
+    @IsString({ message: IS_STRING_MSG('nameDepartament') })
+    nameDepartament: string;
 
     @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('status') })
     @IsString({ message: IS_STRING_MSG('status') })
