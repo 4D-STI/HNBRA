@@ -33,7 +33,7 @@ import { UserPermissionModule } from './modules/userPermission/user-permission.m
       port: Number(process.env.DB_PORT) || 5432,
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_DATABASE_DEV || 'sdin-hnbra-dev',
+      database: process.env.DB_DATABASE_DEV || 'sdin-hnbra',
       models: [Users, Division, Session],
       retryAttempts: Number(process.env.DB_RETRY_ATTEMPTS) || 5,
       retryDelay: Number(process.env.DB_RETRY_DELAY) || 1000,
