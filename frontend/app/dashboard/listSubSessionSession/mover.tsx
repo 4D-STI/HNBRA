@@ -27,7 +27,7 @@ interface SubSessionProps {
 
 export default function ListSubSessionSession({ subSessions: subSessions }: SubSessionProps) {
     const [currentPage, setCurrentPage] = useState(1);
-    const SubSessionsPerPage = 15;
+    const SubSessionsPerPage = 30;
     const totalPages = Math.ceil(subSessions.length / SubSessionsPerPage);
 
     // const handleDownload = (idFile: number) => {
@@ -52,21 +52,22 @@ export default function ListSubSessionSession({ subSessions: subSessions }: SubS
         <div id="list-subSession-comp">
             <Table className="w-full">
                 <TableHeader className="bg-gray-100">
-                    <TableRow>
+                    {/* <TableRow>
                         <TableCell className="text-left px-4 py-2 font-bold">Arquivo</TableCell>
-                    </TableRow>
+                    </TableRow> */}
                 </TableHeader>
                 <TableBody>
                     {paginatedSubSessions.map((subSession, index) => (
                         <TableRow
                             key={subSession.idSession}
                             className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                        >
-                            {/* <TableCell className="text-left px-4 py-2">{subSession.nameSubSession}</TableCell> */}
-                            {/* <TableCell className="text-left px-4 py-2">{subSession.idSubSession}</TableCell> */}
-                            <Link href={`/dashboard/subSessionFileList?teste=${subSession.idSubSession}`}>
-                                <p>{subSession.nameSubSession.replace(/_/g, " ")}</p>
-                            </Link>
+                        ><TableCell className="text-left px-2 py-2">
+                                {/* <TableCell className="text-left px-4 py-2">{subSession.nameSubSession}</TableCell> */}
+                                {/* <TableCell className="text-left px-4 py-2">{subSession.idSubSession}</TableCell> */}
+                                <Link href={`/dashboard/subSessionFileList?teste=${subSession.idSubSession}`}>
+                                    <p>{subSession.nameSubSession.replace(/_/g, " ")}</p>
+                                </Link>
+                            </TableCell>
                         </TableRow>
 
                     ))}
