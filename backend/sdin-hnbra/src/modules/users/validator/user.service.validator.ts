@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { Op } from "sequelize";
 import { Patent } from "src/repository/models/patent.model";
 import { Users } from "src/repository/models/user.model";

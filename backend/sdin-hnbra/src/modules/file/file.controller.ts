@@ -4,6 +4,7 @@ import { FileService } from './file.service';
 import { File } from 'src/repository/models/file.model';
 import { Response } from 'express';
 import * as path from 'path';
+import { extname } from 'path';
 import { ApiBody, ApiConsumes, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { createReadStream } from 'fs';
 
@@ -55,6 +56,25 @@ export class FileController {
         return await this.fileService.uploadFile(file, idSubSession, description);
     }
 
+    // @Get(':idFile/download')
+    // async downloadFile(@Param('idFile') idFile: number, @Res() res: Response) {
+    //     const file = await this.fileService.downloadFile(idFile);
+    //     if (!file) {
+    //         throw new NotFoundException('File not found');
+    //     }
+
+    //     res.setHeader('Content-Type', 'application/pdf');
+    //     res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
+    //     // res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
+
+    //     // const stream = createReadStream(file.path);
+    //     // stream.pipe(res);
+
+    //     return res.sendFile(file.path);
+    // }
+
+
+
     @Get(':idFile/download')
     async downloadFile(@Param('idFile') idFile: number, @Res() res: Response) {
         const file = await this.fileService.downloadFile(idFile);
@@ -62,15 +82,39 @@ export class FileController {
             throw new NotFoundException('File not found');
         }
 
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
-        // res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
+        const fileExtension = extname(file.nameFile).toLowerCase();
+        let contentType: string;
 
-        // const stream = createReadStream(file.path);
-        // stream.pipe(res);
+        // Defina o Content-Type baseado na extensão do arquivo
+        switch (fileExtension) {
+            case '.pdf':
+                contentType = 'application/pdf';
+                break;
+            case '.jpg':
+            case '.jpeg':
+                contentType = 'image/jpeg';
+                break;
+            case '.png':
+                contentType = 'image/png';
+                break;
+            case '.txt':
+                contentType = 'text/plain';
+                break;
+            case '.zip':
+                contentType = 'application/zip';
+                break;
+            // Adicione mais tipos de conteúdo conforme necessário
+            default:
+                contentType = 'application/octet-stream'; // Tipo genérico para arquivos desconhecidos
+        }
+
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
 
         return res.sendFile(file.path);
     }
+
+
 
     @Get(':idFile/view')
     async viewFile(@Param('idFile') name: string, @Res() res: Response) {
