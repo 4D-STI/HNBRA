@@ -16,7 +16,7 @@ export class FileController {
         FileInterceptor('file', {
             fileFilter: (req, file, callback) => {
                 // Permitir apenas arquivos PDF e imagens JPEG/JPG/PNG
-                const allowedExtensions = /pdf|odp|doc|xls|txt|zip|aao/;
+                const allowedExtensions = /pdf|odp|doc|xls|txt|zip|odt|ods/;
                 const extname = path.extname(file.originalname).toLowerCase();
 
                 if (!allowedExtensions.test(extname)) {

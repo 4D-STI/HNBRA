@@ -1,10 +1,9 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Op } from 'sequelize';
+import { literal } from 'sequelize';
 import { SubSession } from 'src/repository/models/subSession.model ';
 import { Session } from 'src/repository/models/session.model';
 import { UpdateSubSessionDto } from './dto/update-sub-session';
-import { SearchSubSessionDto } from './dto/search-sub-session.dto';
 
 
 
@@ -113,7 +112,7 @@ export class SubSessionService {
         const message = `SubSeção inexistente!
     Atributos pesquisados: ${Object.keys(where).map(key => key.toUpperCase())}`
 
-        const user = await this.subSessionRepository.findAll({ where: { idSession: idSession, status: 'active' }, order: [['idSubSession', 'ASC']] })
+        const user = await this.subSessionRepository.findAll({ where: { idSession: idSession, status: 'active' }, order: [[literal(`SUBSTRING(REPLACE("nameSubSession",' ', ''), 1, 7)`), 'ASC']] })
 
         if (user.length === 0) {
             throw new BadRequestException(message)
