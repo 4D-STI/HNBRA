@@ -1,6 +1,5 @@
 const organograma = 'ORGANOGRAMA.PDF'
 const cartaServico = 'CARTA-SERVICO-25ABR202.PDF'
-const acoesProgromas = 'Acoes-e-Programas-Servico-Social-Hospitalar_SAS-H_AGO2024.pdf'
 const ramais = 'LISTA_RAMAIS_HNBRA-03DEZ.PDF'
 const tomadaDeContaTCE = 'CIRC-8-2022-TCE-057.ZIP'
 const regimetoInterno = 'REGIMENTOINTERNO.pdf'
@@ -44,7 +43,7 @@ const mainMenu = [
   { name: 'Heráldica', title: 'Menu Principal', href: '#' },
   { name: 'Alterar Senha do Zimbra', title: 'Menu Principal', href: '#' },
   { name: 'Relação Usuários Zimbra', title: 'Menu Principal', href: '#' },
-  { name: 'Ações e Programas', title: 'Menu Principal', href: `/api/files/${acoesProgromas}/view ` },
+  { name: 'Ações e Programas', title: 'Menu Principal', href: '/dashboard/subSessionFileList?item=ACOES_E_PROGRAMAS' },
   { name: 'Ramais HNBra', title: 'Menu Principal', href: `/api/files/${ramais}/view` },
 ]
 
