@@ -52,7 +52,7 @@ const mainMenu = [
 const internalUse = [
   { name: 'Modelos', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=11&teste=Modelos' }, //ITEM = ID
   { name: 'Tomada de Contas Especial (TCE)', title: 'Uso Interno', href: `/dashboard/subSessionFileList?item=Tomada%20de%20Contas%20Especial%20(TCE)` }, //ALTERAR, PENSAR DE QUE FORMA IRA FAZER? TALVEZ OUTRO ENDPOIN
-  { name: 'Ordens Internas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=10&teste=ORDEM%20INTERENAS' },
+  { name: 'Ordens Internas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=10&teste=ORDENS%20INTERNAS' },
   { name: 'Regimento Interno', title: 'Uso Interno', href: `/api/files/${regimetoInterno}/view` },
   { name: 'Regulamento', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=REGULAMENTO HNBRA' },
   { name: 'Licitações e Contratos', title: 'Uso Interno', href: '/dashboard/subSessionFileList?item=LICITACOES_E_CONTRATOS' },
