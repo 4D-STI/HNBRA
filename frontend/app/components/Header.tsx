@@ -29,17 +29,23 @@ export default function Header() {
                         </div>
                     </Link> */}
                     <Link href={"/"}>
-                        <div id="container-logo-titulo" className="flex items-center">
+                        <div id="container-logo-titulo" className="flex 
+                     items-center">
                             <Image
                                 src={LogoHnbra}
                                 alt="Logo"
-                                className="w-30 h-22" //REDIMENCIONAR
+                                className="w-30 h-22 mr-4" //REDIMENCIONAR
                                 priority
                             />
-                            <h1
-                                className="text-3xl font-bold"
-                            > Hospital Naval de Brasília
-                            </h1>
+
+                            <div id='logo-text-container' className='flex flex-col'>
+                                <h1
+                                    className="text-3xl font-bold"
+                                > Hospital Naval de Brasília
+                                </h1>
+
+                                <span>{`"A Saúde Naval no Planalto Central"`}</span>
+                            </div>
                         </div>
                     </Link>
 
@@ -83,7 +89,7 @@ export default function Header() {
                     <div id="container-titulo-2" className="flex flex-col px-1 h-10">
                         <p
                             className="text-2xl"
-                        >Menu Principal
+                        >Menu principal
                         </p>
                     </div>
                     <div className="flex items-end ml-auto">

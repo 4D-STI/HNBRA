@@ -3,7 +3,7 @@ const shortcutsOtherAppsData = [
         name: 'siscsrecim',
         icon_path_jpg: '/icons/siscsrecim_icon/0.jpg',
         icon_path_svg: '/icons/siscsrecim_icon/siscsrecim_icon.svg',
-        link: 'https://siscsrecim.cetim.mb'
+        link: 'https://siscsrecim.ctim.mb'
     },
     {
         name: 'zimbra',
@@ -27,7 +27,7 @@ const shortcutsOtherAppsData = [
         name: 'cardápio',
         icon_path_jpg: '/icons/menu_icon/4.jpg',
         icon_path_svg: '/icons/menu_icon/menu_icon.svg',
-        link: 'pdf/cardapio.pdf'
+        link: `/api/files/CARDAPIO.pdf/view`
     },
     {
         name: 'safin',
