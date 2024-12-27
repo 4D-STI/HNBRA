@@ -93,9 +93,9 @@ export function NavigationMenuDemo() {
     <NavigationMenu>
       <NavigationMenuList>
 
-        {/* Diretoria */}
+        {/* Direção */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-blue-900 text-white font-bold">Diretoria</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-blue-900 text-white font-bold">Setores</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
@@ -111,9 +111,9 @@ export function NavigationMenuDemo() {
           </NavigationMenuContent>
         </NavigationMenuItem>
       
-        {/* Vice Diretoria */}
+        {/* Vice Direção */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-blue-900 text-white font-bold">Vice Diretoria</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-blue-900 text-white font-bold">Vice Direção</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (

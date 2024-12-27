@@ -3,7 +3,7 @@ import {useDropzone} from 'react-dropzone'
 
 function UploadComponent() {
     // local onde esta os arquivos
-    const onDrop = useCallback(acceptedFiles => {
+    const onDrop = useCallback((acceptedFiles: File[]) => {
         console.log('dropou', acceptedFiles);
         
       }, [])

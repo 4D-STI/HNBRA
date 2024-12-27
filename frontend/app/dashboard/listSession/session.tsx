@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SessionType } from "@/app/types/sessionType"; // Ajuste esse tipo conforme o formato real dos dados
 import {
     Table,
     TableBody,
     TableCell,
-    TableHeader,
+    // TableHeader,
     TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
@@ -17,10 +17,11 @@ interface SessionListProps {
 }
 
 export default function SessionList({ sessions }: SessionListProps) {
+    const router = useRouter();
+    
     if (!sessions) {
         return <div>Carregando...</div>;
     }
-    const router = useRouter();
 
     return (
         <><button

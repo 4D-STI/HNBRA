@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { File } from "../../types/file";
+// import { File } from "../../types/file";
 import {
     Table,
     TableBody,
@@ -12,7 +12,7 @@ import {
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
+    // PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,

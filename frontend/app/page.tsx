@@ -4,12 +4,19 @@ import { Grip } from 'lucide-react';
 import { NavigationMenuDemo } from '@/app/components/utils/shadcn_demo_components/navigation-menu'
 import { CarouselDemo } from './components/utils/shadcn_demo_components/carousel';
 // react
-import { CardWithForm } from './components/utils/shadcn_demo_components/card_with_push';
+import { CardForAdvertisement } from './components/utils/shadcn_demo_components/card_with_ad';
+import { CardForAdvertisementWithoutLink } from './components/utils/shadcn_demo_components/card_with_ad_without_link';
+import { CardWithMultiMedia } from './components/utils/shadcn_demo_components/card_with_multimedia';
+import { CardWithHighlights } from './components/utils/shadcn_demo_components/card_with_highlights';
 import ShortcutsOtherApps from '@/app/components/shortcuts/ShortcutsOtherApps'
-import Link from 'next/link';
+// import Link from 'next/link';
 
 
 export default function Home() {
+
+  const anuncio1 = "Para suporte de TI, abra chamado via SisCSRECIM"
+  const anuncio2 = "Limite para emissão de empenhos: 30DEZ2024"
+  const anuncio3 = "O Arnault será descontinuado até 31DEZ2024"
 
   return (
 
@@ -31,7 +38,7 @@ export default function Home() {
 
         <NavigationMenuDemo />
 
-        <div id="container-userManager-link" className="py-2 px-8 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
+        {/* <div id="container-userManager-link" className="py-2 px-8 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
           <Link href="/dashboard/userManager">
             <p>Gerenciamento de Usuários</p>
           </Link>
@@ -41,7 +48,7 @@ export default function Home() {
           <Link href="/dashboard/filesManagement">
             <p>Gerenciamento de Arquivos</p>
           </Link>
-        </div>
+        </div> */}
 
       </div>
 
@@ -64,25 +71,52 @@ export default function Home() {
       <div id='c-3-container' className='flex flex-col flex-grow flex-shrink w-full h-2/6 mt-4'>
 
         <div id='c-3-content-container' className='flex h-full'>
-          {/* praça padrão */}
-          <div id="praca-padrao" className="w-4/12 ml-8">
-            <span>
-              Praça padrão
-            </span>
 
-            <CardWithForm />
+          {/* praças e servidor civil padrão */}
+          <div id="anuncios-multimidia" className="w-6/12 px-6 bg-green-100">
+
+            <div id="multimedia-title-container" className='mb-2'>
+              Praças e Servidor Civil Padrão
+            </div>
+
+            <div id="multimedia-content-container" className="flex flex-row gap-4">
+              <CardWithHighlights/>
+              <CardWithHighlights/>
+              <CardWithHighlights/>
+              <CardWithHighlights/>
+            </div>
+
           </div>
-
           {/* anuncios multimidia */}
-          <div id="anuncios-multimidia" className="w-4/12">
-            Anuncios Multimidia
-            <CardWithForm />
+          <div id="anuncios-multimidia" className="w-4/12 px-6 bg-red-100">
+            
+            <div id="multimedia-title-container" className='mb-2'>
+              Anuncios Multimidia
+            </div>
+
+            <div id="multimedia-content-container" className="">
+              {/* todo: fazer carrosel */}
+              <CardWithMultiMedia/>
+            </div>
 
           </div>
 
           {/* anuncios textos*/}
-          <div id="anuncios-texto" className="flex-col items-center w-4/12">
-            Anuncios de textos
+          <div id="anuncios-texto" className="flex-col w-4/12 px-6 bg-yellow-100">
+            
+            <div id="advertisement-title-container" className="mb-2">
+              <h1>Anúncios</h1>
+            </div>
+
+            <div id="anuncio-texto-container" className="flex flex-col gap-1">
+              
+              <CardForAdvertisement session='TI' content={anuncio1} link='https://siscsrecim.ctim.mb'/>
+
+              <CardForAdvertisementWithoutLink session='Administração' content={anuncio2}/>
+              
+              <CardForAdvertisementWithoutLink session='Saúde' content={anuncio3}/>
+            </div>
+            
           </div >
         </div >
 

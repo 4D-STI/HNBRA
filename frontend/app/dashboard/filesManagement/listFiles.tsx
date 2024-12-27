@@ -13,7 +13,9 @@ import {
 } from "@/components/ui/table";
 import Command from "@/app/dashboard/userManager/components/Command";
 // Componentes de icones
-import { Eye, Plus, Download, Trash2, Filter, FileUp, Upload } from "lucide-react";
+import { Eye, Plus, Download, Trash2, Filter, FileUp,
+  //  Upload
+   } from "lucide-react";
 // import useGetAllUsers from "./helpers/dataFetch";
 import UploadComponent from "@/components/custom/uploadManager";
 
