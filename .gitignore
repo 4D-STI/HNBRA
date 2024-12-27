@@ -33,10 +33,6 @@ node_modules/
 # Desconsiderar arquivo com variaveis de ambiente
 .env
 
-<<<<<<< HEAD
-# Desconsiderando arquivos do Docker
-=======
 # Desconsiderar arquivo do docker 
 
->>>>>>> c380d26f0686418d4ba79cca8f824056fa40989e
 bd/
