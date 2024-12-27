@@ -27,7 +27,7 @@ interface SubSessionProps {
 
 export default function ListSubSessionSession({ subSessions: subSessions }: SubSessionProps) {
     const [currentPage, setCurrentPage] = useState(1);
-    const SubSessionsPerPage = 30;
+    const SubSessionsPerPage = 50;
     const totalPages = Math.ceil(subSessions.length / SubSessionsPerPage);
 
     // const handleDownload = (idFile: number) => {

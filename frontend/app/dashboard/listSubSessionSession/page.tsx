@@ -43,7 +43,7 @@ export default function SubSessionPage() {
 
     return (
         <div id="div-list-file">
-            <h1 className="text-2xl font-bold mb-4">Lista de Arquivos {(teste ?? "").replace(/_/g, " ")}</h1>
+            <h1 className="text-2xl font-bold mb-4"> {(teste ?? "").replace(/_/g, " ")}</h1>
             <button
                 className="text-blue-500 underline mb-4"
                 onClick={() => router.back()} // Navegar para a página anterior
