@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import FileList from "../listSubSessionSession/file";
 import { File } from "../../types/file";
@@ -11,30 +11,33 @@ export default function ListPage() {
     const searchParams = useSearchParams();
     const item = searchParams.get("item");
 
-    if (!item) {
-        return <div>Erro: Parâmetro 'item' não fornecido.</div>;
-    }
-
+    
     // busca a rela dos links na api
     // 
-    const fetchData = async () => {
-        const res = await fetch(`${apiBack}/files/nameSub?nomeSubSession=${item}`, {
-            cache: "no-store",
-        });
-
-        if (!res.ok) {
-            console.error("Erro ao buscar arquivos");
-            return [];
-        }
-
-        return res.json();
-    };
-
+    const fetchData = useCallback(
+        async () => {
+            const res = await fetch(`${apiBack}/files/nameSub?nomeSubSession=${item}`, {
+                cache: "no-store",
+            });
+            
+            if (!res.ok) {
+                console.error("Erro ao buscar arquivos");
+                return [];
+            }
+            
+            return res.json();
+        },[item, apiBack]
+    ) 
+    
     const [files, setFiles] = React.useState<File[] | null>(null);
-
+    
     React.useEffect(() => {
         fetchData().then(setFiles);
-    }, [item]);
+    }, [item, fetchData]);
+    
+    if (!item) {
+        return <div>{"Erro: Parâmetro 'item' não fornecido."}</div>;
+    }
 
     if (!files) {
         return <div>Carregando...</div>;

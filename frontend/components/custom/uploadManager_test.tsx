@@ -3,12 +3,6 @@ import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import ProgressBar from './progressBar'; // Componente personalizado para a barra de progresso
 
-interface File {
-    name: string;
-    type: string;
-    size: number;
-}
-
 const API_URL = process.env.API_BASE_URL
 
 function UploadComponent() {

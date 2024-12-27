@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/app/components/Footer"
 import Header from "./components/Header";
+import { Suspense } from "react";
 
 const Rawline = localFont({
   src: "./fonts/rawline-300.ttf",
@@ -31,7 +32,9 @@ export default function RootLayout({
             <main
               id="layout-default-main-content"
               className="flex-grow flex-shrink overflow-y-auto bg-blue-100 w-screen h-screen">
-              {children}
+              <Suspense>
+                {children}
+              </Suspense>
             </main>
         <footer id="layout-default-footer-container" className="min-h-24">
           {/* footer padrão */}

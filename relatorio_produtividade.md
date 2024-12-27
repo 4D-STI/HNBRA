@@ -47,7 +47,7 @@
     *   Express
     *   Typescript
     *   Tokenização: jwt
-    *   Criptografia: bcrypt
+    *   Criptografia: bcryptjs
     *   Validação: joi
     *   Testes: jest
     *   Testes: mocha
