@@ -32,7 +32,7 @@ export function CardForAdvertisement({session, content, link}: CardForAdvertisem
       <Card className="w-[400px] h-[80px]">
         <CardHeader>
           <CardTitle>{session}</CardTitle>
-          <CardDescription className="underline underline-offset-4 hover:text-blue-600">{content}</CardDescription>
+          <CardDescription className="hover:underline underline-offset-4 hover:text-blue-600">{content}</CardDescription>
         </CardHeader>
       </Card>
     </Link>
