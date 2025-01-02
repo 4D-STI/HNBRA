@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import { File } from "../../types/file";
+import { IconButton } from '@mui/material'; // Usando Material UI como exemplo
+import DownloadIcon from '@mui/icons-material/Download';
+
 import {
     Table,
     TableBody,
@@ -59,7 +62,7 @@ export default function FileList({ files }: FileListProps) {
                 <TableHeader className="bg-gray-100">
                     <TableRow>
                         <TableCell className="text-left px-4 py-2 font-bold">Arquivo</TableCell>
-                        <TableCell className="text-left px-4 py-2 font-bold">Descrição</TableCell>
+                        <TableCell className="text-left px-4 py-2 font-bold">Download</TableCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -69,11 +72,13 @@ export default function FileList({ files }: FileListProps) {
                             className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
                         >
                             <TableCell className="text-left px-4 py-2">{file.nameFile.slice(0, -4)}</TableCell>
-                            <TableCell
-                                className="text-left px-4 py-2 text-blue-600 cursor-pointer hover:underline"
-                                onClick={() => handleDownload(file.idFile, file.previewOnly)}
-                            >
-                                {file.description}
+                            <TableCell className="text-left px-4 py-2">
+                                <IconButton
+                                    onClick={() => handleDownload(file.idFile, file.previewOnly)}
+                                    aria-label="Download"
+                                >
+                                    <DownloadIcon className="text-blue-600" />
+                                </IconButton>
                             </TableCell>
                         </TableRow>
                     ))}

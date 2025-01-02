@@ -13,29 +13,29 @@ export default function SubSessionPage() {
     const teste = searchParams.get("teste");
     const router = useRouter();
 
-    
+
     const fetchData = useCallback(
         async () => {
             const res = await fetch(`${apiBack}/subSession/session?idSession=${item}`, {
                 cache: "no-store",
             });
-            
+
             if (!res.ok) {
                 console.error("Erro ao buscar arquivos");
                 return [];
             }
-            
+
             return res.json();
-        },[item, apiBack]        
+        }, [item, apiBack]
     );
-    
+
     const [subSessions, setsubSessions] = React.useState<SubSessionType[] | null>(null);
-    
-    
+
+
     React.useEffect(() => {
         fetchData().then(setsubSessions);
     }, [item, fetchData]);
-    
+
     if (!subSessions) {
         return <div>Carregando...</div>;
     }
@@ -46,7 +46,7 @@ export default function SubSessionPage() {
 
     return (
         <div id="div-list-file">
-            <h1 className="text-2xl font-bold mb-4">Lista de Arquivos {(teste ?? "").replace(/_/g, " ")}</h1>
+            <h1 className="text-2xl font-bold mb-4">{(teste ?? "").replace(/_/g, " ")}</h1>
             <button
                 className="text-blue-500 underline mb-4"
                 onClick={() => router.back()} // Navegar para a página anterior
