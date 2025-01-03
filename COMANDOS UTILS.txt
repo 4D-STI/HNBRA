@@ -1,0 +1,25 @@
+winpty docker exec -it db-dev bash
+
+//PUXAR ESTRUTURA E DADOS DO DB (FAZER BACKUP)
+pg_dump -U postgres "sdin-hnbra" > /var/lib/postgresql/data/backuo_windows_302124.sql
+
+//PUXAR BACKUP
+psql -U postgres "sdin-hnbra" -f /opt/caminho/arquivo.sql
+
+//SERVIÇO DIRETO NO SERVIDO(PODENDO FECHAR CONSOLE ONDE LOCALMENTE)
+npm install -g pm2
+
+pm2 start main.js --name nome-da-app
+# ou, se estiver usando npm:
+pm2 start npm --name nome-da-app -- start
+
+pm2 status
+
+pm2 stop nome-da-app
+
+pm2 delete nome-da-app
+
+pm2 startup
+
+//OLHAR LOGS EM TEMPO REAL
+pm2 logs nome-da-app
