@@ -26,7 +26,7 @@ export class FileService {
 
     async viewFile(name: string): Promise<File | null> {
 
-        return this.fileValidator.existsFileName(name);
+        return this.fileValidator.existsFileName(this.fileValidator.removeAcento(name));
     }
 
     async uploadFile(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
