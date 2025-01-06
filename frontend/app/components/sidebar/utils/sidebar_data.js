@@ -5,7 +5,7 @@ const acoesProgramas = 'ACOES-E-PROGRAMAS-SERVICO-SOCIAL-HOSPITALAR_SAS-H_AGO202
 const ramais = 'LISTA_RAMAIS_HNBRA-03DEZ_0.PDF'
 // const tomadaDeContaTCE = 'CIRC-8-2022-TCE-057.ZIP'
 const regimetoInterno = 'REGIMENTOINTERNO.PDF'
-const lgpd = 'LGPD.pdf'
+const lgpd = 'LGPD.PDF'
 const autoridadeNacionalDeProtecaoDeDados = 'AUTORIDADE_NACIONAL_DE_PROTECAO_DE_DADOS.PDF'
 // const cartaDaTerra = 'CARTADATERRA.pdf'
 const pgrss = 'PGRSS.PDF'
@@ -39,11 +39,10 @@ const formularioDeSolicitacaoDeAntimicrobianos = 'FORMULARIO_DE_SOLICITACAO_DE_A
 const mainMenu = [
   { name: 'Dashboard', title: 'Menu Principal', href: '/dashboard' },
   { name: 'Organograma', title: 'Menu Principal', href: `/api/files/${organograma}/view` },
-  { name: 'Diretores', title: 'Menu Principal', href: '#' },
+  { name: 'Diretores', title: 'Menu Principal', href: '/dashboard/diretores' },
   { name: 'Carta de Serviços ao Usuário', title: 'Menu Principal', href: `/api/files/${cartaServico}/view` },
-  { name: 'Diretores', title: 'Menu Principal', href: '#' },
-  { name: 'Heráldica', title: 'Menu Principal', href: '#' },
-  { name: 'Alterar Senha do Zimbra', title: 'Menu Principal', href: '#' },
+  { name: 'Heráldica', title: 'Menu Principal', href: '/dashboard/heraldica' },
+  { name: 'Alterar Senha do Zimbra', title: 'Menu Principal', href: 'https://kc.score.ctim.mb/realms/score2-dev/protocol/openid-connect/auth?client_id=score2-frontend&amp;redirect_uri=https%3A%2F%2Fapp.score.ctim.mb%2F&amp;state=32a5be6b-a3e5-45c9-ac4a-db91ad3f86e0&amp;response_mode=fragment&amp;response_type=code&amp;scope=openid&amp;nonce=00abb' },
   { name: 'Relação Usuários Zimbra', title: 'Menu Principal', href: `/api/files/${relacaoUsuarioZimbra}/view` },
   { name: 'Ações e Programas', title: 'Menu Principal', href: `/api/files/${acoesProgramas}/view` },
   { name: 'Ramais HNBra', title: 'Menu Principal', href: `/api/files/${ramais}/view` },
@@ -75,7 +74,7 @@ const neturnProgram = [
 ]
 
 const internalControl = [
-  { name: 'Plano de Integridade da MB', title: 'Controle Interno', href: '#' }, //REVISAR,
+  { name: 'Plano de Integridade da MB', title: 'Controle Interno', href: '/dashboard/planoIntegridadeMB' },
 ]
 
 const LGPD = [
@@ -84,43 +83,41 @@ const LGPD = [
 ]
 
 const sustainability = [
-  { name: 'Carta da Terra', title: 'Sustentabilidade', href: '#' }, //marinha.mill
-  { name: 'Cartilha de Educação Ambiental da DPC', title: 'Sustentabilidade', href: '#' },//marinha.mill
-  { name: 'Lei Nº 9605/1998 - dos Crimes Ambientais', title: 'Sustentabilidade', href: '#' },//marinha.mill
-  { name: 'Livro Defesa e Meio Ambiente - MD', title: 'Sustentabilidade', href: '#' },//marinha.mill
+  { name: 'Carta da Terra', title: 'Sustentabilidade', href: 'https://www.marinha.mil.br/hnbra/node/91' }, //marinha.mill
+  { name: 'Cartilha de Educação Ambiental da DPC', title: 'Sustentabilidade', href: 'https://www.marinha.mil.br/hnbra/node/87' },//marinha.mill
+  { name: 'Lei Nº 9605/1998 - dos Crimes Ambientais', title: 'Sustentabilidade', href: 'https://www.marinha.mil.br/hnbra/node/88' },//marinha.mill
+  { name: 'Livro Defesa e Meio Ambiente - MD', title: 'Sustentabilidade', href: 'https://www.marinha.mil.br/hnbra/node/86' },//marinha.mill
   { name: 'PGRSS - Plano de Gerenciamento dos Resíduos de Serviços de Saúde', title: 'Sustentabilidade', href: `/api/files/${pgrss}/view` },
 ]
 
 const itSection = [
-  { name: 'Autoridade Certificadora', title: 'Sessão de Informática', href: '#' },
+  { name: 'Autoridade Certificadora', title: 'Sessão de Informática', href: 'http://download.ca/' },
   { name: 'Investigação de Perfis Falsos', title: 'Sessão de Informática', href: `/api/files/${investifacaoDePerfisFalsos}/view` },
   { name: 'Manuais', title: 'Sessão de Informática', href: `/api/files/${manuaisInfo}/view` },
-  { name: 'Portal MB', title: 'Sessão de Informática', href: '#' },
+  { name: 'Portal MB', title: 'Sessão de Informática', href: 'https://internet.ctim.mb/score/login.php' },
 ]
 
 const healthSupportService = [
-  { name: 'Serviço Social Hospitalar', title: 'Serviços de Apoio a Saúde', href: '#' },
-  { name: 'Serviço de Fonoaudiologia', title: 'Serviços de Apoio a Saúde', href: '#' },
-  { name: 'Serviço de Medicina Física e Reabilitação', title: 'Serviços de Apoio a Saúde', href: '#' },
-  { name: 'Serviço de Nutrição e Dietética', title: 'Serviços de Apoio a Saúde', href: '#' },
-  { name: 'Serviço de Psicologia', title: 'Serviços de Apoio a Saúde', href: '#' },
+  { name: 'Serviço Social Hospitalar', title: 'Serviços de Apoio a Saúde', href: '/dashboard/ServicoSocialHospitalar' },
+  { name: 'Serviço de Fonoaudiologia', title: 'Serviços de Apoio a Saúde', href: '/dashboard/ServicoDeFonoaudiologo' },
+  { name: 'Serviço de Medicina Física e Reabilitação', title: 'Serviços de Apoio a Saúde', href: '/dashboard/ServicodeMedicinaFisicaReabilitacao' },
+  { name: 'Serviço de Nutrição e Dietética', title: 'Serviços de Apoio a Saúde', href: '/dashboard/ServicoNutricaoDietetica' },
+  { name: 'Serviço de Psicologia', title: 'Serviços de Apoio a Saúde', href: '/dashboard/ServicoPsicologia' },
   { name: 'Serviço Odontológicos', title: 'Serviços de Apoio a Saúde', href: `/api/files/${servicoOdontologico}/view` },
   { name: 'Padronização das Dietas Enterais do HNBra 2024', title: 'Serviços de Apoio a Saúde', href: `/api/files/${padronizacaoDasDietas}/view` },
 ]
 
 const pharmacyLaboratoryDivision = [
-  { name: 'Serviço de Análises Clínicas', title: 'Divisão de Farmácia e Laboratório', href: '#' },
+  { name: 'Serviço de Análises Clínicas', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/ServicoAnalisesClinicas' },
   { name: 'Serviço de Farmácia Hospitalar', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/subSessionFileList?item=SERVICO_DE_FARMACIA_HOSPITALAR' },
   {
     name: 'Setor de Dispersação de Medicamentos (SeDiMe)', title: 'Divisão de Farmácia e Laboratório', href: `/api/files/${sedime}/view`
   },
-  { name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: '#' }, //APAGAR
-
 ]
 
 const CCIH = [
   { name: 'Formulário de Solicitação de Antimicrobianos', title: 'CCIH', href: `/api/files/${formularioDeSolicitacaoDeAntimicrobianos}/view` },
-  { name: 'Protocolos', title: 'CCIH', href: '#' }, //VIZUALIZAR NOVAMENTE
+  { name: 'Protocolos', title: 'CCIH', href: '/dashboard/protocoloCCIH' },
   { name: 'Comissão de Óbito', title: 'CCIH', href: '/dashboard/subSessionFileList?item=COMISSAO_DE_OBITO' },
   { name: 'NSP', title: 'CCIH', href: '/dashboard/subSessionFileList?item=NSP' },
 ]

@@ -27,7 +27,7 @@ export function CardWithMultiMedia() {
     <Card className="w-[450px]">
 
       {/* todo: link para lista com todas as edições da revista */}
-      <Link href={"#"}>
+      <Link href={"/dashboard/subSessionFileList?item=NOTICIAS_DO_CERRADO"}>
         <Image
           src={noticiasDoCerradoCapa}
           alt={"capa da revista notícias do cerrado"}
@@ -37,7 +37,7 @@ export function CardWithMultiMedia() {
       </Link>
 
       {/* todo: link para edição especifica ndc17 */}
-      <Link href={"#"}>
+      <Link href={"/dashboard/subSessionFileList?item=NOTICIAS_DO_CERRADO"}>
         <CardHeader>
           <CardTitle>Revista Notícias do Cerrado</CardTitle>
           <CardDescription
@@ -47,7 +47,6 @@ export function CardWithMultiMedia() {
           </CardDescription>
         </CardHeader>
       </Link>
-      
     </Card>
   )
 }

@@ -15,8 +15,8 @@ const pracaPadrao = [
     },
     {
         name: 'Jéssica',
-        sigla: '2ºSG-CN',
-        patente: 'Sargento',
+        sigla: 'CB-EF',
+        patente: 'Cabo',
         description: 'Destaque em liderança',
         image: '/images/praca_padrao/cb_jessica.jpeg'
     },

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import FileList from "../listSubSessionSession/file";
 import { File } from "../../types/file";
@@ -23,30 +23,29 @@ export default function ListPage() {
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<string | null>(null);
 
-    React.useEffect(() => {
+    const fetchData = useCallback(async () => {
         if (!url) {
             setError("Erro: Parâmetro 'item' ou 'teste' não fornecido.");
             setLoading(false);
             return;
         }
 
-        const fetchData = async () => {
-            try {
-                const res = await fetch(url, { cache: "no-store" });
-                if (!res.ok) {
-                    throw new Error("Erro ao buscar arquivos");
-                }
-                const data = await res.json();
-                setFiles(data);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : "Erro desconhecido");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
+        try {
+            const res = await fetch(url, { cache: "no-store" });
+            if (!res.ok) throw new Error("Erro ao buscar arquivos");
+            const data = await res.json();
+            setFiles(data);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Erro desconhecido");
+        } finally {
+            setLoading(false);
+        }
     }, [url]);
+
+    // Executa a busca ao carregar ou quando a URL muda
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     if (loading) return <div>Carregando...</div>;
     if (error) return <div>{error}</div>;
