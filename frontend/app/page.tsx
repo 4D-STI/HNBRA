@@ -23,8 +23,8 @@ export default function Home() {
 
     <>
 
-      {/* C1 - atalhos, navegação, suporte */}
-      <div id="c-1-container" className="flex h-10 mt-2 max-w-screen items-center justify-center mx-auto relative">
+      {/* C1 - acesso rápido | bono do dia (geral, sede) | clinicas credenciadas | plano do dia | cardapio */}
+      <div id="c-1-container" className="flex h-10 mt-2 max-w-screen items-center justify-center mx-auto relative bg-red-100">
 
         <div id="container-shortcut-button" className="flex px-8 py-2 ml-12 items-center hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer absolute left-0">
 
