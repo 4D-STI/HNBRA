@@ -1,5 +1,4 @@
 // import Image from "next/image";
-import { Grip } from 'lucide-react';
 // shadcn: navigation-menu
 // import { NavigationMenuDemo } from '@/app/components/utils/shadcn_demo_components/navigation-menu'
 import { CarouselDemo } from './components/utils/shadcn_demo_components/carousel';
@@ -12,30 +11,43 @@ import { CardWithHighlights } from './components/utils/shadcn_demo_components/ca
 import {pracaPadrao,servidorCivilPadrao} from '@/app/components/utils/shadcn_demo_components/data/card_with_highlights_data'
 
 import ShortcutsOtherApps from '@/app/components/shortcuts/ShortcutsOtherApps'
+import ShortcutButton from '@/app/components/shortcuts/ShortcutButton'
+import BonoGeralButton from './components/shortcuts/BonoGeralButton';
+import BonoSedeButton from './components/shortcuts/BonoSedeButton';
+import ClinicasCredenciadasButton from './components/shortcuts/ClinicasCredenciadasButton';
+import PlanoDoDiaButton from './components/shortcuts/PlanoDoDiaButton';
+import CardapioButton from './components/shortcuts/CardapioButton';
 
 export default function Home() {
 
   const anuncio1 = "Para suporte de TI, abra chamado via SisCSRECIM"
-  const anuncio2 = "Limite para emissão de empenhos: 30DEZ2024"
+  const anuncio2 = "24JAN é o prazo para encaminhar subsídios para aquisição de material permanente no 1SEM2025."
   const anuncio3 = "O Arnault será descontinuado até 31DEZ2024"
 
   return (
 
     <>
 
-      {/* C1 - acesso rápido | bono do dia (geral, sede) | clinicas credenciadas | plano do dia | cardapio */}
-      <div id="c-1-container" className="flex h-10 mt-2 max-w-screen items-center justify-center mx-auto relative bg-red-100">
+      {/* C1 */}
+      <div id="c-1-container" className="flex flex-row py-1 max-w-screen items-center justify-center mx-auto relative space-x-4">
 
-        <div id="container-shortcut-button" className="flex px-8 py-2 ml-12 items-center hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer absolute left-0">
+        {/* shortcut button */}
+        <ShortcutButton/>
 
-          <div id="container-shortcut-icon" className="mr-4">
-            <Grip />
-          </div>
+        {/* bono geral */}
+        <BonoGeralButton />
 
-          <div id="shortcut-title">
-            <p className='truncate'>Acesso rápido</p>
-          </div>
-        </div>
+        {/* bono sede */}
+        <BonoSedeButton />
+
+        {/* clinicas credenciadas */}
+        <ClinicasCredenciadasButton/>
+
+        {/* plano do dia */}
+        <PlanoDoDiaButton/>
+
+        {/* cardapio */}
+        <CardapioButton/>
 
         {/* <NavigationMenuDemo /> */}
 
