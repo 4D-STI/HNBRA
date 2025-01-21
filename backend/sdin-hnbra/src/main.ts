@@ -23,14 +23,18 @@ async function bootstrap() {
 
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('HNBRA API')
+    .setDescription('The HNBRA API description')
     .setVersion('1.0')
-    .addBearerAuth()
-    .addTag('cats')
+    .addBasicAuth({ type: 'http', scheme: 'basic' }, 'basic') // Define o BasicAuth
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
   await app.listen(API_PORT || 3002);
 }
