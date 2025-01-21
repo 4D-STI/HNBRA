@@ -133,6 +133,23 @@ export class FileController {
         // return res.sendFile(file.path);
     }
 
+    @Get(':idFile/viewLast')
+    async viewFilelast(@Param('idFile') id: number, @Res() res: Response) {
+        const file = await this.fileService.viewFileLast(id);
+        if (!file) {
+            throw new NotFoundException('File not found');
+        }
+
+        res.setHeader('Content-Type', 'application/pdf');
+        // res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
+        res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
+
+        const stream = createReadStream(file.path);
+        stream.pipe(res);
+
+        // return res.sendFile(file.path);
+    }
+
 
     @Put('update')
     @ApiBody({
@@ -187,5 +204,51 @@ export class FileController {
         @Query('idSubSession') idSubSession: number) {
         return this.fileService.getAllFileSubSession(nomeSubSession, idSubSession);
     }
+
+
+    @Post(':idSubSession/upload-mp3')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            fileFilter: (req, file, callback) => {
+                // Permitir apenas arquivos MP3
+                const allowedExtensions = /mp3|mp4/;
+                const extname = path.extname(file.originalname).toLowerCase();
+
+                if (!allowedExtensions.test(extname)) {
+                    return callback(new BadRequestException('Somente arquivos com extensão .mp3 são permitidos'), false);
+                }
+
+                callback(null, true);
+            },
+        }),
+    )
+    @ApiConsumes('multipart/form-data')
+    @ApiOperation({ summary: 'Upload de arquivo MP3' })
+    @ApiBody({
+        description: 'Arquivo MP3 a ser enviado',
+        type: 'multipart/form-data',
+        required: true,
+        schema: {
+            type: 'object',
+            properties: {
+                file: {
+                    type: 'string',
+                    format: 'binary',
+                },
+                description: {
+                    type: 'string',
+                    description: 'Descrição do arquivo',
+                },
+            },
+        },
+    })
+    async uploadMp3File(
+        @UploadedFile() file: Express.Multer.File,
+        @Param('idSubSession') idSubSession: number,
+        @Body('description') description: string,
+    ): Promise<File> {
+        return await this.fileService.uploadMp3File(file, idSubSession, description);
+    }
+
 
 }
