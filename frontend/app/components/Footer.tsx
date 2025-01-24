@@ -4,7 +4,7 @@ export default function Footer() {
             <address id="footer-text-container" className="flex flex-row not-italic text-sm gap-8 p-2">
                 <h1 className="">Hospital Naval de Brasília</h1>
                 <p>|</p>
-                <p className="">SEPS Q 711/911 - Asa Sul, Brasília - DF, 73390-115</p>
+                <p className="">SEPS Q 711/911 - Asa Sul, Brasília - DF, 70390-115</p>
                 <p>|</p>
                 <p className="">(61) 3445-7303</p>
                 <p>|</p>
