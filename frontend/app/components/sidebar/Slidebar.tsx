@@ -14,9 +14,13 @@ import { AlignJustify } from 'lucide-react';
 export default function SlideBar() {
   return (
     <Sheet>
-      <SheetTrigger className="p-2">
+      <SheetTrigger className="flex flex-row gap-x-2 hover:bg-blue-300 transition duration-200 rounded-full px-4 items-center h-10">
         {/* icone do menu */}
         <AlignJustify />
+
+        <div id="container-titulo-2" className="">
+            <p className="text-2xl">Menu principal</p>
+        </div>
       </SheetTrigger>
 
       {/* conteudo */}

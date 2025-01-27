@@ -13,7 +13,7 @@ export default function NotFound() {
       className="flex flex-col items-center align-center h-screen text-white bg-sky-700"
     >
       <h2 id="404-text" className="text-3xl mt-20">
-        404 - NADA A ESTIBORDO
+        404 - NADA A VISTA
       </h2>
 
       <div id="animation-container">

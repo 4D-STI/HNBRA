@@ -4,7 +4,7 @@ import * as React from "react"
 import {
   Card,
   // CardContent,
-  CardDescription,
+  // CardDescription,
   // CardFooter,
   CardHeader,
   CardTitle,
@@ -21,33 +21,42 @@ import Link from "next/link"
 //   SelectTrigger,
 //   SelectValue,
 // } from "@/components/ui/select"
+const URL_NOTICIAS_DO_CERRADO = "https://www.ceimbra.mb/cerrado"
+// const URL_NOTICIAS_DO_CERRADO_API = "/dashboard/subSessionFileList?SubSessionFileList_name=NOTICIAS_DO_CERRADO"
 
 export function CardWithMultiMedia() {
   return (
-    <Card className="w-[450px]">
+    <Card className="w-full h-[291px]">
 
       {/* todo: link para lista com todas as edições da revista */}
-      <Link href={"/dashboard/subSessionFileList?item=NOTICIAS_DO_CERRADO"}>
-        <Image
-          src={noticiasDoCerradoCapa}
-          alt={"capa da revista notícias do cerrado"}
-          height={200}
-          className="rounded-t-xl"
-        />
+      <Link href={URL_NOTICIAS_DO_CERRADO} target="_blank">
+        <div
+          className="relative w-full h-2/3 bg-red-400 rounded-t-xl"
+        >
+          <Image
+            src={noticiasDoCerradoCapa}
+            alt={"capa da revista notícias do cerrado"}
+            // height={200}
+            fill
+            objectFit="cover"
+            className="rounded-t-xl"
+          />
+        </div>
       </Link>
 
       {/* todo: link para edição especifica ndc17 */}
-      <Link href={"/dashboard/subSessionFileList?item=NOTICIAS_DO_CERRADO"}>
+      <Link 
+        href={URL_NOTICIAS_DO_CERRADO}
+        target="_blank"
+        className="flex h-1/3 flex-col hover:underline underline-offset-4 hover:text-blue-600 font-bold items-center justify-center"
+      >
         <CardHeader>
           <CardTitle>Revista Notícias do Cerrado</CardTitle>
-          <CardDescription
+          {/* <CardDescription
             className="hover:underline underline-offset-4 hover:text-blue-600"
-          >
-            Última edição: NdC17 | DEZEMBRO | 2024 | Com7ºDN
-          </CardDescription>
+          >Revista Notícias do Cerrado</CardDescription> */}
         </CardHeader>
       </Link>
-
     </Card>
   )
 }

@@ -2,9 +2,7 @@
 import { ContrastIcon } from 'lucide-react';
 import Login from "@/app/components/login/Login";
 import Image from "next/image";
-import Slidebar from "@/app/components/sidebar/Slidebar";
 import LogoHnbra from "@/public/images/Logo_HNBra.png";
-import Search from "@/app/components/search/Search";
 import React, { useState } from 'react';
 import MobileMenu from './mobilemenu/Mobilemenu';
 import Link from 'next/link';
@@ -16,9 +14,9 @@ export default function Header() {
         setIsOpen(!isOpen);
     };
 
-    return (
+    return (    
         <header className="shadow-sm text-blue-900 bg-white">
-            <div id="container" className="container max-w-screen-xl mx-auto p-2">
+            <div id="container" className="flex container max-w-screen-xl mx-auto p-2 h-28 items-center">
                 <div id="container-top" className="flex justify-between items-center p-">
                     {/* <Link href={"/"}>
                         <div id="container-titulo-2" className="flex flex-col px-4">
@@ -81,21 +79,6 @@ export default function Header() {
                 </div>
 
                 <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
-
-                <div id="container-low" className="flex md:flex-row items-center p-">
-                    <div id="container-menu" className='flex hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer'>
-                        <Slidebar />
-                    </div>
-                    <div id="container-titulo-2" className="flex flex-col px-1 h-10">
-                        <p
-                            className="text-2xl"
-                        >Menu principal
-                        </p>
-                    </div>
-                    <div className="flex items-end ml-auto">
-                        <Search />
-                    </div>
-                </div>
             </div>
         </header>
     );

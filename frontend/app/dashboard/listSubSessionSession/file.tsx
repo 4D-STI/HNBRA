@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { File } from "../../types/file";
 import { IconButton } from '@mui/material'; // Usando Material UI como exemplo
 import DownloadIcon from '@mui/icons-material/Download';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import {
     Table,
@@ -21,10 +22,17 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import Link from "next/link";
 // import Link from "next/link";
 
 interface FileListProps {
     files: File[];
+}
+
+interface iHandleDownload {
+    idFile?: number,
+    nameFile?: string,
+    previewOnly?: boolean
 }
 
 export default function FileList({ files }: FileListProps) {
@@ -32,14 +40,14 @@ export default function FileList({ files }: FileListProps) {
     const filesPerPage = 15;
     const totalPages = Math.ceil(files.length / filesPerPage);
 
-    const handleDownload = (idFile: number, previewOnly?: boolean) => {
-        // const fileUrl = `${process.env.NEXT_PUBLIC_API_BACK}/files/${idFile}/download/`;
-        const fileUrl = `/api/files/${idFile}/download/`;
-        console.log("Iniciando download...");
-        if (previewOnly) {
-            window.open(fileUrl, "_blank");
+    const handleDownload = (params: iHandleDownload) => {
+        const FILE_URL_DOWNLOAD = `${process.env.NEXT_PUBLIC_API_BACK}/files/${params.idFile}/download/`;
+        const FILE_URL_VIEW = `https://www.hnbra.mb:3002/files/${params.nameFile}/view`;
+        if (params.previewOnly) {
+            window.open(FILE_URL_VIEW, "_blank");
         } else {
-            window.location.href = fileUrl
+            window.open(FILE_URL_DOWNLOAD, "_blank");
+
         }
     };
 
@@ -58,32 +66,55 @@ export default function FileList({ files }: FileListProps) {
 
     return (
         <div id="lis-file-comp">
-            <Table className="w-full">
-                <TableHeader className="bg-gray-100">
-                    <TableRow>
-                        <TableCell className="text-left px-4 py-2 font-bold">Arquivo</TableCell>
-                        <TableCell className="text-left px-4 py-2 font-bold">Download</TableCell>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {paginatedFiles.map((file, index) => (
-                        <TableRow
-                            key={file.idFile}
-                            className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                        >
-                            <TableCell className="text-left px-4 py-2">{file.nameFile.slice(0, -4)}</TableCell>
-                            <TableCell className="text-left px-4 py-2">
+                <Table className="w-full">
+                    <TableHeader className="bg-gray-100">
+                        <TableRow>
+                            {/* <TableCell className="text-left px-4 py-2 font-bold">Arquivo</TableCell>
+                            <TableCell className="text-left px-4 py-2 font-bold">Download</TableCell> */}
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody className="flex flex-col">
+                        {paginatedFiles.map((file, index) => (
+                            
+                            <div key={index} className="flex bg-white rounded-xl mb-1">
+                                <Link 
+                                    key={index}
+                                    href={`https://www.hnbra.mb:3002/files/${file.nameFile}/view`}
+                                    target="_blank"
+                                    className="flex flex-row w-full items-end justify-between hover:bg-blue-300 rounded-xl"
+                                >
+                                    <TableRow key={file.idFile}>
+                                        <TableCell className="text-left px-4 py-2">{file.nameFile.slice(0, -4)}</TableCell>
+                                    </TableRow>
+                                    <IconButton
+                                        // onClick={() => handleDownload({nameFile: file.nameFile, previewOnly: true})}
+                                        aria-label="vizualização"
+                                        sx={{
+                                            '&:hover': {
+                                                bgcolor:"OKLCH(0.809 0.105 251.813)"
+                                            },
+                                            'borderRadius': '30%'
+                                        }}
+                                    >
+                                        <VisibilityIcon className="text-blue-600" />
+                                    </IconButton>
+                                </Link>
                                 <IconButton
-                                    onClick={() => handleDownload(file.idFile, file.previewOnly)}
-                                    aria-label="Download"
+                                    onClick={() => handleDownload({idFile:file.idFile, previewOnly:false})}
+                                    aria-label="download"
+                                    sx={{
+                                        '&:hover': {
+                                            bgcolor:"OKLCH(0.809 0.105 251.813)"
+                                        },
+                                        'borderRadius': '30%'
+                                    }}
                                 >
                                     <DownloadIcon className="text-blue-600" />
                                 </IconButton>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                            </div>
+                        ))}
+                    </TableBody>
+                </Table>
 
             <Pagination className="mt-4">
                 <PaginationContent>

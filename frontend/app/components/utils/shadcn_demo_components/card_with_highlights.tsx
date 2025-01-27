@@ -27,7 +27,7 @@ export function CardWithHighlights({pracaPadrao, servidorCivilPadrao}: CardWithH
   
   if (pracaPadrao) {
     return (
-      <Card className="w-[300px] h-[291px]">
+      <Card className="w-[300px] h-[291px] shadow-xl">
 
           {/* container foto */}
           <div 
@@ -81,7 +81,7 @@ export function CardWithHighlights({pracaPadrao, servidorCivilPadrao}: CardWithH
 
   if (servidorCivilPadrao) {
     return (
-      <Card className="w-[300px]">
+      <Card className="w-[300px] h-[291px]">
         
         {/* foto container */}
         <div id="servidor-padraoimage-container" className="relative w-full h-2/3 bg-red-100 rounded-t-xl">
