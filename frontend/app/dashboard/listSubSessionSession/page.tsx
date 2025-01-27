@@ -10,7 +10,7 @@ export default function SubSessionPage() {
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     const searchParams = useSearchParams();
     const item = searchParams.get("item");
-    const teste = searchParams.get("teste");
+    const SUBSESSION_NAME = searchParams.get("subsession_name");
     const router = useRouter();
 
 
@@ -46,7 +46,7 @@ export default function SubSessionPage() {
 
     return (
         <div id="div-list-file">
-            <h1 className="text-2xl font-bold mb-4">{(teste ?? "").replace(/_/g, " ")}</h1>
+            <h1 className="text-2xl font-bold mb-4">{(SUBSESSION_NAME ?? "").replace(/_/g, " ")}</h1>
             <button
                 className="text-blue-500 underline mb-4"
                 onClick={() => router.back()} // Navegar para a página anterior
