@@ -64,7 +64,7 @@ export default function ListSubSessionSession({ subSessions: subSessions }: SubS
                         ><TableCell className="text-left px-2 py-2">
                                 {/* <TableCell className="text-left px-4 py-2">{subSession.nameSubSession}</TableCell> */}
                                 {/* <TableCell className="text-left px-4 py-2">{subSession.idSubSession}</TableCell> */}
-                                <Link href={`/dashboard/subSessionFileList?teste=${subSession.idSubSession}`}>
+                                <Link href={`/dashboard/subSessionFileList?SubSessionFileList_id=${subSession.idSubSession}`}>
                                     <p>{subSession.nameSubSession.replace(/_/g, " ")}</p>
                                 </Link>
                             </TableCell>

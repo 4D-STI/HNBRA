@@ -11,8 +11,8 @@ import {
    
   export default function CommandDemo() {
     return (
-      <Command className="rounded-lg border shadow-md md:min-w-[450px] bg-blue-200">
-        <CommandInput placeholder="Pesquisar..." />
+      <Command className="rounded-lg border shadow-md mr-20 w-80">
+        <CommandInput placeholder="CTRL+K = Pesquisar Documento" />
       </Command>
     )
   }

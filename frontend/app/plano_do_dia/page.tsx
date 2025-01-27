@@ -2,22 +2,26 @@
 
 import React, { useCallback, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import FileList from "../listSubSessionSession/file";
-import { File } from "../../types/file";
+import FileList from "@/app/dashboard/listSubSessionSession/file";
+import { File } from "@/app/types/file";
+
 
 export default function ListPage() {
     //Lista SubSession a partir de nome ou id
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     const searchParams = useSearchParams();
     const router = useRouter();
-    const SUBSESSION_NAME = searchParams.get("SubSessionFileList_name");
-    const SUBSESSION_ID = searchParams.get("SubSessionFileList_id");
+    const item = searchParams.get("item");
+    // const teste = searchParams.get("teste");
+    const PLANO_DO_DIA_ID = '6';
+
+    const handleGoBack = () => window.history.length > 1 ? router.back() : router.push('/')
 
     const url = React.useMemo(() => {
-        if (SUBSESSION_NAME) return `${apiBack}/files/nameSub?nomeSubSession=${SUBSESSION_NAME}`;
-        if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
+        if (item) return `${apiBack}/files/nameSub?nomeSubSession=${item}`;
+        if (PLANO_DO_DIA_ID) return `${apiBack}/files/nameSub?idSubSession=${PLANO_DO_DIA_ID}`;
         return null;
-    }, [apiBack, SUBSESSION_NAME, SUBSESSION_ID]);
+    }, [apiBack, item, PLANO_DO_DIA_ID]);
 
     const [files, setFiles] = React.useState<File[]>([]); // Inicializado como array vazio
     const [loading, setLoading] = React.useState(true);
@@ -25,7 +29,7 @@ export default function ListPage() {
 
     const fetchData = useCallback(async () => {
         if (!url) {
-            setError("Erro: Parâmetro 'item' ou 'teste' não fornecido.");
+            setError("Erro: Parâmetro 'item' ou 'ID' não fornecido.");
             setLoading(false);
             return;
         }
@@ -51,16 +55,19 @@ export default function ListPage() {
     if (error) return <div>{error}</div>;
 
     return (
-        <div id="div-list-file">
+        <div id="container-plano-do-dia" className="flex flex-col justify-center items-center">
+            
             <h1 className="text-2xl font-bold mb-4">
-                Lista de Arquivos {(SUBSESSION_NAME ?? "").replace(/_/g, " ")}
+                Lista de Arquivos {(item ?? "").replace(/_/g, " ")}
             </h1>
+            
             <button
-                className="text-blue-500 underline mb-4"
-                onClick={() => router.back()} // Navegar para a página anterior
+                className="hover:text-blue-500 hover:underline mb-4"
+                onClick={handleGoBack} // Navegar para a página anterior
             >
                 voltar
             </button>
+            
             <FileList files={files} />
         </div>
     );

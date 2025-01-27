@@ -3,14 +3,28 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { readFileSync } from 'fs';
+
+
 
 async function bootstrap() {
+
+  // produção
+  // const httpsOptions = {
+  //   key: readFileSync('./src/cors/cert/www.hnbra.mb.key'),
+  //   cert: readFileSync('./src/cors/cert/www.hnbra.mb.pem')
+  // }
+
+  // produção
+  // const app = await NestFactory.create(AppModule, { httpsOptions });
+  // desenvolvimento
   const app = await NestFactory.create(AppModule);
   // Configura CORS
   app.enableCors({
-    // origin: ["http://localhost:3001", "http://localhost:80", "http://localhost:3000"]
-    origin: ["http://172.21.44.24", "http://172.21.44.24:80", "http://172.21.44.24:3000", "http://172.21.44.24:3001",
-      "http://localhost:3001", "http://localhost:3000"
+    origin: [
+      "http://localhost:3001",
+      "http://hnbra.mb:3000", "http://172.21.44.24:3000",
+      "https://hnbra.com", "https://www.hnbra.com", "https://172.21.44.24"
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept',

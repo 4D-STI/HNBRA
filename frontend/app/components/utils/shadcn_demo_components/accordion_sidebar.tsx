@@ -5,7 +5,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import LinkSlideBar from "@/app/components/sidebar/components/LinkCustom";
-// links data
 import * as sideBarLinks from "@/app/components/sidebar/utils/sidebar_data";
 
 export function AccordionSideBar() {

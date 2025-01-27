@@ -15,19 +15,19 @@ const shortcutsOtherAppsData = [
         name: 'sigdem',
         icon_path_jpg: '/icons/sigdem_icon/2.jpg',
         icon_path_svg: '/icons/sigdem_icon/sigdem_icon.svg',
-        link: 'https://clti-com7dn1.intranet.mb/webmailredirect-sf.nsf'
+        link: 'https://clti-com7dn1.intranet.mb/hosbra/aplica/sigdem20/hosbra.nsf?opendatabase'
     },
     {
         name: 'rumb',
         icon_path_jpg: '/icons/rumb_icon/3.jpg',
         icon_path_svg: '/icons/rumb_icon/rumb_icon.svg',
-        link: 'httpd://dabm.mb/intranet/rumb'
+        link: 'http://www.dabm.mb/intranet/rumb'
     },
     {
         name: 'cardápio',
         icon_path_jpg: '/icons/menu_icon/4.jpg',
         icon_path_svg: '/icons/menu_icon/menu_icon.svg',
-        link: `/api/files/CARDAPIO.pdf/view`
+        link: `https://www.hnbra.mb:3002/files/7/viewLast`
     },
     {
         name: 'safin',
@@ -39,7 +39,7 @@ const shortcutsOtherAppsData = [
         name: 'quaestor',
         icon_path_jpg: '/icons/quaestor_icon/6.jpg',
         icon_path_svg: '/icons/quaestor_icon/quaestor_icon.svg',
-        link: 'https://www.quaestor.mb'
+        link: 'http://www.quaestor.mb'
     },
     {
         name: 'mb share',
@@ -51,13 +51,13 @@ const shortcutsOtherAppsData = [
         name: 'sinais',
         icon_path_jpg: '/icons/sinais_icon/8.jpg',
         icon_path_svg: '/icons/sinais_icon/sinais_icon.svg',
-        link: 'https://www.sinais.dsm.mb'
+        link: 'https://sinais.dsm.mb/'
     },
     {
         name: 'regulação',
         icon_path_jpg: '/icons/regulacao_icon/9.jpg',
         icon_path_svg: '/icons/regulacao_icon/regulacao_icon.svg',
-        link: 'https://www.regulacao.dsm.mb/Auditoria'
+        link: 'https://regulacao.dsm.mb/login/telalogin'
     },
     {
         name: 'sisbol',
@@ -69,13 +69,13 @@ const shortcutsOtherAppsData = [
         name: 'sismat',
         icon_path_jpg: '/icons/sismat_icon/11.jpg',
         icon_path_svg: '/icons/sismat_icon/sismat_icon.svg',
-        link: 'https://www.sisbens.dfm.mb:8080/sismat'
+        link: 'http://www.sisbens.dfm.mb:8080/sismat/'
     },
     {
         name: 'fusmaweb',
         icon_path_jpg: '/icons/fusmaweb_icon/12.jpg',
         icon_path_svg: '/icons/fusmaweb_icon/fusmaweb_icon.svg',
-        link: 'https://www.demografico.dsm.mb/catalagosbasicos/public/consultarUsuarioSSM.xhtml'
+        link: 'https://demografico.dsm.mb/catalogosbasicos/public/consultarUsuarioSSM.xhtml'
     },
     {
         name: 'sigsaude',
@@ -93,7 +93,7 @@ const shortcutsOtherAppsData = [
         name: 'catálogo',
         icon_path_jpg: '/icons/catalogue_icon/15.jpg',
         icon_path_svg: '/icons/catalogue_icon/catalogue_icon.svg',
-        link: 'https://catalogo2.dadm.mb:8434/novocat'
+        link: 'https://catalogo2.dadm.mb:8443/novocat/'
     },
     {
         name: 'sedime',
@@ -102,16 +102,17 @@ const shortcutsOtherAppsData = [
         link: 'https://172.21.44.11'
     },
     {
-        name: 'bilhete de pagamento',
+        name: 'BP Online',
         icon_path_jpg: '/icons/payment_ticket_icon/17.jpg',
         icon_path_svg: '/icons/payment_ticket_icon/payment_ticket_icon.svg',
         link: 'https://bponline.papem.mar.mil.br/bponline/pages'
     },
     {
         name: 'serviços gerais',
-        icon_path_jpg: '/icons/general_service_icon/18.jpg',
-        icon_path_svg: '/icons/general_service_icon/general_service_icon.svg',
-        link: 'pdf/dsg.pdf'
+        icon_path_jpg: '/icons/dsg_icon/18.jpg',
+        icon_path_svg: '/icons/dsg_icon/dsg_icon.svg',
+        // link: 'pdf/dsg.pdf'
+        link: '/dashboard/subSessionFileList?SubSessionFileList_id=169'
     },
     {
         name: 'sispes',
@@ -135,19 +136,25 @@ const shortcutsOtherAppsData = [
         name: 'vivace connect',
         icon_path_jpg: '/icons/vivace_connect_icon/23.jpg',
         icon_path_svg: '/icons/vivace_connect_icon/vivace_connect_icon.svg',
-        link: '172.21.44.12:5555'
+        link: 'http://172.21.44.12:5555/'
     },
     {
         name: 'vivace ris',
         icon_path_jpg: '/icons/vivace_ris_icon/24.jpg',
         icon_path_svg: '/icons/vivace_ris_icon/vivace_ris_icon.svg',
-        link: '172.21.44.12/idce'
+        link: 'http://172.21.44.12/idce/'
     },
     {
         name: 'cervello',
         icon_path_jpg: '/icons/cervello_icon/25.jpg',
         icon_path_svg: '/icons/cervello_icon/cervello_icon.svg',
         link: 'https://www.cervelloesm.com.br/MV'
+    },
+    {
+        name: 'hinos',
+        icon_path_jpg: '/icons/hino_icon/26.jpg',
+        icon_path_svg: '/icons/hino_icon/hino_icon.svg',
+        link: '/dashboard/subSessionFileList?SubSessionFileList_id=168'
     },
 ]
 
