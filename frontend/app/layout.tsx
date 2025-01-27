@@ -12,8 +12,12 @@ const Rawline = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "sdin-hnbra",
-  description: "Sistema Digital Intranet do Hospital Naval de Brasília",
+  title: "www.hnbra.mb",
+  description: "Hospital Naval de Brasília",
+  authors: [
+    {name: "devHB - Helber Brito", url: "https://www.linkedin.com/in/devhb/",},
+    {name: "devBreno - Breno Marcio", url: "https://www.linkedin.com/in/breno-marcio-medeiros/"}
+    ]
 };
 
 export default function RootLayout({
@@ -33,7 +37,7 @@ export default function RootLayout({
         {/* body dinamico */}
         <main
           id="layout-default-main-content"
-          className="flex-grow flex-shrink overflow-y-auto bg-blue-100 w-screen h-screen">
+          className="flex-grow flex-shrink overflow-y-auto bg-blue-100 w-screen">
           <Suspense>
             {children}
           </Suspense>
