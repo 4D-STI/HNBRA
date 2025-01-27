@@ -3,7 +3,7 @@
 // import { NavigationMenuDemo } from '@/app/components/utils/shadcn_demo_components/navigation-menu'
 import { CarouselDemo } from './components/utils/shadcn_demo_components/carousel';
 // react
-import { CardForAdvertisement } from './components/utils/shadcn_demo_components/card_with_ad';
+// import { CardForAdvertisement } from './components/utils/shadcn_demo_components/card_with_ad';
 import { CardForAdvertisementWithoutLink } from './components/utils/shadcn_demo_components/card_with_ad_without_link';
 import { CardWithMultiMedia } from './components/utils/shadcn_demo_components/card_with_multimedia';
 import { CardWithHighlights } from './components/utils/shadcn_demo_components/card_with_highlights';
@@ -11,43 +11,60 @@ import { CardWithHighlights } from './components/utils/shadcn_demo_components/ca
 import {pracaPadrao,servidorCivilPadrao} from '@/app/components/utils/shadcn_demo_components/data/card_with_highlights_data'
 
 import ShortcutsOtherApps from '@/app/components/shortcuts/ShortcutsOtherApps'
-import ShortcutButton from '@/app/components/shortcuts/ShortcutButton'
+// import ShortcutButton from '@/app/components/shortcuts/ShortcutButton'
 import BonoGeralButton from './components/shortcuts/BonoGeralButton';
 import BonoSedeButton from './components/shortcuts/BonoSedeButton';
 import ClinicasCredenciadasButton from './components/shortcuts/ClinicasCredenciadasButton';
-import PlanoDoDiaButton from './components/shortcuts/PlanoDoDiaButton';
+import PlanoDoDiaPage from './components/shortcuts/PlanoDoDiaPage';
 import CardapioButton from './components/shortcuts/CardapioButton';
+import Slidebar from "@/app/components/sidebar/Slidebar";
+import Search from "@/app/components/search/Search";
 
 export default function Home() {
 
-  const anuncio1 = "Para suporte de TI, abra chamado via SisCSRECIM"
-  const anuncio2 = "24JAN é o prazo para encaminhar subsídios para aquisição de material permanente no 1SEM2025."
-  const anuncio3 = "O Arnault será descontinuado até 31DEZ2024"
+  const ANUNCIO_TI = "É proibido conectar qualquer dispositivo eletrônico nas Estações de Trabalho."
+  const ANUNCIO_ADMINISTRACAO = "O Conselho de Gestão será realizado dia 12FEV às 0830P, no Centro de Estudos."
+  const ANUNCIO_SAUDE = "O Arnault será descontinuado até 31JAN2025."
 
   return (
 
     <>
 
       {/* C1 */}
-      <div id="c-1-container" className="flex flex-row py-1 max-w-screen items-center justify-center mx-auto relative space-x-4">
+      <div id="c-1-container" className="flex flex-row py-1 max-w-screen items-center space-x-4 bg-blue-200 justify-between">
 
-        {/* shortcut button */}
-        <ShortcutButton/>
+        <div id='menu-principal-container' className='ml-20'>
+        {/* slide bar */}
+        <Slidebar/>
+        </div>
 
-        {/* bono geral */}
-        <BonoGeralButton />
+        <div id='nav-button-container' className='flex flex-row'>
+          {/* shortcut button */}
+          {/* <ShortcutButton/> */}
 
-        {/* bono sede */}
-        <BonoSedeButton />
 
-        {/* clinicas credenciadas */}
-        <ClinicasCredenciadasButton/>
+          {/* bono geral */}
+          <BonoGeralButton />
 
-        {/* plano do dia */}
-        <PlanoDoDiaButton/>
+          {/* bono sede */}
+          <BonoSedeButton />
 
-        {/* cardapio */}
-        <CardapioButton/>
+          {/* clinicas credenciadas */}
+          <ClinicasCredenciadasButton/>
+
+          {/* plano do dia */}
+          <PlanoDoDiaPage/>
+
+          {/* cardapio */}
+          <CardapioButton />
+        </div>
+
+        <div id="busca-container" className=''>
+          {/* busca */}
+          <Search/>
+        </div>
+
+        
 
         {/* <NavigationMenuDemo /> */}
 
@@ -86,10 +103,10 @@ export default function Home() {
         <div id='c-3-content-container' className='flex h-full'>
 
           {/* praças e servidor civil padrão */}
-          <div id="anuncios-multimidia" className="w-6/12 px-6">
+          <div id="praca-sc-padrao-container" className="w-6/12 px-6">
 
-            <div id="multimedia-title-container" className='mb-2 font-bold'>
-              Praças e Servidor Civil Padrão
+            <div id="praca-sc-padrao-title-container" className='mb-2 font-bold'>
+              Praças e SC Padrão
             </div>
 
             <div id="multimedia-content-container" className="flex flex-row gap-4">
@@ -106,10 +123,10 @@ export default function Home() {
 
           </div>
           {/* anuncios multimidia */}
-          <div id="anuncios-multimidia" className="w-4/12 px-6">
+          <div id="anuncios-multimidia" className="w-2/12 px-6">
             
             <div id="multimedia-title-container" className='mb-2 font-bold'>
-              Anuncios Multimidia
+              Multimídia
             </div>
 
             <div id="multimedia-content-container" className="">
@@ -123,16 +140,18 @@ export default function Home() {
           <div id="anuncios-texto" className="flex-col w-4/12 px-6">
             
             <div id="advertisement-title-container" className="mb-2 font-bold">
-              <h1>Anúncios</h1>
+              <h1>Informações Gerais</h1>
             </div>
 
-            <div id="anuncio-texto-container" className="flex flex-col gap-1">
+            <div id="anuncio-texto-container" className="flex flex-col gap-3">
               
-              <CardForAdvertisement session='TI' content={anuncio1} link='https://siscsrecim.ctim.mb'/>
+              {/* <CardForAdvertisement session='TI' content={ANUNCIO_TI} link='https://siscsrecim.ctim.mb'/> */}
 
-              <CardForAdvertisementWithoutLink session='Administração' content={anuncio2}/>
+              <CardForAdvertisementWithoutLink session='Administração' content={ANUNCIO_ADMINISTRACAO}/>
+
+              <CardForAdvertisementWithoutLink session='Saúde' content={ANUNCIO_SAUDE}/>
               
-              <CardForAdvertisementWithoutLink session='Saúde' content={anuncio3}/>
+              <CardForAdvertisementWithoutLink session='TI' content={ANUNCIO_TI} />
             </div>
             
           </div >
