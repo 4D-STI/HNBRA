@@ -10,14 +10,14 @@ export default function ListPage() {
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     const searchParams = useSearchParams();
     const router = useRouter();
-    const item = searchParams.get("item");
-    const teste = searchParams.get("teste");
+    const SUBSESSION_NAME = searchParams.get("SubSessionFileList_name");
+    const SUBSESSION_ID = searchParams.get("SubSessionFileList_id");
 
     const url = React.useMemo(() => {
-        if (item) return `${apiBack}/files/nameSub?nomeSubSession=${item}`;
-        if (teste) return `${apiBack}/files/nameSub?idSubSession=${teste}`;
+        if (SUBSESSION_NAME) return `${apiBack}/files/nameSub?nomeSubSession=${SUBSESSION_NAME}`;
+        if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
         return null;
-    }, [apiBack, item, teste]);
+    }, [apiBack, SUBSESSION_NAME, SUBSESSION_ID]);
 
     const [files, setFiles] = React.useState<File[]>([]); // Inicializado como array vazio
     const [loading, setLoading] = React.useState(true);
@@ -53,7 +53,7 @@ export default function ListPage() {
     return (
         <div id="div-list-file">
             <h1 className="text-2xl font-bold mb-4">
-                Lista de Arquivos {(item ?? "").replace(/_/g, " ")}
+                Lista de Arquivos {(SUBSESSION_NAME ?? "").replace(/_/g, " ")}
             </h1>
             <button
                 className="text-blue-500 underline mb-4"
