@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function BonoGeralButton () {
+export default function PlanoDoDiaButton () {
     return (
         <div id="container-plano-do-dia-button" className="hover:bg-blue-300 px-8 py-2 transition duration-200 rounded-full cursor-pointer">
 
