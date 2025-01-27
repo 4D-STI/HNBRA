@@ -57,7 +57,7 @@ export default function SubSessionList({ subSessions }: SubSessionListProps) {
                     <TableRow key={index}
                         className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                         <TableCell className="text-left px-4 py-2 hover:bg-gray-50" >
-                            <Link href={`/dashboard/subSessionFileList?item=${group.nameSubSession}`}>
+                            <Link href={`/dashboard/subSessionFileList?SubSessionFileList_name=${group.nameSubSession}`}>
                                 <p>{group.nameSubSession.replace(/_/g, " ")}</p>
                             </Link>
                         </TableCell>

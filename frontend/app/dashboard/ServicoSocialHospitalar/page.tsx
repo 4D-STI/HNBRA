@@ -20,7 +20,7 @@ export default function ServicoDeFonoaudiologo() {
       </p>
       <p>&nbsp;</p>
       <p>
-        <a className="text-blue-500 underline hover:text-blue-700" href="/api/files/ACOES-E-PROGRAMAS-SERVICO-SOCIAL-HOSPITALAR_SAS-H_AGO2024.PDF/view">Ações e Programas do serviço social hospitalar</a>
+        <a className="text-blue-500 underline hover:text-blue-700" href="https://www.hnbra.mb:3002/files/ACOES-E-PROGRAMAS-SERVICO-SOCIAL-HOSPITALAR_SAS-H_AGO2024.PDF/view">Ações e Programas do serviço social hospitalar</a>
       </p>
       <p>&nbsp;</p>
       <p><strong>Atividades:</strong></p>

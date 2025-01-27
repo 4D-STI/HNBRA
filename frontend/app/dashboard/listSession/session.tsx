@@ -37,7 +37,7 @@ export default function SessionList({ sessions }: SessionListProps) {
                             className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
                         >
                             <TableCell className="text-left px-4 py-2 hover:bg-gray-50">
-                                <Link href={`/dashboard/listSubSessionSession?item=${session.idSession}&teste=${session.nameSession}`} onClick={() => console.log(session.idSession)}
+                                <Link href={`/dashboard/listSubSessionSession?item=${session.idSession}&subsession_name=${session.nameSession}`} onClick={() => console.log(session.idSession)}
                                 >
                                     <p>{session.nameSession}</p>
                                 </Link>
