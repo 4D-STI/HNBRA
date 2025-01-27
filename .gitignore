@@ -38,3 +38,6 @@ bd/
 
 # Desconsiderar arquivos compactados
 *.7z
+
+# Desconsiderar diretorio de certificado
+cert
