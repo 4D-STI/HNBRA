@@ -13,7 +13,7 @@ async function bootstrap() {
       "http://localhost:3001", "http://localhost:3000"
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Accept',
+    allowedHeaders: ['Content-Type, Accept', 'Authorization']
   });
   // obter porta a partir do .env
   const configService = app.get(ConfigService)
@@ -26,7 +26,15 @@ async function bootstrap() {
     .setTitle('HNBRA API')
     .setDescription('The HNBRA API description')
     .setVersion('1.0')
-    .addBasicAuth({ type: 'http', scheme: 'basic' }, 'basic') // Define o BasicAuth
+    // .addBasicAuth({ type: 'http', scheme: 'basic' }, 'basic') // Define o BasicAuth
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT', // Opcional, apenas para visualização
+      },
+      'JWT-auth', // Nome da referência para segurança
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
