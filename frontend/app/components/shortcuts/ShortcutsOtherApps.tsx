@@ -16,23 +16,23 @@ function ShortcutsOtherApps() {
                     id='shortcut-buttons-main-container'
                     className='flex flex-col items-center justify-center'
                 >
-                    <Button
-                        key={index}
-                        className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 border-2 border-blue-800 rounded-full shadow-lg mt-2'
-                    >
+                    <Link
 
-                        <Link
-                            href={app.link}
-                            target='blank'
+                        href={app.link}
+                        target='blank'
+                    >
+                        <Button
+                            key={index}
+                            className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 border-2 border-blue-800 rounded-full shadow-lg mt-2'
                         >
                             <Image
                                 alt={`logo_${index}`}
-                                src={ app.icon_path_svg || app.icon_path_jpg || DEFAULT_ICON}
+                                src={ app.icon_path_svg ||  app.icon_path_jpg || DEFAULT_ICON}
                                 width={100}
                                 height={100}
                             />
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                     <span className='font-bold text-black text-xs text-wrap mt-1 text-center'>
                         {app.name.toUpperCase()}
                     </span>
