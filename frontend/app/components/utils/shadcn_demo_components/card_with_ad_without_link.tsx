@@ -26,7 +26,11 @@ type CardForAdvertisementType = {
 
 export function CardForAdvertisementWithoutLink({session, content}: CardForAdvertisementType) {
   return (
-      <Card className="w-[400px] h-auto">
+      <Card 
+        className={`flex w-full h-auto border-x-8
+          ${session === 'Administração' ? 'border-x-yellow-500' : session === 'Saúde' ? 'border-x-purple-500' : 'border-x-blue-500'}`
+        }
+      >
         <CardHeader>
           <CardTitle>{session}</CardTitle>
           <CardDescription>{content}</CardDescription>
