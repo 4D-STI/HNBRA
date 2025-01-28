@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, Req, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody } from '@nestjs/swagger';
 
@@ -24,5 +24,23 @@ export class AuthController {
             throw new UnauthorizedException('E-mail ou senha inválidos');
         }
         return this.authService.login(user);
+    }
+
+    @Post('verifyJwt')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                jwt: { type: 'string' }
+            },
+        },
+    })
+    // async login(@Body() body: { email: string; password: string }) {
+    async verifyJwt(@Body('jwt') jwt: string) {
+        const jwtV = await this.authService.verifyJwt(jwt);
+        if (!jwtV) {
+            throw new UnauthorizedException('Jwt Inválido!');
+        }
+        return HttpStatus.OK;
     }
 }

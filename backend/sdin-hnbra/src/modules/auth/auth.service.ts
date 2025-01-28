@@ -1,8 +1,9 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
 import { Users } from 'src/repository/models/user.model';
+import { error } from 'console';
 
 @Injectable()
 export class AuthService {
@@ -41,5 +42,17 @@ export class AuthService {
         return {
             access_token: this.jwtService.sign(payload, { secret: secretKey }),
         };
+    }
+
+    async verifyJwt(jwt: string) {
+        const secretKey = process.env.JWT_SECRET_KEY || 'default_secret_key';
+        try {
+            return {
+                access_token: this.jwtService.verify(jwt, { secret: secretKey }),
+            };
+        }
+        catch (err) {
+            return null;
+        }
     }
 }
