@@ -20,6 +20,7 @@ import { SubSessionModule } from './modules/SubSession/sub-session.module';
 import { FileModule } from './modules/file/file.module';
 import { PatentModule } from './modules/patent/patent.module';
 import { UserPermissionModule } from './modules/userPermission/user-permission.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -49,7 +50,7 @@ import { UserPermissionModule } from './modules/userPermission/user-permission.m
     UsersModule,
     DivisionModule,
     SessionModule,
-    // AuthModule,
+    AuthModule,
     SubSessionModule,
     FileModule,
     PatentModule,
