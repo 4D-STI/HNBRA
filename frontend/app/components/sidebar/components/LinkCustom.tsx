@@ -7,15 +7,16 @@ export type linkCustom = {
   text: string,
   key: number,
   href: string,
-  target: string
+  target: string,
+  linkIndex: number
 }
 
-function LinkSlideBar({text, key, href, target}: linkCustom) {
+function LinkSlideBar({text, href, target, linkIndex}: linkCustom) {
   const textNormalized = idTextConverter(text)
   
     return (
         <Link
-        id={`link-dashboard-${key}`}
+        id={`link-dashboard-${linkIndex}`}
         href={`${href}`}
         className="hover:bg-blue-300 transition duration-200 rounded-full"
         target={target}
