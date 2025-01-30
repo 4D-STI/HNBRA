@@ -1,15 +1,6 @@
-// import Image from "next/image";
-// shadcn: navigation-menu
-// import { NavigationMenuDemo } from '@/app/components/utils/shadcn_demo_components/navigation-menu'
-import { CarouselDemo } from './components/utils/shadcn_demo_components/carousel';
-// react
-// import { CardForAdvertisement } from './components/utils/shadcn_demo_components/card_with_ad';
 import { CardForAdvertisementWithoutLink } from './components/utils/shadcn_demo_components/card_with_ad_without_link';
 import { CardWithMultiMedia } from './components/utils/shadcn_demo_components/card_with_multimedia';
 import { CardWithHighlights } from './components/utils/shadcn_demo_components/card_with_highlights';
-// data
-import {pracaPadrao,servidorCivilPadrao} from '@/app/components/utils/shadcn_demo_components/data/card_with_highlights_data'
-
 import ShortcutsOtherApps from '@/app/components/shortcuts/ShortcutsOtherApps'
 // import ShortcutButton from '@/app/components/shortcuts/ShortcutButton'
 import BonoGeralButton from './components/shortcuts/BonoGeralButton';
@@ -19,6 +10,10 @@ import PlanoDoDiaPage from './components/shortcuts/PlanoDoDiaPage';
 import CardapioButton from './components/shortcuts/CardapioButton';
 import Slidebar from "@/app/components/sidebar/Slidebar";
 import Search from "@/app/components/search/Search";
+
+// data
+import {pracaPadrao,servidorCivilPadrao} from '@/app/components/utils/shadcn_demo_components/data/card_with_highlights_data'
+import SwiperCarousel from './components/carousel/carousel_swiper';
 
 export default function Home() {
 
@@ -92,8 +87,8 @@ export default function Home() {
         </div>
 
         {/* container - banner carousel */}
-        <div id='carousel-container' className='flex flex-row w-1/2 rounded-xl container mx-auto '>
-          <CarouselDemo />
+        <div id='carousel-container' className='flex flex-row w-1/2 h-[350px] rounded-xl container mx-auto mr-6'>
+          <SwiperCarousel/>
         </div>
       </div>
 
