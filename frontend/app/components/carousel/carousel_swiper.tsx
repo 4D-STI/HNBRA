@@ -104,7 +104,7 @@ export default function SwiperCarousel() {
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
-        // navigation
+        navigation
         pagination={{ clickable: true }}
         autoplay={{
           delay: 6000,
