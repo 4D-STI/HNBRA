@@ -11,7 +11,6 @@ import {
   TableRow,
   // TableCaption,
 } from "@/components/ui/table";
-import Command from "./components/Command";
 
 // Mock de usuarios
 // import users_mock from "../utils/mocks/users_mock"
@@ -23,13 +22,12 @@ import useGetAllUsers from "./helpers/dataFetch";
 
 export default function ListUsers() {
 
-  const {users} = useGetAllUsers()
+  const { users } = useGetAllUsers()
 
   return (
     <div className="p-2">
       <div className="flex flex-col md:flex-row items-center justify-center mb-4">
         <div className="relative w-full md:w-80">
-          <Command />
         </div>
         <div className="flex px-4 mt-2 md:mt-0">
           <Filter className="mr-1" />
@@ -43,38 +41,38 @@ export default function ListUsers() {
           {/* Header */}
           <TableHeader className="bg-blue-900 text-gray-50">
             <TableRow>
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Nome
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 NIP
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Departamento
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Seção
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Status
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Permissões
               </TableHead>

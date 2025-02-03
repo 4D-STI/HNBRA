@@ -32,6 +32,7 @@ node_modules/
 
 # Desconsiderar arquivo com variaveis de ambiente
 .env
+.env.dev
 
 # Desconsiderar arquivo do docker 
 bd/
