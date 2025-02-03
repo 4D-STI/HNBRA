@@ -20,7 +20,7 @@ export class FileController {
         FileInterceptor('file', {
             fileFilter: (req, file, callback) => {
                 // Permitir apenas arquivos PDF e imagens JPEG/JPG/PNG
-                const allowedExtensions = /pdf|odp|doc|xls|txt|zip|odt|ods/;
+                const allowedExtensions = /pdf|odp|doc|xls|txt|zip|odt|ods|jpg/;
                 const extname = path.extname(file.originalname).toLowerCase();
 
                 if (!allowedExtensions.test(extname)) {
@@ -32,9 +32,9 @@ export class FileController {
         }),
     )
     @ApiConsumes('multipart/form-data') // Indica que o endpoint consome arquivos
-    @ApiOperation({ summary: 'Upload de arquivo PDF' })
+    @ApiOperation({ summary: 'Upload de arquivo' })
     @ApiBody({
-        description: 'Arquivo PDF a ser enviado',
+        description: 'Extensões aceitas: pdf | odp | doc | xls | txt | zip | odt | ods | jpg',
         type: 'multipart/form-data',
         required: true,
         schema: {
@@ -95,6 +95,8 @@ export class FileController {
                 contentType = 'application/pdf';
                 break;
             case '.jpg':
+                contentType = 'image/jpeg'
+                break;
             case '.jpeg':
                 contentType = 'image/jpeg';
                 break;
