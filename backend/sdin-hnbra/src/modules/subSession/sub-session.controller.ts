@@ -1,10 +1,13 @@
-import { Controller, Post, Body, Get, Put, BadRequestException, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, BadRequestException, Query, UseGuards } from '@nestjs/common';
 import { SubSessionService } from './sub-session.service';
 import { CreateSubSessionDto } from './dto/create-sub-session';
 import { SubSession } from 'src/repository/models/subSession.model ';
 import { UpdateSubSessionDto } from './dto/update-sub-session';
+import { BasicAuthGuard } from 'src/config/basicAuth';
+import { ApiBasicAuth } from '@nestjs/swagger';
 
 @Controller('subSession')
+@ApiBasicAuth('basic')
 export class SubSessionController {
     constructor(private readonly subSessionService: SubSessionService) { }
 
@@ -14,6 +17,7 @@ export class SubSessionController {
     }
 
     @Get()
+    // @UseGuards(BasicAuthGuard)
     async getAllSubSession() {
         return this.subSessionService.getSubSession();
     }

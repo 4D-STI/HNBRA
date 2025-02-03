@@ -30,7 +30,7 @@ export class FileService {
     }
 
     async uploadFile(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
-        if (file.size > 5206700) {
+        if (file.size > 15206700 && !file.originalname.includes(".mp4")) {
             throw new Error('Tamanho do arquivo não suportado.')
         }
         const fileNameExist = await this.fileModel.findOne({ where: { nameFile: this.fileValidator.removeAcento(file.originalname), idSubSession: idSubSession, status: 'true' } });
@@ -114,7 +114,7 @@ export class FileService {
             if (!subSessionSession) {
                 throw new BadRequestException('Subsessão não encontrada.');
             }
-            return this.fileModel.findAll({ where: { idSubSession: subSessionSession.idSubSession, status: "true" } })
+            return this.fileModel.findAll({ where: { idSubSession: subSessionSession.idSubSession, status: "true" }, order: [['idFile', 'DESC']] })
         }
         nomeSubSession = this.fileValidator.removeAcento(nomeSubSession);
         const subSession = await this.subSessionModel.findOne({
@@ -144,5 +144,17 @@ export class FileService {
 
         // await file.destroy();
     }
+
+    async viewFileLast(id: number): Promise<File | null> {
+
+        return this.fileValidator.existsFileNameLast(id);
+    }
+
+
+    async uploadMp3File(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
+
+        return this.uploadFile(file, idSubSession, description);
+    }
+
 
 }

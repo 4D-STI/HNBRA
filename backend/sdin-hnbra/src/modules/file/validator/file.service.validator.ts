@@ -27,7 +27,7 @@ export class FileValidator {
             throw new Error('Subseção/divisão não existe.');
         }
 
-        const directoryPath = path.join(__dirname, '..', '..', '..', '..', 'PDFs', subSession.nameSubSession, session.nameSession,);
+        const directoryPath = path.join('/opt/PDFs', subSession.nameSubSession, session.nameSession,);
         await fs.ensureDir(directoryPath);
 
         return directoryPath;
@@ -79,6 +79,18 @@ export class FileValidator {
         const file = await this.fileRepository.findOne({ where: { nameFile: name, status: 'true' } });
         if (!file) {
             throw new BadRequestException('Arquivo não encontrado.')
+        }
+
+        return file;
+    }
+
+    async existsFileNameLast(id: number) {
+        const file = await this.fileRepository.findOne({ where: { idSubSession: id, status: 'true' }, order: [['idFile', 'DESC']] });
+        if (!file) {
+            throw new BadRequestException('Arquivo não encontrado.')
+        }
+        if (!file.nameFile.endsWith('.PDF')) {
+            throw new BadRequestException('Arquivo não é PDF.');
         }
 
         return file;
