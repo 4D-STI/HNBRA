@@ -16,10 +16,11 @@ import { FormEvent, useState } from "react";
 import { User2Icon } from "lucide-react";
 import UserValidation from '@/app/components/utils/validations/userValidation';
 import passwordValidation from "../utils/validations/passwordValidation";
+import loginNip from "./LoginValidator";
 
 export default function Login() {
   // const router = useRouter();
-  const [user, setUser] = useState<string>('');
+  const [nip, setUser] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
@@ -31,20 +32,52 @@ export default function Login() {
     setPasswordErrors([]);
     setUserErrors([]);
 
-    const userValidationErrors = UserValidation(user);
-    if (userValidationErrors.length > 0) {
-      setUserErrors(userValidationErrors);
-      return;
+    // const userValidationErrors = UserValidation(user);
+    // if (userValidationErrors.length > 0) {
+    //   setUserErrors(userValidationErrors);
+    //   return;
+    // }
+
+    // try {
+    //   // const token = await login(user, password);
+    //   const token = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/login`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ nip, password }),
+    //   });
+    //   console.log(JSON.stringify({ nip, password }))
+    //   if (!token.ok) {
+    //     console.log(`${process.env.NEXT_PUBLIC_API_BACK}/auth/login`)
+    //     throw new Error('Erro ao fazer login. Verifique suas credenciais.');
+    //   }
+    //   console.log('Login bem-sucedido! Token:', token);
+    // } catch (err) {
+    //   alert(`Erro ao fazer login. Verifique suas credenciais. ${err}`);
+    // }
+
+    try {
+      const token = await loginNip(nip, password);
+      console.log('Login bem-sucedido! Token:', token);
+      window.location.reload();
+
+    } catch (err) {
+      alert('Erro ao fazer login. Verifique suas credenciais.');
     }
 
-    const passwordValidationErrors = passwordValidation(password);
-    if (passwordValidationErrors.length > 0) {
-      setPasswordErrors(passwordValidationErrors);
-      return;
-    }
 
-    console.log('valido'); 
-    
+    // const passwordValidationErrors = passwordValidation(password);
+    // if (passwordValidationErrors.length > 0) {
+    //   setPasswordErrors(passwordValidationErrors);
+    //   return;
+    // }
+
+
+
+    console.log('valido');
+
 
     // const response = await fetch('/api/login', {
     //   method: 'POST',
@@ -92,10 +125,10 @@ export default function Login() {
                 alt="entrada de dados: identificador NIP (numero de identificação pessoal)"
                 placeholder="8 caracteres numéricos"
                 type="text"
-                pattern="[0-9]*" 
+                // pattern="[0-9]*"
                 id="user"
                 name="user"
-                value={user}
+                value={nip}
                 onChange={(e) => setUser(e.target.value)}
                 required
                 className="col-span-3"

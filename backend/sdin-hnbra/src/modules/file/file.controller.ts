@@ -1,18 +1,21 @@
-import { Controller, Post, Param, UseInterceptors, UploadedFile, Body, Get, Res, NotFoundException, Put, Delete, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Param, UseInterceptors, UploadedFile, Body, Get, Res, NotFoundException, Put, Delete, Query, BadRequestException, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 import { File } from 'src/repository/models/file.model';
 import { Response } from 'express';
 import * as path from 'path';
 import { extname } from 'path';
-import { ApiBody, ApiConsumes, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { createReadStream } from 'fs';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('files')
+@ApiBearerAuth('JWT-auth')
 export class FileController {
     constructor(private readonly fileService: FileService) { }
 
     @Post(':idSubSession/upload')
+    @UseGuards(JwtAuthGuard)
     @UseInterceptors(
         FileInterceptor('file', {
             fileFilter: (req, file, callback) => {
@@ -191,6 +194,7 @@ export class FileController {
     }
 
     @Get()
+    @UseGuards(JwtAuthGuard)
     async getAllSession() {
         return this.fileService.getAllFile();
     }
