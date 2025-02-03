@@ -1,6 +1,3 @@
-import Cookies from 'js-cookie';
-
-
 const loginNip = async (nip: string, password: string) => {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/login`, {

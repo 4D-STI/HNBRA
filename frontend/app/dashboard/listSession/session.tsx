@@ -18,7 +18,6 @@ interface SessionListProps {
 
 export default function SessionList({ sessions }: SessionListProps) {
     const router = useRouter();
-    
     if (!sessions) {
         return <div>Carregando...</div>;
     }
