@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,9 +22,25 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ]
+    },
+    "types": [
+      "node"
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/utils/shadcn_demo_components/types/card_with_highlights_type.js", "app/components/utils/shadcn_demo_components/types/card_with_highlights_type.js", "app/components/carousel/carousel_swiper.tsx", "app/components/carousel/carousel_swiper.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/components/utils/shadcn_demo_components/types/card_with_highlights_type.js",
+    "app/components/utils/shadcn_demo_components/types/card_with_highlights_type.js",
+    "app/components/carousel/carousel_swiper.tsx",
+    "app/components/carousel/carousel_swiper.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

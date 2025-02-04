@@ -14,8 +14,8 @@ import { Input } from "@/components/ui/input";
 import { FormEvent, useState } from "react";
 // import { useRouter } from "next/navigation";
 import { User2Icon } from "lucide-react";
-import UserValidation from '@/app/components/utils/validations/userValidation';
-import passwordValidation from "../utils/validations/passwordValidation";
+// import UserValidation from '@/app/components/utils/validations/userValidation';
+// import passwordValidation from "../utils/validations/passwordValidation";
 import loginNip from "./LoginValidator";
 
 export default function Login() {
@@ -63,7 +63,7 @@ export default function Login() {
       console.log('Login bem-sucedido! Token:', token);
       window.location.reload();
 
-    } catch (err) {
+    } catch {
       alert('Erro ao fazer login. Verifique suas credenciais.');
     }
 

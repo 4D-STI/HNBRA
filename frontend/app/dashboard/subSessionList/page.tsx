@@ -11,7 +11,7 @@ export default function ListPage() {
     const searchParams = useSearchParams();
     const item = searchParams.get("item");
 
-    
+
     // busca a rela dos links na api
     // 
     const fetchData = useCallback(
@@ -19,22 +19,22 @@ export default function ListPage() {
             const res = await fetch(`${apiBack}/files/nameSub?nomeSubSession=${item}`, {
                 cache: "no-store",
             });
-            
+
             if (!res.ok) {
                 console.error("Erro ao buscar arquivos");
                 return [];
             }
-            
+
             return res.json();
-        },[item, apiBack]
-    ) 
-    
+        }, [item, apiBack]
+    )
+
     const [files, setFiles] = React.useState<File[] | null>(null);
-    
+
     React.useEffect(() => {
         fetchData().then(setFiles);
     }, [item, fetchData]);
-    
+
     if (!item) {
         return <div>{"Erro: Parâmetro 'item' não fornecido."}</div>;
     }

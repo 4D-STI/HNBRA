@@ -22,7 +22,7 @@ import useGetAllUsers from "./helpers/dataFetch";
 
 export default function ListUsers() {
 
-  const {users} = useGetAllUsers()
+  const { users } = useGetAllUsers()
 
   return (
     <div className="p-2">
@@ -42,38 +42,38 @@ export default function ListUsers() {
           {/* Header */}
           <TableHeader className="bg-blue-900 text-gray-50">
             <TableRow>
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Nome
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 NIP
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Departamento
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Seção
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Status
               </TableHead>
-              
-              <TableHead 
-              className="text-gray-50 text-left w-1/5"
+
+              <TableHead
+                className="text-gray-50 text-left w-1/5"
               >
                 Permissões
               </TableHead>

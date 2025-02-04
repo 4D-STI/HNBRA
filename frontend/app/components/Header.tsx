@@ -3,18 +3,58 @@ import { ContrastIcon } from 'lucide-react';
 import Login from "@/app/components/login/Login";
 import Image from "next/image";
 import LogoHnbra from "@/public/images/Logo_HNBra.png";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MobileMenu from './mobilemenu/Mobilemenu';
 import Link from 'next/link';
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isLogin, setIslogin] = useState(false);
+    // var isLogin = false;
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+    // useEffect(() => {
+    //     if (typeof window !== "undefined" && localStorage.getItem("token")) {
+    //         setIslogin(true);
+    //     }
+    // }, []);
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+        if (storedToken != '') {
+            fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
+                method: 'POST',
+                // cache: 'no-store',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ jwt: storedToken }),
+            }).then((res) => {
+                if (!res.ok) {
+                    setIslogin(false);
+                    localStorage.removeItem('token');
+                    alert("Login inválido!");
+                    window.location.href = '/';
+                    throw new Error("jwt Inválido ou Expirado!");
+                } else {
+                    setIslogin(true);
+                }
+                return res.json();
+            })
+            // .then((data) => console.log('Token verificado:', data))
+            // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+        }
+    }, []);
 
-    return (    
+    const clearLocal = () => {
+        localStorage.removeItem('token');
+        window.location.reload();
+        setIslogin(false);
+    }
+
+    return (
         <header className="shadow-sm text-blue-900 bg-white">
             <div id="container" className="flex container max-w-screen-xl mx-auto p-2 h-28 items-center">
                 <div id="container-top" className="flex justify-between items-center p-">
@@ -73,9 +113,16 @@ export default function Header() {
                     <div id="dark-mode" className="flex p-2 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
                         <ContrastIcon />
                     </div>
-                    <div id="button_login" className="flex items-center mx-4">
-                        <Login />
-                    </div>
+                    {!isLogin ? (
+                        <div id="button_login" className="flex items-center mx-4">
+                            <Login />
+                        </div>
+                    ) :
+                        (
+                            <div>
+                                <button onClick={clearLocal}>Sair</button>
+                            </div>
+                        )}
                 </div>
 
                 <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
