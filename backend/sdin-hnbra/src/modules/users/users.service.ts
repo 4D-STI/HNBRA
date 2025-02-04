@@ -33,6 +33,7 @@ export class UsersService {
       // Criar o usuário no banco de dados
       await this.userRepository.create(createUserDto);
     } catch (e) {
+      // return `Erro ao criar usuário. Erro: ${e}`;
       throw new Error(`Erro ao criar usuário. Erro: ${e}`);
     }
 
