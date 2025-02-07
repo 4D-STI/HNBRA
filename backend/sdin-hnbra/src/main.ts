@@ -22,9 +22,10 @@ async function bootstrap() {
   // Configura CORS
   app.enableCors({
     origin: [
-      "http://localhost:3001", "http://localhost:3002",
-      "http://hnbra.mb:3000", "http://172.21.44.24:3000",
-      "https://hnbra.com", "https://www.hnbra.com", "https://172.21.44.24"
+      "http://localhost:3001", "http://localhost:3002", "http://hnbra.mb:3000",
+      "http://172.21.44.24:3000", "https://172.21.44.24", "http://172.21.44.24:3011",
+      "https://hnbra.com", "https://www.hnbra.com",
+
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: ['Content-Type, Accept', 'Authorization']
