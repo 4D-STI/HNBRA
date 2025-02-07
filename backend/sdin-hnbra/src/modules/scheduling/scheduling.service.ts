@@ -114,11 +114,11 @@ export class SchedulingService {
 
     async deleteScheduling(idScheduling: number, req: string) {
         const schedulingOld = await this.schedulingModel.findByPk(idScheduling);
-        if (schedulingOld.nip != req.toString()) {
-            throw new BadRequestException('Error ao apagar, Nip diferente de cadastro do agendamento')
-        }
         if (!schedulingOld) {
             throw new BadRequestException('Agendamento não encontrado!')
+        }
+        if (schedulingOld.nip != req) {
+            throw new BadRequestException('Error ao apagar, Nip diferente de cadastro do agendamento')
         }
         try {
             await this.schedulingModel.destroy({ where: { idScheduling: idScheduling } });
