@@ -5,13 +5,18 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 // import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+// import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiBadRequestResponse, ApiNotFoundResponse, ApiInternalServerErrorResponse, ApiBody, ApiQuery } from '@nestjs/swagger';
+import { User } from 'src/repository/models/user.model copy';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post()
+  @ApiOperation({ summary: 'Criar usuário' })
+  @ApiCreatedResponse({ description: 'Usuário criado com sucesso', type: User }) // Documenta a resposta de criação
+  @ApiBadRequestResponse({ description: 'Dados inválidos para criar o usuário' })
   createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
