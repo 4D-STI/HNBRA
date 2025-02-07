@@ -1,160 +1,130 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { File } from 'src/repository/models/file.model';
-import { FileValidator } from './validator/scheduling.service.validator';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { SubSession } from 'src/repository/models/subSession.model ';
-import { Op } from 'sequelize';
+import { literal, Op, where } from 'sequelize';
+import { Scheduling } from 'src/repository/models/scheduling.model';
+import { Users } from 'src/repository/models/user.model';
+import { Patent } from 'src/repository/models/patent.model';
+import { DataType } from 'sequelize-typescript';
+import * as moment from 'moment-timezone';
 
 @Injectable()
 export class SchedulingService {
     constructor(
-        private readonly fileValidator: FileValidator,
-        @InjectModel(File)
-        private readonly fileModel: typeof File,
-        @InjectModel(SubSession)
-        private readonly subSessionModel: typeof SubSession,
+        @InjectModel(Scheduling)
+        private readonly schedulingModel: typeof Scheduling,
+        @InjectModel(Patent)
+        private readonly patentModel: typeof Patent,
+        @Inject('USERS_REPOSITORY') private readonly usersRepository: typeof Users,
     ) { }
 
+    async createScheduling(scheduling: Scheduling, req: string) {
+        scheduling.schedulingStart = moment(scheduling.schedulingStart).tz("America/Sao_Paulo").subtract(3, 'hours').toDate();
+        scheduling.schedulingEnd = moment(scheduling.schedulingEnd).tz("America/Sao_Paulo").subtract(3, 'hours').toDate();
 
-
-    async downloadFile(idFile: number): Promise<File | null> {
-
-        return this.fileValidator.existsFile(idFile);
-    }
-
-    async viewFile(name: string): Promise<File | null> {
-
-        return this.fileValidator.existsFileName(this.fileValidator.removeAcento(name));
-    }
-
-    async uploadFile(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
-        if (file.size > 15206700 && !file.originalname.includes(".mp4")) {
-            throw new Error('Tamanho do arquivo não suportado.')
+        if (!scheduling.nip) {
+            scheduling.nip = req.toString()
         }
-        const fileNameExist = await this.fileModel.findOne({ where: { nameFile: this.fileValidator.removeAcento(file.originalname), idSubSession: idSubSession, status: 'true' } });
-        const subSession = await this.fileValidator.existsSubSession(idSubSession);
-        const directoryPath = await this.fileValidator.ensureDirectoryExists(idSubSession);
-        if (fileNameExist) {
-            throw new BadRequestException('Arquivo com mesmo nome cadastrado.')
-        }
-        if (!fs.existsSync(directoryPath)) {
-            fs.mkdirSync(directoryPath, { recursive: true });
+        const user = await this.usersRepository.findOne({ where: { nip: scheduling.nip } });
+        const patent = await this.patentModel.findByPk(user.idPatent);
+
+        scheduling.nameResponsible = (patent.patent, user.warName);
+
+        if (scheduling.schedulingEnd < scheduling.schedulingStart) {
+            throw new BadRequestException('O horário final do agendamento deve ser posterior ao horário de início!')
         }
 
-        const uniqueFileName = this.fileValidator.generateUniqueFileName(directoryPath, file.originalname);
-
-        const filePath = path.join(directoryPath, uniqueFileName);
-        fs.writeFileSync(filePath, file.buffer);
-
-        const savedFile = await this.fileModel.create({
-            idSubSession,
-            path: filePath,
-            nomeSubSession: subSession.nameSubSession,
-            nameFile: uniqueFileName,
-            description,
-            status: true,
-        });
-
-        return savedFile;
-    }
-
-
-    async updateFile(
-        idFile: number,
-        idSubSession: number,
-        description: string,
-        nameFile: string,
-        status: boolean,
-    ): Promise<File> {
-        const file = await this.fileValidator.existsFile(idFile);
-
-        const oldFilePath = file.path;
-        const fileDir = path.dirname(oldFilePath);
-
-        const fileExtension = path.extname(oldFilePath);
-
-        const newFileName = this.fileValidator.removeAcento(nameFile).endsWith(fileExtension)
-            ? this.fileValidator.removeAcento(nameFile)
-            : `${this.fileValidator.removeAcento(nameFile)}${fileExtension}`;
-
-        const newFilePath = path.join(fileDir, newFileName);
-
-        if (file.nameFile !== newFileName) {
-            try {
-                fs.renameSync(oldFilePath, newFilePath);
-            } catch (err) {
-                throw new BadRequestException('Erro ao renomear o arquivo no sistema de arquivos.');
-            }
-        }
-
-        file.idSubSession = idSubSession;
-        file.path = newFilePath;
-        file.nameFile = newFileName;
-        file.description = description;
-        file.status = status;
-
-        await file.save();
-
-        return file;
-    }
-
-    async getAllFile() {
-        return this.fileModel.findAll();
-    }
-
-    async getAllFileSubSession(nomeSubSession: string, idSubSession: number) {
-        if (idSubSession) {
-            const subSessionSession = await this.subSessionModel.findOne({
-                where: {
-                    idSubSession: idSubSession,
-                },
-            });
-            if (!subSessionSession) {
-                throw new BadRequestException('Subsessão não encontrada.');
-            }
-            return this.fileModel.findAll({ where: { idSubSession: subSessionSession.idSubSession, status: "true" }, order: [['idFile', 'DESC']] })
-        }
-        nomeSubSession = this.fileValidator.removeAcento(nomeSubSession);
-        const subSession = await this.subSessionModel.findOne({
+        const conflictingScheduling = await this.schedulingModel.findOne({
             where: {
-                nameSubSession: { [Op.iLike]: `%${nomeSubSession}%` },
-            },
+                typeScheduling: scheduling.typeScheduling,
+                [Op.or]: [
+                    {
+                        schedulingStart: { [Op.between]: [scheduling.schedulingStart, scheduling.schedulingEnd] }
+                    },
+                    {
+                        schedulingEnd: { [Op.between]: [scheduling.schedulingStart, scheduling.schedulingEnd] }
+                    },
+                    {
+                        schedulingStart: { [Op.lte]: scheduling.schedulingStart },
+                        schedulingEnd: { [Op.gte]: scheduling.schedulingEnd }
+                    }
+                ]
+            }
         });
 
-        if (!subSession) {
-            throw new BadRequestException('Subsessão não encontrada.');
+        if (conflictingScheduling) {
+            throw new BadRequestException('Já existe um agendamento para esse horário.');
         }
-        return this.fileModel.findAll({ where: { nomeSubSession: { [Op.iLike]: `%${nomeSubSession}%` }, status: "true" }, order: [['nameFile', 'ASC']] });
+
+        return await this.schedulingModel.create(scheduling);
     }
 
-    async deleteFile(idFile: number): Promise<void> {
-        const file = await this.fileValidator.existsFile(idFile);
+    async getAllScheduling() {
+        await Scheduling.update(
+            { status: false },
+            {
+                where: {
+                    schedulingEnd: {
+                        [Op.lte]: literal("NOW() + INTERVAL '-3 hours'")
+                    },
+                    status: {
+                        [Op.ne]: false
+                    }
+                }
+            }
+        );
+
+        return await this.schedulingModel.findAll({ where: { status: true }, order: [['schedulingStart', 'ASC']] });
+    }
+
+    async getAllSchedulingTrue() {
+        return await this.schedulingModel.findAll({ order: [['schedulingStart', 'ASC']] });
+    }
+
+    async putScheduling(scheduling: Scheduling, req: string) {
+        const schedulingOld = await this.schedulingModel.findByPk(scheduling.idScheduling);
+        if (schedulingOld.nip != req.toString()) {
+            console.log(scheduling.nip, req.toString())
+            throw new BadRequestException('Error na atualização, Nip diferente de cadastro do agendamento')
+        }
+        if (!schedulingOld) {
+            throw new BadRequestException('Agendamento não encontrado.');
+        }
+
+        const updatedScheduling = {
+            schedulingStart: scheduling.schedulingStart ?? schedulingOld.schedulingStart,
+            schedulingEnd: scheduling.schedulingEnd ?? schedulingOld.schedulingEnd,
+            theme: scheduling.theme ?? schedulingOld.theme,
+            description: scheduling.description ?? schedulingOld.description,
+            typeScheduling: scheduling.typeScheduling ?? schedulingOld.typeScheduling,
+            ramal: scheduling.ramal ?? schedulingOld.ramal,
+        };
 
         try {
-            if (fs.existsSync(file.path)) {
-                await fs.remove(file.path);
-            }
-            await this.fileModel.update({ status: false }, { where: { idFile: file.idFile } })
-        } catch (err) {
-            throw new BadRequestException('Erro ao excluir o arquivo do sistema de arquivos.');
+            await this.schedulingModel.update(updatedScheduling, { where: { idScheduling: scheduling.idScheduling } });
         }
-
-
-        // await file.destroy();
+        catch (e) {
+            throw new Error(`Erro ao atualizar agendamento: ${e.message}`);
+        }
+        return await this.schedulingModel.findByPk(scheduling.idScheduling);
     }
 
-    async viewFileLast(id: number): Promise<File | null> {
-
-        return this.fileValidator.existsFileNameLast(id);
+    async deleteScheduling(idScheduling: number, req: string) {
+        const schedulingOld = await this.schedulingModel.findByPk(idScheduling);
+        if (schedulingOld.nip != req.toString()) {
+            throw new BadRequestException('Error ao apagar, Nip diferente de cadastro do agendamento')
+        }
+        if (!schedulingOld) {
+            throw new BadRequestException('Agendamento não encontrado!')
+        }
+        try {
+            await this.schedulingModel.destroy({ where: { idScheduling: idScheduling } });
+        }
+        catch (e) {
+            throw new BadRequestException('Erro em deletar :', e);
+        }
     }
-
-
-    async uploadMp3File(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
-
-        return this.uploadFile(file, idSubSession, description);
-    }
-
-
 }
