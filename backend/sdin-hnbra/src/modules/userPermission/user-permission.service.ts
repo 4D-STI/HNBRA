@@ -20,6 +20,10 @@ export class UserPermissionService {
         }
     }
 
+    async gealAllPermission() {
+        return this.userPermissionService.findAll();
+    }
+
     // async getDivision() {
     //     return this.divisionModel.findAll();
     // }

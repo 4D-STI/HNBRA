@@ -1,9 +1,8 @@
 import { Column, Model, Table, DataType, ForeignKey } from 'sequelize-typescript';
-import { SubSession } from './subSession.model ';
 import { schedulingType } from '../types/schedulingType ';
 import { Users } from './user.model';
 
-@Table({ tableName: 'TABLE_SCHEDULING' })
+@Table({ tableName: "TABLE_SCHEDULING" })
 export class Scheduling extends Model<schedulingType> {
     @Column({
         type: DataType.INTEGER,
@@ -22,7 +21,12 @@ export class Scheduling extends Model<schedulingType> {
     @Column({
         type: DataType.DATE,
     })
-    scheduling: Date;
+    schedulingStart: Date;
+
+    @Column({
+        type: DataType.DATE,
+    })
+    schedulingEnd: Date;
 
     @Column({
         type: DataType.STRING,
@@ -53,6 +57,12 @@ export class Scheduling extends Model<schedulingType> {
         allowNull: true,
     })
     ramal: string;
+
+    @Column({
+        type: DataType.BOOLEAN,
+        defaultValue: true,
+    })
+    status: boolean;
 
     @Column({
         type: DataType.DATE,

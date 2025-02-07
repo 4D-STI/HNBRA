@@ -1,260 +1,154 @@
-import { Controller, Post, Param, UseInterceptors, UploadedFile, Body, Get, Res, NotFoundException, Put, Delete, Query, BadRequestException, UseGuards } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { FileService } from './scheduling.service';
-import { File } from 'src/repository/models/file.model';
-import { Response } from 'express';
-import * as path from 'path';
-import { extname } from 'path';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiQuery } from '@nestjs/swagger';
-import { createReadStream } from 'fs';
+import { Controller, Post, Param, Body, Get, Put, Delete, UseGuards, Request } from '@nestjs/common';
+import { SchedulingService } from './scheduling.service';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Scheduling } from 'src/repository/models/scheduling.model';
 
 @Controller('scheduling')
 @ApiBearerAuth('JWT-auth')
 export class SchedulingController {
-    constructor(private readonly fileService: FileService) { }
+    constructor(private readonly schedulingService: SchedulingService) { }
 
-    @Post(':idSubSession/upload')
+    /**
+     * Cria um agendamento para reunião ou auditório.
+     *
+     * Este endpoint permite criar um novo agendamento para uma reunião ou auditório, 
+     * informando a data/hora de início e fim, tema, descrição, tipo de agendamento e ramal.
+     * O usuário autenticado (através do JwtAuthGuard) é identificado e seu NIP é usado 
+     * para relacionar o agendamento ao responsável.
+     *
+     * @param scheduling Objeto com as informações do agendamento.
+     * @param req Objeto de requisição que contém os dados do usuário autenticado.
+     * @returns Os dados do agendamento criado.
+     */
+    @Post()
     @UseGuards(JwtAuthGuard)
-    @UseInterceptors(
-        FileInterceptor('file', {
-            fileFilter: (req, file, callback) => {
-                // Permitir apenas arquivos PDF e imagens JPEG/JPG/PNG
-                const allowedExtensions = /pdf|odp|doc|xls|txt|zip|odt|ods|jpg/;
-                const extname = path.extname(file.originalname).toLowerCase();
-
-                if (!allowedExtensions.test(extname)) {
-                    return callback(new BadRequestException(`Somente arquivos de extensão, ${allowedExtensions}`), false);
-                }
-
-                callback(null, true); // Aceitar o arquivo
-            },
-        }),
-    )
-    @ApiConsumes('multipart/form-data') // Indica que o endpoint consome arquivos
-    @ApiOperation({ summary: 'Upload de arquivo' })
-    @ApiBody({
-        description: 'Extensões aceitas: pdf | odp | doc | xls | txt | zip | odt | ods | jpg',
-        type: 'multipart/form-data',
-        required: true,
-        schema: {
-            type: 'object',
-            properties: {
-                file: {
-                    type: 'string',
-                    format: 'binary',
-                },
-                description: {
-                    type: 'string',
-                    description: 'Descrição do arquivo',
-                },
-            },
-        },
-    })
-    async uploadFile(
-        @UploadedFile() file: Express.Multer.File,
-        @Param('idSubSession') idSubSession: number,
-        @Body('description') description: string,
-    ): Promise<File> {
-        console.log('o jwt aqui: ', JwtAuthGuard)
-        return await this.fileService.uploadFile(file, idSubSession, description);
-    }
-
-    // @Get(':idFile/download')
-    // async downloadFile(@Param('idFile') idFile: number, @Res() res: Response) {
-    //     const file = await this.fileService.downloadFile(idFile);
-    //     if (!file) {
-    //         throw new NotFoundException('File not found');
-    //     }
-
-    //     res.setHeader('Content-Type', 'application/pdf');
-    //     res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
-    //     // res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
-
-    //     // const stream = createReadStream(file.path);
-    //     // stream.pipe(res);
-
-    //     return res.sendFile(file.path);
-    // }
-
-
-
-    @Get(':idFile/download')
-    async downloadFile(@Param('idFile') idFile: number, @Res() res: Response) {
-        const file = await this.fileService.downloadFile(idFile);
-        if (!file) {
-            throw new NotFoundException('File not found');
-        }
-
-        const fileExtension = extname(file.nameFile).toLowerCase();
-        let contentType: string;
-
-        // Defina o Content-Type baseado na extensão do arquivo
-        switch (fileExtension) {
-            case '.pdf':
-                contentType = 'application/pdf';
-                break;
-            case '.jpg':
-                contentType = 'image/jpeg'
-                break;
-            case '.jpeg':
-                contentType = 'image/jpeg';
-                break;
-            case '.png':
-                contentType = 'image/png';
-                break;
-            case '.txt':
-                contentType = 'text/plain';
-                break;
-            case '.zip':
-                contentType = 'application/zip';
-                break;
-            // Adicione mais tipos de conteúdo conforme necessário
-            default:
-                contentType = 'application/octet-stream'; // Tipo genérico para arquivos desconhecidos
-        }
-
-        res.setHeader('Content-Type', contentType);
-        res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
-
-        return res.sendFile(file.path);
-    }
-
-
-
-    @Get(':idFile/view')
-    async viewFile(@Param('idFile') name: string, @Res() res: Response) {
-        const file = await this.fileService.viewFile(name);
-        if (!file) {
-            throw new NotFoundException('File not found');
-        }
-
-        res.setHeader('Content-Type', 'application/pdf');
-        // res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
-        res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
-
-        const stream = createReadStream(file.path);
-        stream.pipe(res);
-
-        // return res.sendFile(file.path);
-    }
-
-    @Get(':idFile/viewLast')
-    async viewFilelast(@Param('idFile') id: number, @Res() res: Response) {
-        const file = await this.fileService.viewFileLast(id);
-        if (!file) {
-            throw new NotFoundException('File not found');
-        }
-
-        res.setHeader('Content-Type', 'application/pdf');
-        // res.setHeader('Content-Disposition', `attachment; filename=${file.nameFile}`);
-        res.setHeader('Content-Disposition', `inline; filename=${file.nameFile}`);
-
-        const stream = createReadStream(file.path);
-        stream.pipe(res);
-
-        // return res.sendFile(file.path);
-    }
-
-
-    @Put('update')
+    @ApiOperation({ summary: 'Cria um agendamento para reunião ou auditório' })
     @ApiBody({
         schema: {
             type: 'object',
             properties: {
-                idFile: { type: 'number' },
-                // nip: { type: 'string' },
-                idSubSession: { type: 'number' },
-                description: { type: 'string' },
-                nameFile: { type: 'string' },
-                status: { type: 'string' },
-                // file: {
-                //     type: 'string',
-                //     format: 'binary',
-                // },
+                schedulingStart: { type: 'string', example: '2025-02-06 11:03' },
+                schedulingEnd: { type: 'string', example: '2025-02-06 11:05' },
+                theme: { type: 'string', example: 'Reunião de Alinhamento' },
+                description: { type: 'string', example: 'Discussão sobre metas e resultados' },
+                typeScheduling: { type: 'string', example: 'Reunião' },
+                ramal: { type: 'number', example: 7304 },
             },
+            required: ['schedulingStart', 'schedulingEnd', 'theme', 'description', 'typeScheduling', 'ramal'],
         },
     })
-    @UseInterceptors(FileInterceptor('file'))
-    async updateFile(
-        @Body('idFile') idFile: number,
-        // @Body('nip') nip: string,
-        @Body('idSubSession') idSubSession: number,
-        @Body('description') description: string,
-        @Body('nameFile') nameFile: string,
-        @Body('status') status: boolean,
-    ): Promise<File> {
-        return await this.fileService.updateFile(idFile,
-            idSubSession, description, nameFile, status);
+    @ApiResponse({
+        status: 201,
+        description: 'Agendamento criado com sucesso',
+        type: Scheduling,
+    })
+    @ApiResponse({ status: 400, description: 'Requisição inválida' })
+    async createScheduling(
+        @Body() scheduling: Scheduling,
+        @Request() req
+    ) {
+        return await this.schedulingService.createScheduling(scheduling, req.user.nip);
     }
 
-    @Delete(':id')
-    async deleteFile(@Param('id') id: number): Promise<{ message: string }> {
-        await this.fileService.deleteFile(id);
-        return { message: 'Arquivo excluído com sucesso.' };
-    }
 
+    /**
+     * Retorna todos os agendamentos.
+     *
+     * Este endpoint traz todos os agendamentos cadastrados, incluindo os que já ocorreram 
+     * e os que ainda irão ocorrer.
+     *
+     * @returns Um array de agendamentos.
+     */
     @Get()
-    @UseGuards(JwtAuthGuard)
-    async getAllSession() {
-        return this.fileService.getAllFile();
-    }
-
-    @Get('/nameSub')
-    @ApiQuery({
-        name: 'nomeSubSession',
-        type: 'string',
-        description: 'Name of the sub-session to retrieve files for',
-        example: 'OBTENÇÃO',
+    @ApiOperation({ summary: 'Lista apenas os agendamentos que irão ocorrer' })
+    @ApiResponse({
+        status: 200,
+        description: 'Lista de agendamentos futuros retornada com sucesso',
+        isArray: true,
+        type: Scheduling,
     })
-    async getAllFilesSubSession(@Query('nomeSubSession') nomeSubSession: string,
-        @Query('idSubSession') idSubSession: number) {
-        return this.fileService.getAllFileSubSession(nomeSubSession, idSubSession);
+    async getAllScheduling() {
+        return this.schedulingService.getAllScheduling();
+    }
+
+    /**
+     * Retorna apenas os agendamentos que ainda irão ocorrer.
+     *
+     * Este endpoint traz somente os agendamentos futuros, ou seja, aqueles que ainda não aconteceram.
+     *
+     * @returns Um array contendo os agendamentos que irão ocorrer.
+     */
+    @Get('/schedulingTrue')
+    @ApiOperation({ summary: 'Lista todos os agendamentos' })
+    @ApiResponse({
+        status: 200,
+        description: 'Lista de agendamentos retornada com sucesso',
+        isArray: true,
+        type: Scheduling,
+    })
+    async getAllSchedulingTrue() {
+        return this.schedulingService.getAllSchedulingTrue();
     }
 
 
-    @Post(':idSubSession/upload-mp3')
-    @UseInterceptors(
-        FileInterceptor('file', {
-            fileFilter: (req, file, callback) => {
-                // Permitir apenas arquivos MP3
-                const allowedExtensions = /mp3|mp4/;
-                const extname = path.extname(file.originalname).toLowerCase();
-
-                if (!allowedExtensions.test(extname)) {
-                    return callback(new BadRequestException('Somente arquivos com extensão .mp3 são permitidos'), false);
-                }
-
-                callback(null, true);
-            },
-        }),
-    )
-    @ApiConsumes('multipart/form-data')
-    @ApiOperation({ summary: 'Upload de arquivo MP3' })
+    /**
+     * Atualiza os agendamentos que irão ocorrer.
+     *
+     * Este endpoint atualiza os dados de um agendamento existente. Caso algum campo não seja informado,
+     * o valor antigo é mantido. O endpoint espera receber o objeto de agendamento com as novas informações e
+     * utiliza os dados do usuário autenticado (por meio do JWT) para atualizar o registro.
+     *
+     * @param scheduling Objeto contendo os dados para atualização do agendamento.
+     * @param req Objeto de requisição que contém as informações do usuário autenticado.
+     * @returns O resultado da operação de atualização.
+     */
+    @Put()
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Atualiza os agendamentos que irão ocorrer' })
+    @ApiResponse({
+        status: 200,
+        description: 'Agendamento atualizado com sucesso',
+        isArray: true,
+        type: Scheduling,
+    })
     @ApiBody({
-        description: 'Arquivo MP3 a ser enviado',
-        type: 'multipart/form-data',
-        required: true,
         schema: {
             type: 'object',
             properties: {
-                file: {
-                    type: 'string',
-                    format: 'binary',
-                },
-                description: {
-                    type: 'string',
-                    description: 'Descrição do arquivo',
-                },
+                idScheduling: { type: 'number', example: 1 },
+                schedulingStart: { type: 'string', example: '2025-02-06 11:03' },
+                schedulingEnd: { type: 'string', example: '2025-02-06 11:05' },
+                theme: { type: 'string', example: 'Reunião de Alinhamento' },
+                description: { type: 'string', example: 'Discussão sobre metas e resultados' },
+                typeScheduling: { type: 'string', example: 'Reunião' },
+                ramal: { type: 'number', example: 7304 },
             },
+            required: ['schedulingStart', 'schedulingEnd', 'theme', 'description', 'typeScheduling', 'ramal'],
         },
     })
-    async uploadMp3File(
-        @UploadedFile() file: Express.Multer.File,
-        @Param('idSubSession') idSubSession: number,
-        @Body('description') description: string,
-    ): Promise<File> {
-        return await this.fileService.uploadMp3File(file, idSubSession, description);
+    async putScheduling(
+        @Body() scheduling: Scheduling,
+        @Request() req
+    ) {
+        return this.schedulingService.putScheduling(scheduling, req.user.nip);
+    }
+
+
+    @Delete(':idScheduling')
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Deleta Agendamento' })
+    @ApiResponse({
+        status: 200,
+        description: 'Agendamento deletado com sucesso!',
+    })
+    async deleteScheduling(@Param
+        ('idScheduling') idScheduling: number,
+        @Request() req
+    ) {
+        console.log(idScheduling)
+        await this.schedulingService.deleteScheduling(idScheduling, req.user.nip);
+        return { message: 'Agendamento excluído com sucesso.' };
     }
 
 

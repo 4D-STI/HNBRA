@@ -6,15 +6,19 @@ import { File } from 'src/repository/models/file.model';
 import { Scheduling } from 'src/repository/models/scheduling.model';
 import { SubSessionModule } from '../SubSession/sub-session.module';
 import { UsersModule } from '../users/users.module';
-import { SchedulingValidator } from './validator/scheduling.service.validator';
+import { PatentModule } from '../patent/patent.module';
+import { Patent } from 'src/repository/models/patent.model';
+// import { SchedulingValidator } from './validator/scheduling.service.validator';
 
 @Module({
     imports: [
-        SequelizeModule.forFeature([Scheduling]),
+        SequelizeModule.forFeature([Scheduling, Patent]),
         UsersModule,
     ],
     controllers: [SchedulingController],
-    providers: [SchedulingService, SchedulingValidator],
+    providers: [SchedulingService,
+        // SchedulingValidator
+    ],
     exports: [SchedulingService]
 })
-export class FileModule { }
+export class SchedulingModule { }
