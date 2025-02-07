@@ -146,7 +146,6 @@ export class SchedulingController {
         ('idScheduling') idScheduling: number,
         @Request() req
     ) {
-        console.log(idScheduling)
         await this.schedulingService.deleteScheduling(idScheduling, req.user.nip);
         return { message: 'Agendamento excluído com sucesso.' };
     }
