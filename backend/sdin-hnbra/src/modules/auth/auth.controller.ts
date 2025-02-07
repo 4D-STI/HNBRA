@@ -21,7 +21,7 @@ export class AuthController {
         @Body('password') password: string) {
         const user = await this.authService.validateUser(nip, password);
         if (!user) {
-            throw new UnauthorizedException('E-mail ou senha inválidos');
+            throw new UnauthorizedException('Nip ou senha inválidos');
         }
         return this.authService.login(user);
     }

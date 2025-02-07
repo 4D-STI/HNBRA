@@ -36,8 +36,16 @@ export class AuthService {
     }
 
 
-    async login(user: any) {
-        const payload = { username: user.username, sub: user.id };
+    async login(user: Users) {
+        const payload = {
+            nip: user.dataValues.nip,
+            email: user.dataValues.emailPersonal,
+            firstName: user.dataValues.firstName,
+            lastName: user.dataValues.lastName,
+            patent: user.dataValues.idPatent,
+            warName: user.dataValues.warName,
+        };
+
         const secretKey = process.env.JWT_SECRET_KEY || 'default_secret_key';
         return {
             access_token: this.jwtService.sign(payload, { secret: secretKey }),
