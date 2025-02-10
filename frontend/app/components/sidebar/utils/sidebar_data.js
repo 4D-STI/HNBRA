@@ -116,8 +116,8 @@ const pharmacyLaboratoryDivision = [
 ]
 
 const CCIH = [
-  { name: 'Formulário de Solicitação de Antimicrobianos', title: 'CCIH', href: `https://www.hnbra.mb:3002/files/${FORMULARIO_SOLICITACAO_ANTIMICROBIANOS}/view` },
-  { name: 'Protocolos', title: 'CCIH', href: '/dashboard/protocoloCCIH' },
+{ name: 'Formulário de Solicitação de Antimicrobianos', title: 'CCIH', href: `https://www.hnbra.mb:3002/files/${FORMULARIO_SOLICITACAO_ANTIMICROBIANOS}/view` },
+  { name: 'Protocolos', title: 'CCIH', href: `/dashboard/subSessionFileList?SubSessionFileList_id=163` },
   { name: 'Comissão de Óbito', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=COMISSAO_DE_OBITO' },
   { name: 'NSP', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=NSP' },
 ]
