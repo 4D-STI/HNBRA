@@ -123,7 +123,7 @@ export default function FileList({ files }: FileListProps) {
                                 className="flex flex-row w-full items-end justify-between hover:bg-blue-300 rounded-xl"
                             >
                                 <TableRow key={file.idFile}>
-                                    <TableCell className="text-left px-4 py-2">{file.nameFile.slice(0, -4)}</TableCell>
+                                    <TableCell className="text-left px-4 py-2">{file.nameFile.slice(0, -4).replace(/_/g, " ")}</TableCell>
                                 </TableRow>
                                 <IconButton
                                     // onClick={() => handleDownload({nameFile: file.nameFile, previewOnly: true})}
