@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={`${Rawline.variable} antialiased flex flex-col min-h-screen`}>
+      <body className={`${Rawline.variable} antialiased flex flex-col min-h-screen bg-blue-100`}>
         
         <header id="layout-default-header-container" className="">
           {/* header padrao */}
@@ -37,7 +37,7 @@ export default function RootLayout({
         {/* body dinamico */}
         <main
           id="layout-default-main-content"
-          className="flex-grow flex-shrink overflow-y-auto bg-blue-100 w-screen">
+          className="flex-grow flex-shrink overflow-y-auto w-screen mb-4">
           <Suspense>
             {children}
           </Suspense>
