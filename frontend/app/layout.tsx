@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={`${Rawline.variable} antialiased h-screen flex flex-col`}>
+      <body className={`${Rawline.variable} antialiased flex flex-col min-h-screen`}>
         
         <header id="layout-default-header-container" className="">
           {/* header padrao */}
