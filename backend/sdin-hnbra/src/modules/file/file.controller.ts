@@ -195,7 +195,7 @@ export class FileController {
     }
 
     @Get()
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     async getAllSession() {
         return this.fileService.getAllFile();
     }
