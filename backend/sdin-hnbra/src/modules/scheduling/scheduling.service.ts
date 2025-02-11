@@ -1,14 +1,9 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { File } from 'src/repository/models/file.model';
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import { SubSession } from 'src/repository/models/subSession.model ';
-import { literal, Op, where } from 'sequelize';
+import { literal, Op } from 'sequelize';
 import { Scheduling } from 'src/repository/models/scheduling.model';
 import { Users } from 'src/repository/models/user.model';
 import { Patent } from 'src/repository/models/patent.model';
-import { DataType } from 'sequelize-typescript';
 import * as moment from 'moment-timezone';
 
 @Injectable()
@@ -86,7 +81,8 @@ export class SchedulingService {
 
     async putScheduling(scheduling: Scheduling, req: string) {
         const schedulingOld = await this.schedulingModel.findByPk(scheduling.idScheduling);
-        if (schedulingOld.nip != req.toString()) {
+        const user = await this.usersRepository.findByPk(req);
+        if (schedulingOld.nip != req.toString() || user.permission != 'admin') {
             console.log(scheduling.nip, req.toString())
             throw new BadRequestException('Error na atualização, Nip diferente de cadastro do agendamento')
         }
@@ -117,7 +113,8 @@ export class SchedulingService {
         if (!schedulingOld) {
             throw new BadRequestException('Agendamento não encontrado!')
         }
-        if (schedulingOld.nip != req) {
+        const user = await this.usersRepository.findByPk(req);
+        if (schedulingOld.nip != req && user.permission != 'admin') {
             throw new BadRequestException('Error ao apagar, Nip diferente de cadastro do agendamento')
         }
         try {
