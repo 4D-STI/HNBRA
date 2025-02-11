@@ -97,7 +97,8 @@ export class SchedulingController {
      *
      * Este endpoint atualiza os dados de um agendamento existente. Caso algum campo não seja informado,
      * o valor antigo é mantido. O endpoint espera receber o objeto de agendamento com as novas informações e
-     * utiliza os dados do usuário autenticado (por meio do JWT) para atualizar o registro.
+     * utiliza os dados do usuário autenticado (por meio do JWT) para atualizar o registro. Somente o nip que cadastrou o agendamento
+     * ou "admin" pode fazer atuzalização
      *
      * @param scheduling Objeto contendo os dados para atualização do agendamento.
      * @param req Objeto de requisição que contém as informações do usuário autenticado.
@@ -124,7 +125,7 @@ export class SchedulingController {
                 typeScheduling: { type: 'string', example: 'Reunião' },
                 ramal: { type: 'number', example: 7304 },
             },
-            required: ['schedulingStart', 'schedulingEnd', 'theme', 'description', 'typeScheduling', 'ramal'],
+            required: ['idScheduling', 'schedulingStart', 'schedulingEnd', 'theme', 'description', 'typeScheduling', 'ramal'],
         },
     })
     async putScheduling(
@@ -134,13 +135,25 @@ export class SchedulingController {
         return this.schedulingService.putScheduling(scheduling, req.user.nip);
     }
 
-
+    /**
+       * Deleta um agendamento existente.
+       *
+       * Este endpoint exclui um agendamento do sistema. Apenas o criador do agendamento ou um usuário com permissão "admin" pode realizar a exclusão.
+       *
+       * @param idScheduling Identificador do agendamento que será excluído.
+       * @param req Requisição contendo os dados do usuário autenticado.
+       * @returns Mensagem de sucesso ou erro.
+       */
     @Delete(':idScheduling')
     @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Deleta Agendamento' })
     @ApiResponse({
         status: 200,
-        description: 'Agendamento deletado com sucesso!',
+        description: 'Agendamento excluído com sucesso.',
+    })
+    @ApiResponse({
+        status: 400,
+        description: 'Erro ao excluir o agendamento.',
     })
     async deleteScheduling(@Param
         ('idScheduling') idScheduling: number,
