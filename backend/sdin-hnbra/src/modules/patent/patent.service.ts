@@ -8,7 +8,7 @@ export class PatentService {
     constructor(
         @InjectModel(Patent)
         private readonly patentRepository: typeof Patent,
-        @Inject('USER_REPOSITORY') private readonly userRepository: typeof Users,
+        @Inject('USERS_REPOSITORY') private readonly userRepository: typeof Users,
     ) { }
 
 
