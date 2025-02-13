@@ -52,7 +52,12 @@ export default {
             updatedAt: {
                 type: DATE
                 , allowNull: false
-            }
+            },
+
+            nip: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
         })
     },
     async down(queryInterface: QueryInterface) { await queryInterface.dropTable('tabela_file') }

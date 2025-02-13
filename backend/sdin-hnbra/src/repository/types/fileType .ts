@@ -9,4 +9,5 @@ export type fileType = {
     createdAt: Date,
     updatedAt: Date,
     previewOnly?: boolean;
+    nip: string,
 }
