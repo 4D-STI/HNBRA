@@ -21,6 +21,7 @@ import { FileModule } from './modules/file/file.module';
 import { PatentModule } from './modules/patent/patent.module';
 import { UserPermissionModule } from './modules/userPermission/user-permission.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { SchedulingModule } from './modules/scheduling/scheduling.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { AuthModule } from './modules/auth/auth.module';
       retryDelay: Number(process.env.DB_RETRY_DELAY) || 1000,
       autoLoadModels: true,
       synchronize: true,
+      // timezone: '-03:00',
       pool: {
         max: 2,
         min: 0,
@@ -55,6 +57,7 @@ import { AuthModule } from './modules/auth/auth.module';
     FileModule,
     PatentModule,
     UserPermissionModule,
+    SchedulingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

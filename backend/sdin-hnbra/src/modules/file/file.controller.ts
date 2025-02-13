@@ -56,6 +56,7 @@ export class FileController {
         @Param('idSubSession') idSubSession: number,
         @Body('description') description: string,
     ): Promise<File> {
+        console.log('o jwt aqui: ', JwtAuthGuard)
         return await this.fileService.uploadFile(file, idSubSession, description);
     }
 
@@ -194,7 +195,7 @@ export class FileController {
     }
 
     @Get()
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     async getAllSession() {
         return this.fileService.getAllFile();
     }

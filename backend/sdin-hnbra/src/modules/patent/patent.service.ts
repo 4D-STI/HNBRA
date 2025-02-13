@@ -1,21 +1,63 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { File } from 'src/repository/models/file.model';
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import { SubSession } from 'src/repository/models/subSession.model ';
-import { Session } from 'src/repository/models/session.model';
 import { Patent } from 'src/repository/models/patent.model';
+import { Users } from 'src/repository/models/user.model';
 
 @Injectable()
 export class PatentService {
     constructor(
         @InjectModel(Patent)
         private readonly patentRepository: typeof Patent,
+        @Inject('USERS_REPOSITORY') private readonly userRepository: typeof Users,
     ) { }
 
 
     async getPatent() {
-        return this.patentRepository.findAll();
+        return await this.patentRepository.findAll();
+    }
+
+    async createPatent(patent: Patent, nip: string) {
+        const user = await this.userRepository.findByPk(nip);
+        if (!user) {
+            throw new BadRequestException('Usuário não encontrado!')
+        }
+        if (user.permission != 'admin') {
+            throw new BadRequestException('Usuário sem permissão!')
+        }
+        try {
+            const allPatent = await this.patentRepository.findOne({ where: { patent: patent.patent } });
+            if (allPatent) {
+                throw new BadRequestException('Patente ja existente!');
+            }
+            return await this.patentRepository.create(patent);
+        }
+        catch (e) {
+            throw new BadRequestException('Erro ao criar patente ', e);
+        }
+
+    }
+
+    async deletePatent(idPatent: number, nip: string) {
+        const user = await this.userRepository.findByPk(nip);
+        if (!user) {
+            throw new BadRequestException('Usuário não encontrado!')
+        }
+        if (user.permission != 'admin') {
+            throw new BadRequestException('Usuário sem permissão.')
+        }
+        try {
+            const patent = await this.patentRepository.findByPk(idPatent);
+            if (!patent) {
+                throw new BadRequestException('Patente não encontrada!');
+            }
+            const deleted = await this.patentRepository.destroy({ where: { idPatent: patent.idPatent } });
+            if (!deleted) {
+                throw new BadRequestException('Erro ao deletar patent');
+            }
+            return { message: 'Patente deletada com sucesso!' }
+        }
+        catch (e) {
+            throw new BadRequestException('Erro ao deletar patente ', e);
+        }
     }
 }

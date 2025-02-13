@@ -20,8 +20,10 @@ import SwiperCarousel from './components/carousel/carousel_swiper';
 
 export default function Home() {
 
-  const ANUNCIO_TI = "É proibido conectar qualquer dispositivo eletrônico nas Estações de Trabalho."
-  const ANUNCIO_ADMINISTRACAO = "O Conselho de Gestão será realizado dia 12FEV às 0830P, no Centro de Estudos."
+  const ANUNCIO_TI = "Por necessidade de manutenção a ser realizada pelo CTIM, a intranet ficará indisponível no dia 11FEV a partir das 20h, com previsão de retorno à 01h do dia 12FEV. Nesse período os sistemas corporativos não poderão ser acessados."
+
+  const ANUNCIO_ADMINISTRACAO = "As vagas de estacionamento do HNBra são de uso exclusivo das viaturas administrativas da MB e da tripulação do HNBra, distribuídas conforme a OI 20-32A, exceto para as situações previstas na legislação (idosos por exemplo). Para acesso, o veículo deverá obrigatoriamente portar o cartão de estacionamento ou de utilização de vaga exclusiva."
+  
   const ANUNCIO_SAUDE = "O agendamento de atendimento do PME (Programa de Medicamentos Especiais) será realizado pelo telefone 3445-7340 - RETELMA 8916 (Farmácia)."
 
   return (

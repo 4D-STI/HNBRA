@@ -1,4 +1,4 @@
-export default function passwordValidation(pass: string): string[] {
+export default function PasswordValidation(pass: string): string[] {
   const errors: string[] = [];
 
   if (!/(?=.*[A-Z])/.test(pass)) {
