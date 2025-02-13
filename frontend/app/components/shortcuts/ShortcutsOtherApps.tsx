@@ -23,7 +23,7 @@ function ShortcutsOtherApps() {
                     >
                         <Button
                             key={index}
-                            className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 border-2 border-blue-800 rounded-full shadow-lg mt-2'
+                            className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 hover:border-2 hover:border-blue-300 rounded-full shadow-xl mt-2'
                         >
                             <Image
                                 alt={`logo_${index}`}

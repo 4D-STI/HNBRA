@@ -10,6 +10,7 @@ import Link from "next/link";
 export default function ListPage() {
     //Lista SubSession a partir de nome ou id
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
+    // const apiBack = process.env.NEXT_PUBLIC_API_LOCAL;
     const searchParams = useSearchParams();
     const router = useRouter();
     const item = searchParams.get("item");

@@ -11,106 +11,90 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { FormEvent, useState } from "react";
-// import { useRouter } from "next/navigation";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { User2Icon } from "lucide-react";
-// import UserValidation from '@/app/components/utils/validations/userValidation';
-// import passwordValidation from "../utils/validations/passwordValidation";
+import NipValidation from '@/app/components/utils/validations/nip_validation';
+import PasswordValidation from "../utils/validations/password_validation";
 import loginNip from "./LoginValidator";
 
 export default function Login() {
-  // const router = useRouter();
-  const [nip, setUser] = useState<string>('');
+  const [nip, setNip] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
-  const [userErrors, setUserErrors] = useState<string[]>([]);
+  const [NipErrors, setNipErrors] = useState<string[]>([]);
 
+  // método input Nip
+  const handleNipInput = (event: ChangeEvent<HTMLInputElement>) => {
+    // adiciona o valor ao estado a partir do onChange do input do nip
+    setNip(event.target.value)
+    console.log('estado fora da callback: ',nip);
+    
+    // realiza as validações do nip
+    const NipValidationErrors = NipValidation(nip);
+    // limpa o estado do erros do input nip caso
+    // 1 - não haja erros nas validações
+    // 2 - não haja valor em nip
+    if (NipValidationErrors.length === 0 || nip === '') setNipErrors([])
+    
+    if (NipValidationErrors.length > 0) setNipErrors(NipValidationErrors)
+  }
+
+  // método envio password
+  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // adiciona o valor ao estado a partir do onChange do input do nip
+    setPassword(event.target.value)
+    console.log('estado password: ', password);
+    
+    // realiza as validações do nip
+    const PasswordValidationErrors = PasswordValidation(password);
+    // limpa o estado do erros do input nip caso
+    // 1 - não haja erros nas validações
+    // 2 - não haja valor em nip
+    if (PasswordValidationErrors.length === 0 || nip === '') setNipErrors([])
+    
+    if (PasswordValidationErrors.length > 0) {
+      setPasswordErrors(PasswordValidationErrors);
+      return;
+    }
+  }
+  
+  // método envio dados
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage('');
     setPasswordErrors([]);
-    setUserErrors([]);
-
-    // const userValidationErrors = UserValidation(user);
-    // if (userValidationErrors.length > 0) {
-    //   setUserErrors(userValidationErrors);
-    //   return;
-    // }
-
-    // try {
-    //   // const token = await login(user, password);
-    //   const token = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/login`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ nip, password }),
-    //   });
-    //   console.log(JSON.stringify({ nip, password }))
-    //   if (!token.ok) {
-    //     console.log(`${process.env.NEXT_PUBLIC_API_BACK}/auth/login`)
-    //     throw new Error('Erro ao fazer login. Verifique suas credenciais.');
-    //   }
-    //   console.log('Login bem-sucedido! Token:', token);
-    // } catch (err) {
-    //   alert(`Erro ao fazer login. Verifique suas credenciais. ${err}`);
-    // }
+    setNipErrors([]);
 
     try {
-      const token = await loginNip(nip, password);
+      console.log('tentou logar');
+      
+      const token = await loginNip({nip, password});
       console.log('Login bem-sucedido! Token:', token);
       window.location.reload();
 
     } catch {
       alert('Erro ao fazer login. Verifique suas credenciais.');
     }
-
-
-    // const passwordValidationErrors = passwordValidation(password);
-    // if (passwordValidationErrors.length > 0) {
-    //   setPasswordErrors(passwordValidationErrors);
-    //   return;
-    // }
-
-
-
-    console.log('valido');
-
-
-    // const response = await fetch('/api/login', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ user, password }),
-    // });
-
-    // if (response.ok) {
-    //   const data = await response.json();
-    //   localStorage.setItem('token', data.token);
-    //   handleClose();
-    //   router.push('/profile');
-    // } else {
-    //   const errorData = await response.json();
-    //   setErrorMessage(errorData.message);
-    // }
   };
 
   const handleClose = () => {
-    setUser('');
+    setNip('');
     setPassword('');
     setErrorMessage('');
     setPasswordErrors([]);
-    setUserErrors([]);
+    setNipErrors([]);
   };
 
   return (
     <Dialog onOpenChange={handleClose}>
+      
       <DialogTrigger asChild>
         <Button className="bg-blue-900 text-white">
           <User2Icon /> Login
         </Button>
       </DialogTrigger>
+      
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>
@@ -122,21 +106,21 @@ export default function Login() {
                 NIP
               </Label>
               <Input
-                alt="entrada de dados: identificador NIP (numero de identificação pessoal)"
-                placeholder="8 caracteres numéricos"
+                alt="entrada de dados: NIP (numero de identificação pessoal)"
+                placeholder="Digite seu NIP"
                 type="text"
                 // pattern="[0-9]*"
-                id="user"
-                name="user"
+                id="nip-input"
+                name="nip"
                 value={nip}
-                onChange={(e) => setUser(e.target.value)}
+                onChange={(event) => handleNipInput(event)}
                 required
                 className="col-span-3"
               />
             </div>
-            {userErrors.length > 0 && (
+            {NipErrors.length > 0 && (
               <div className="text-red-600 text-center text-sm">
-                {userErrors.map((error, index) => (
+                {NipErrors.map((error, index) => (
                   <div key={index}>{error}</div>
                 ))}
               </div>
@@ -147,12 +131,12 @@ export default function Login() {
               </Label>
               <Input
                 alt="entrada de dados: senha"
-                placeholder="6~8 caracteres"
+                placeholder="Digite sua senha"
                 type="password"
                 id="password"
                 name="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => handlePasswordInput(e)}
                 required
                 className="col-span-3"
               />
@@ -181,4 +165,3 @@ export default function Login() {
     </Dialog>
   );
 }
-

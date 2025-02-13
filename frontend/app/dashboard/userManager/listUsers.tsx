@@ -28,6 +28,7 @@ export default function ListUsers() {
     <div className="p-2">
       <div className="flex flex-col md:flex-row items-center justify-center mb-4">
         <div className="relative w-full md:w-80">
+          {"INPUT BUSCAR USUARIOS"}
         </div>
         <div className="flex px-4 mt-2 md:mt-0">
           <Filter className="mr-1" />

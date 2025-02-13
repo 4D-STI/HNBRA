@@ -133,7 +133,7 @@ const MyComponent: React.FC = () => {
 
               </div>
           
-              <button onClick={() => setIsOpen(false)} className="bg-gray-200 p-2 rounded-lg">
+              <button onClick={() => (setIsOpen(false), setSearchTerm(''))} className="bg-gray-200 p-2 rounded-lg">
                 Fechar
               </button>
             

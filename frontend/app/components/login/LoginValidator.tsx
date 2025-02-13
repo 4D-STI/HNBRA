@@ -1,5 +1,16 @@
-const loginNip = async (nip: string, password: string) => {
+interface ILoginData {
+    nip: string,
+    password: string,
+}
+
+const loginNip = async (loginData: ILoginData) => {
+    const nip = loginData.nip
+    const password = loginData.password
     try {
+        console.log('entrou em loginNip');
+        console.log('tentou logar com  :', {nip, password});
+        
+        
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/login`, {
             method: 'POST',
             headers: {
@@ -9,12 +20,15 @@ const loginNip = async (nip: string, password: string) => {
             body: JSON.stringify({ nip, password }),
         });
         console.log(JSON.stringify({ nip, password }))
+        
         if (!response.ok) {
-            throw new Error('Erro ao fazer login. Verifique suas credenciais.');
+            // return 'Senha ou nip invalido'
+            // throw new Error('Erro ao fazer login. Verifique suas credenciais.');
+            throw new Error('Login inválido!');
         }
 
         const data = await response.json();
-        // console.log('dsaljçdalsçkndaslkndalkn', data.access_token)
+        // console.log('TOKEN DE ACESSO ->', data.access_token)
         const token = data.access_token;
 
         // Armazenar o token no Local Storage (ou Session Storage)
