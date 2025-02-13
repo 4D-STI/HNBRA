@@ -59,4 +59,10 @@ export class File extends Model<fileType> {
         defaultValue: DataType.NOW,
     })
     updatedAt: Date;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    nip: string;
 }
