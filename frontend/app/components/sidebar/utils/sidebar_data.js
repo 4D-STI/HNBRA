@@ -10,7 +10,7 @@ const autoridadeNacionalDeProtecaoDeDados = 'AUTORIDADE_NACIONAL_DE_PROTECAO_DE_
 // const cartaDaTerra = 'CARTADATERRA.pdf'
 const PGRSS_PDF = 'PGRSS.PDF'
 const INVESTIGACAO_DE_PERFIS_FALSOS = 'CARTILHA_DE_CONDUTAS_DA_VITIMA_PF.PDF'
-const MANUAIS_INFO = 'BACKUP_EMAILS_ZIMBRA.PDF'
+// const MANUAIS_INFO = 'BACKUP_EMAILS_ZIMBRA.PDF'
 const SERVICO_ODONTOLOGICO = 'MANUAL_DE_SAUDE_BUCAL_HNBRA_-_2024.PDF'
 const PADRONIZACAO_DIETAS = 'PADRONIZACAO_DE_DIETAS_PREGAO_2024.PDF'
 // const sedime = 'MEDICAMENTOS_SEDIME_052024.PDF'
@@ -93,7 +93,7 @@ const sustainability = [
 const itSection = [
   { name: 'Autoridade Certificadora', title: 'Seção de Informática', href: 'http://download.ca/' },
   { name: 'Investigação de Perfis Falsos', title: 'Seção de Informática', href: `https://www.hnbra.mb:3002/files/${INVESTIGACAO_DE_PERFIS_FALSOS}/view` },
-  { name: 'Manuais', title: 'Seção de Informática', href: `https://www.hnbra.mb:3002/files/${MANUAIS_INFO}/view` },
+  { name: 'Manuais', title: 'Seção de Informática', href: '/dashboard/listSubSessionSession?item=2&subsession_name=MANUAIS%20INFORMÁTICA' },
   { name: 'Portal MB', title: 'Seção de Informática', href: 'https://internet.ctim.mb/score/login.php' },
 ]
 
@@ -116,7 +116,7 @@ const pharmacyLaboratoryDivision = [
 ]
 
 const CCIH = [
-{ name: 'Formulário de Solicitação de Antimicrobianos', title: 'CCIH', href: `https://www.hnbra.mb:3002/files/${FORMULARIO_SOLICITACAO_ANTIMICROBIANOS}/view` },
+  { name: 'Formulário de Solicitação de Antimicrobianos', title: 'CCIH', href: `https://www.hnbra.mb:3002/files/${FORMULARIO_SOLICITACAO_ANTIMICROBIANOS}/view` },
   { name: 'Protocolos', title: 'CCIH', href: `/dashboard/subSessionFileList?SubSessionFileList_id=163` },
   { name: 'Comissão de Óbito', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=COMISSAO_DE_OBITO' },
   { name: 'NSP', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=NSP' },

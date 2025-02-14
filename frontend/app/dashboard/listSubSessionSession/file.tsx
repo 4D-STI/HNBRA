@@ -54,13 +54,27 @@ export default function FileList({ files }: FileListProps) {
         }
     };
 
-    const handleDelete = (params: iHandleDownload, nameFiles: string) => {
+    const handleDelete = async (params: iHandleDownload, nameFiles: string) => {
+        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
         const FILE_URL_DELETE = `${process.env.NEXT_PUBLIC_API_BACK}/files/${params.idFile}`;
         if (window.confirm(`Deseja apagar o arquivo: ${nameFiles}`)) {
-            fetch(FILE_URL_DELETE, {
-                method: 'DELETE',
-            })
-            window.location.reload()
+            try {
+                const response = await fetch(FILE_URL_DELETE, {
+                    method: 'DELETE',
+                    cache: 'no-store',
+                    headers: {
+                        Authorization: 'Bearer ' + storedToken,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao deletar o arquivo');
+                }
+
+                window.location.reload();
+            } catch (error) {
+                console.error('Erro:', error);
+            }
         }
 
     };
