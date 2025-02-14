@@ -156,6 +156,12 @@ const shortcutsOtherAppsData = [
         icon_path_svg: '/icons/hino_icon/hino_icon.svg',
         link: '/dashboard/subSessionFileList?SubSessionFileList_id=168'
     },
+    {
+        name: 'netuno',
+        // icon_path_jpg: '/icons/hino_icon/26.jpg',
+        icon_path_jpg: '/icons/netuno_icon/logo_netuno.jpg',
+        link: 'https://sisnetuno.dadm.mb/principal'
+    },
 ]
 
-export {shortcutsOtherAppsData}
+export { shortcutsOtherAppsData }

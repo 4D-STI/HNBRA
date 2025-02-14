@@ -12,18 +12,18 @@ import Slidebar from "@/app/components/sidebar/Slidebar";
 import Search from "@/app/components/search/Search";
 
 // contexto
-import {PDF_DataProvider} from '@/app/context/files_pdf_Context'
+import { PDF_DataProvider } from '@/app/context/files_pdf_Context'
 
 // data
-import {pracaPadrao,servidorCivilPadrao} from '@/app/components/utils/shadcn_demo_components/data/card_with_highlights_data'
+import { pracaPadrao, servidorCivilPadrao } from '@/app/components/utils/shadcn_demo_components/data/card_with_highlights_data'
 import SwiperCarousel from './components/carousel/carousel_swiper';
 
 export default function Home() {
 
-  const ANUNCIO_TI = "Por necessidade de manutenção a ser realizada pelo CTIM, a intranet ficará indisponível no dia 11FEV a partir das 20h, com previsão de retorno à 01h do dia 12FEV. Nesse período os sistemas corporativos não poderão ser acessados."
+  const ANUNCIO_TI = "Os chamados para suporte de informática deverão ser acompanhados pelos respectivos solicitantes. A cada alteração no ciclo de atendimento do chamado, o sistema - de forma automática - envia um e-mail ao requisitante que, poderá conter informações fundamentais para a resolução do problema relatado."
 
   const ANUNCIO_ADMINISTRACAO = "As vagas de estacionamento do HNBra são de uso exclusivo das viaturas administrativas da MB e da tripulação do HNBra, distribuídas conforme a OI 20-32A, exceto para as situações previstas na legislação (idosos por exemplo). Para acesso, o veículo deverá obrigatoriamente portar o cartão de estacionamento ou de utilização de vaga exclusiva."
-  
+
   const ANUNCIO_SAUDE = "O agendamento de atendimento do PME (Programa de Medicamentos Especiais) será realizado pelo telefone 3445-7340 - RETELMA 8916 (Farmácia)."
 
   return (
@@ -33,8 +33,8 @@ export default function Home() {
         <div id="c-1-container" className="flex flex-row py-1 max-w-screen items-center space-x-4 bg-blue-200 justify-between">
 
           <div id='menu-principal-container' className='ml-20'>
-          {/* slide bar */}
-          <Slidebar/>
+            {/* slide bar */}
+            <Slidebar />
           </div>
 
           <div id='nav-button-container' className='flex flex-row'>
@@ -49,10 +49,10 @@ export default function Home() {
             <BonoSedeButton />
 
             {/* clinicas credenciadas */}
-            <ClinicasCredenciadasButton/>
+            <ClinicasCredenciadasButton />
 
             {/* plano do dia */}
-            <PlanoDoDiaPage/>
+            <PlanoDoDiaPage />
 
             {/* cardapio */}
             <CardapioButton />
@@ -60,10 +60,10 @@ export default function Home() {
 
           <div id="busca-container" className=''>
             {/* busca */}
-            <Search/>
+            <Search />
           </div>
 
-          
+
 
           {/* <NavigationMenuDemo /> */}
 
@@ -92,7 +92,7 @@ export default function Home() {
 
           {/* container - banner carousel */}
           <div id='carousel-container' className='flex flex-row w-1/2 h-[350px] rounded-xl container mx-auto mr-6'>
-            <SwiperCarousel/>
+            <SwiperCarousel />
           </div>
         </div>
 
@@ -111,7 +111,7 @@ export default function Home() {
               <div id="multimedia-content-container" className="flex flex-row gap-4">
                 {/* praça */}
                 {pracaPadrao?.map((praca, i) => {
-                  return <CardWithHighlights key={i} pracaPadrao={praca}/>
+                  return <CardWithHighlights key={i} pracaPadrao={praca} />
                 })}
 
                 {/* servidor civil padrão */}
@@ -123,36 +123,37 @@ export default function Home() {
             </div>
             {/* anuncios multimidia */}
             <div id="anuncios-multimidia" className="w-2/12 px-6">
-              
+
               <div id="multimedia-title-container" className='mb-2 font-bold'>
                 Multimídia
               </div>
 
               <div id="multimedia-content-container" className="">
                 {/* todo: fazer carrosel */}
-                <CardWithMultiMedia/>
+                <CardWithMultiMedia />
               </div>
 
             </div>
 
             {/* anuncios textos*/}
             <div id="anuncios-texto" className="flex-col w-4/12 px-6">
-              
+
               <div id="advertisement-title-container" className="mb-2 font-bold">
                 <h1>Informações Gerais</h1>
               </div>
 
               <div id="anuncio-texto-container" className="flex flex-col gap-3">
-                
+
                 {/* <CardForAdvertisement session='TI' content={ANUNCIO_TI} link='https://siscsrecim.ctim.mb'/> */}
 
-                <CardForAdvertisementWithoutLink session='Administração' content={ANUNCIO_ADMINISTRACAO}/>
-
-                <CardForAdvertisementWithoutLink session='Saúde' content={ANUNCIO_SAUDE}/>
-                
                 <CardForAdvertisementWithoutLink session='TI' content={ANUNCIO_TI} />
+
+                <CardForAdvertisementWithoutLink session='Administração' content={ANUNCIO_ADMINISTRACAO} />
+
+                <CardForAdvertisementWithoutLink session='Saúde' content={ANUNCIO_SAUDE} />
+
               </div>
-              
+
             </div >
           </div >
 
