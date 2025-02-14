@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { File } from 'src/repository/models/file.model';
 import { FileValidator } from './validator/file.service.validator';
@@ -6,6 +6,8 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import { SubSession } from 'src/repository/models/subSession.model ';
 import { Op } from 'sequelize';
+import { Users } from 'src/repository/models/user.model';
+import { UserPermission } from 'src/repository/models/permission.model';
 
 @Injectable()
 export class FileService {
@@ -15,6 +17,9 @@ export class FileService {
         private readonly fileModel: typeof File,
         @InjectModel(SubSession)
         private readonly subSessionModel: typeof SubSession,
+        @Inject('USERS_REPOSITORY') private readonly userRepository: typeof Users,
+        @InjectModel(UserPermission)
+        private readonly permissionModel: typeof UserPermission,
     ) { }
 
 
@@ -29,7 +34,16 @@ export class FileService {
         return this.fileValidator.existsFileName(this.fileValidator.removeAcento(name));
     }
 
-    async uploadFile(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
+    async uploadFile(file: Express.Multer.File, idSubSession: number, description: string, nip: string): Promise<File> {
+        const user = await this.userRepository.findByPk(nip);
+        if (!user) {
+            throw new BadRequestException('Usuário não encontrado')
+        }
+        const permission = await this.permissionModel.findOne({ where: { nip: user.nip, idSubSession: idSubSession } })
+        if (!permission && user.permission != 'admin') {
+            throw new BadRequestException('Usuário sem permissão')
+        }
+
         if (file.size > 15206700 && !file.originalname.includes(".mp4")) {
             throw new Error('Tamanho do arquivo não suportado.')
         }
@@ -55,6 +69,7 @@ export class FileService {
             nameFile: uniqueFileName,
             description,
             status: true,
+            nip: user.nip,
         });
 
         return savedFile;
@@ -67,7 +82,17 @@ export class FileService {
         description: string,
         nameFile: string,
         status: boolean,
+        nip: string,
     ): Promise<File> {
+        const user = await this.userRepository.findByPk(nip);
+        if (!user) {
+            throw new BadRequestException('Usuário não encontrado!');
+        }
+        const permission = await this.permissionModel.findOne({ where: { nip: user.nip, idSubSession: idSubSession } });
+        if (!permission && user.permission != 'admin') {
+            throw new BadRequestException('Usuário sem permissão!')
+        }
+
         const file = await this.fileValidator.existsFile(idFile);
 
         const oldFilePath = file.path;
@@ -129,14 +154,22 @@ export class FileService {
         return this.fileModel.findAll({ where: { nomeSubSession: { [Op.iLike]: `%${nomeSubSession}%` }, status: "true" }, order: [['nameFile', 'ASC']] });
     }
 
-    async deleteFile(idFile: number): Promise<void> {
+    async deleteFile(idFile: number, nip: string): Promise<void> {
+        const user = await this.userRepository.findByPk(nip);
+        if (!user) {
+            throw new BadRequestException('Usuário não encontrado!');
+        }
         const file = await this.fileValidator.existsFile(idFile);
+        const permission = await this.permissionModel.findOne({ where: { nip: user.nip, idPermission: file.idSubSession } })
+        if (!permission && user.permission != 'admin') {
+            throw new BadRequestException('Usuário sem permissão')
+        }
 
         try {
             if (fs.existsSync(file.path)) {
                 await fs.remove(file.path);
             }
-            await this.fileModel.update({ status: false }, { where: { idFile: file.idFile } })
+            await this.fileModel.update({ status: false, nip: user.nip }, { where: { idFile: file.idFile } })
         } catch (err) {
             throw new BadRequestException('Erro ao excluir o arquivo do sistema de arquivos.');
         }
@@ -151,9 +184,9 @@ export class FileService {
     }
 
 
-    async uploadMp3File(file: Express.Multer.File, idSubSession: number, description: string): Promise<File> {
+    async uploadMp3File(file: Express.Multer.File, idSubSession: number, description: string, nip: string): Promise<File> {
 
-        return this.uploadFile(file, idSubSession, description);
+        return this.uploadFile(file, idSubSession, description, nip);
     }
 
 

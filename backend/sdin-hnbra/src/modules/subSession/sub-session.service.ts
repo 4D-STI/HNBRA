@@ -126,4 +126,17 @@ export class SubSessionService {
         return this.subSessionRepository.findAll({ where: { status: "active" }, order: [['nameSubSession', 'ASC']], });
     }
 
+    async deleteSubSession(idSubSession: number) {
+        const subSession = await this.subSessionRepository.findByPk(idSubSession);
+        if (!subSession) {
+            throw new BadRequestException('SubSeção não encontradao!');
+        }
+        try {
+            await this.subSessionRepository.destroy({ where: { idSubSession: idSubSession } })
+        }
+        catch (e) {
+            return { message: 'Erro ao apagar subSeção ', e }
+        }
+    }
+
 }

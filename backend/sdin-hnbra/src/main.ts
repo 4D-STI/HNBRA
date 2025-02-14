@@ -9,15 +9,15 @@ import { readFileSync } from 'fs';
 
 async function bootstrap() {
 
-  // produção
+  // // produção
   // const httpsOptions = {
-  //   key: readFileSync('./src/cors/cert/www.hnbra.mb.key'),
-  //   cert: readFileSync('./src/cors/cert/www.hnbra.mb.pem')
+  //   key: readFileSync('/etc/pki/tls/private/www.hnbra.mb.key'),
+  //   cert: readFileSync('/etc/pki/tls/private/www.hnbra.mb.pem')
   // }
 
-  // produção
+  // // produção
   // const app = await NestFactory.create(AppModule, { httpsOptions });
-  // desenvolvimento
+  // // desenvolvimento
   const app = await NestFactory.create(AppModule);
   // Configura CORS
   app.enableCors({
