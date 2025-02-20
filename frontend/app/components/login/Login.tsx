@@ -16,6 +16,7 @@ import { User2Icon } from "lucide-react";
 import NipValidation from '@/app/components/utils/validations/nip_validation';
 import PasswordValidation from "../utils/validations/password_validation";
 import loginNip from "./LoginValidator";
+import router from "next/router";
 
 export default function Login() {
   const [nip, setNip] = useState<string>('');
@@ -71,8 +72,10 @@ export default function Login() {
       
       const token = await loginNip({nip, password});
       console.log('Login bem-sucedido! Token:', token);
-      window.location.reload();
-
+      await router.push('/dashboard/resourceManagement')
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
     } catch {
       alert('Erro ao fazer login. Verifique suas credenciais.');
     }
