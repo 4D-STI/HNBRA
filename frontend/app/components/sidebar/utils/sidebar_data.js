@@ -122,6 +122,11 @@ const CCIH = [
   { name: 'NSP', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=NSP' },
 ]
 
+const schedule = [
+  {name: 'Auditório/Sala de Reuniões', title: 'schedule', href:'/dashboard/resourceManagement'},
+  // {name: 'Consultas', title: 'schedule', href:'/dashboard/resourceManagement'}
+]
+
 const menuTitles = [
   { name: 'Menu Principal', ref: mainMenu },
   { name: 'Uso Interno', ref: internalUse },
@@ -132,7 +137,8 @@ const menuTitles = [
   { name: 'Seção de Informática', ref: itSection },
   { name: 'Serviços de Apoio a Saúde', ref: healthSupportService },
   { name: 'Divisão de Farmácia e Laboratório', ref: pharmacyLaboratoryDivision },
-  { name: 'CCIH', ref: CCIH }
+  { name: 'CCIH', ref: CCIH },
+  {name: 'Agendamentos', ref: schedule}
 ]
 
 
@@ -147,5 +153,6 @@ export {
   itSection,
   healthSupportService,
   pharmacyLaboratoryDivision,
-  CCIH
+  CCIH,
+  schedule
 }
