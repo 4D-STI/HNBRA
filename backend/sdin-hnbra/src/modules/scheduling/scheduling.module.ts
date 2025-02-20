@@ -8,7 +8,7 @@ import { SubSessionModule } from '../SubSession/sub-session.module';
 import { UsersModule } from '../users/users.module';
 import { PatentModule } from '../patent/patent.module';
 import { Patent } from 'src/repository/models/patent.model';
-// import { SchedulingValidator } from './validator/scheduling.service.validator';
+import { SchedulingValidator } from './validator/scheduling.service.validator';
 
 @Module({
     imports: [
@@ -17,7 +17,7 @@ import { Patent } from 'src/repository/models/patent.model';
     ],
     controllers: [SchedulingController],
     providers: [SchedulingService,
-        // SchedulingValidator
+        SchedulingValidator
     ],
     exports: [SchedulingService]
 })
