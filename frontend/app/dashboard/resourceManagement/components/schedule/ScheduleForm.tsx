@@ -21,8 +21,13 @@ interface IScheduleItem {
 }
 
 enum ScheduleType {
-  auditorium = 'Auditório',
-  meeting_room = 'Sala de Reuniões',
+  auditorium = 'auditorium',
+  meeting_room = 'meeting-room',
+}
+
+const dataTranslate = {
+  auditorium: 'Auditório',
+  'meeting-room': 'Sala de Reuniões'
 }
 
 interface IUserData {
@@ -38,9 +43,8 @@ interface IUserData {
 
 const scheduleSchema = z.object({
   nip: z.string(),
-  schedulingStart: z.string(),
-//   schedulingStart: z.string().transform((val) => val.replace('T', ' ')),
-  schedulingEnd: z.string().transform((val) => val.replace('T', ' ')),
+  schedulingStart: z.string().nonempty('Preencha data e horario!'),
+  schedulingEnd: z.string().nonempty('Preencha data e horario!'),
   theme: z.string().min(5, 'Tema deve ter no mínimo 5 caracteres'),
   description: z.string().min(10, 'Descrição deve ter no mínimo 10 caracteres'),
   typeScheduling: z.nativeEnum(ScheduleType),
@@ -66,6 +70,7 @@ const ScheduleForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<IScheduleItem>({
     resolver: zodResolver(scheduleSchema),
   });
@@ -76,18 +81,30 @@ const ScheduleForm: React.FC = () => {
     const token = localStorage.getItem('token')
     const API_URL = 'http://localhost:3002/scheduling'
     try {
-        const response = await axios.post(API_URL,data,{
-                headers: { Authorization: `Bearer ${token}`}
-            }
-        )
-
-        if (response.status === 201) window.alert('Agendamento realizado com sucesso!')
-        
+      const response = await axios.post(API_URL,data,{
+        headers: { Authorization: `Bearer ${token}`}
+      }
+    )
+    
+    if (response.status === 201) {
+        window.alert('Agendamento realizado com sucesso!')
         console.log('resposta servidor: ', response.data);
+        reset()
+      }
 
-    } catch (error) {
-      console.log('Erro ao enviar o formulário: ', error)
-      window.alert('Não foi possível realizar o seu agendamento!\nVerifique os dados do formulário!')
+    } catch (error: unknown) {
+      if(axios.isAxiosError<{message?: string, error?: string, statusCode?: number}>(error)) {
+        console.log('erro resposta statusCode: ', error.response?.data.statusCode);
+        console.log('erro resposta tipo: ', error.response?.data.error);
+        console.log('erro resposta msg: ', error.response?.data.message);
+        
+        window.alert(`
+          Não foi possível realizar o seu agendamento!\n
+          Verifique os dados do formulário!\n\n
+          Código: ${error.response?.data.statusCode} --- Erro: ${error.response?.data.error}\n\n
+          Motivo: ${error.response?.data.message}
+        `)
+      }
     }
   };
 
@@ -147,6 +164,7 @@ const ScheduleForm: React.FC = () => {
           <input
             type="text"
             id="ramal"
+            maxLength={4}
             {...register('ramal')}
             className="w-auto border border-gray-300 px-3 py-2 rounded-md"
           />
@@ -155,7 +173,7 @@ const ScheduleForm: React.FC = () => {
 
       </div>
       
-
+      {/* tema */}
       <div>
         <label htmlFor="theme" className="block text-gray-700 font-bold">
           Tema:
@@ -170,6 +188,7 @@ const ScheduleForm: React.FC = () => {
         {errors.theme && <p className="text-red-500">{errors.theme.message}</p>}
       </div>
 
+      {/* descrição */}
       <div>
         <label htmlFor="description" className="block text-gray-700 font-bold">
           Descrição:
@@ -183,6 +202,7 @@ const ScheduleForm: React.FC = () => {
         {errors.description && <p className="text-red-500">{errors.description.message}</p>}
       </div>
 
+      {/* tipo do agendamento */}
       <div>
         <label className="block text-gray-700 font-bold">Tipo de Agendamento:</label>
         <div>
@@ -196,7 +216,7 @@ const ScheduleForm: React.FC = () => {
                 checked={scheduleType === type}
                 onChange={() => setScheduleType(type)}
               />
-              <span>{type}</span>
+              <span>{dataTranslate[type]}</span>
             </label>
           ))}
         </div>
