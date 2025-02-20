@@ -5,7 +5,7 @@ import React, {useState} from 'react'
 import {ContentManagement} from './components/content/ContentManagement'
 import {FilesManagement} from './components/files/FilesManagement'
 import {ScheduleManagement} from './components/schedule/ScheduleManagement'
-import {UsersManagement} from './components/users/ScheduleManagement'
+import {UsersManagement} from './components/users/UserManagement'
 
 
 export default function RegisterPage() {
