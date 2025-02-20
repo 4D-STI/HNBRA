@@ -1,14 +1,16 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { literal, Op } from 'sequelize';
 import { Scheduling } from 'src/repository/models/scheduling.model';
 import { Users } from 'src/repository/models/user.model';
 import { Patent } from 'src/repository/models/patent.model';
 import * as moment from 'moment-timezone';
+import { SchedulingValidator } from './validator/scheduling.service.validator';
 
 @Injectable()
 export class SchedulingService {
     constructor(
+        private readonly schedulingValidator: SchedulingValidator,
         @InjectModel(Scheduling)
         private readonly schedulingModel: typeof Scheduling,
         @InjectModel(Patent)
@@ -26,12 +28,15 @@ export class SchedulingService {
         const user = await this.usersRepository.findOne({ where: { nip: scheduling.nip } });
         const patent = await this.patentModel.findByPk(user.idPatent);
 
-        scheduling.nameResponsible = (patent.patent, user.warName);
+        scheduling.nameResponsible = `${patent.patent} ${user.warName}`;
 
         if (scheduling.schedulingEnd < scheduling.schedulingStart) {
             throw new BadRequestException('O horário final do agendamento deve ser posterior ao horário de início!')
         }
 
+        await this.schedulingValidator.verifyScheduling(scheduling);
+
+        scheduling.schedulingEnd = moment(scheduling.schedulingEnd).add(29, 'minutes').toDate();
         const conflictingScheduling = await this.schedulingModel.findOne({
             where: {
                 typeScheduling: scheduling.typeScheduling,
@@ -72,11 +77,24 @@ export class SchedulingService {
             }
         );
 
-        return await this.schedulingModel.findAll({ where: { status: true }, order: [['schedulingStart', 'ASC']] });
+        return await this.schedulingModel.findAll({
+            attributes: {
+                include: [
+                    [literal(`"schedulingEnd" - INTERVAL '29 minutes'`), 'schedulingEnd']
+                ]
+            },
+            where: { status: true },
+            order: [['schedulingStart', 'ASC']]
+        });
     }
 
     async getAllSchedulingTrue() {
-        return await this.schedulingModel.findAll({ order: [['schedulingStart', 'ASC']] });
+        const result = await this.schedulingModel.findAll({
+            order: [['schedulingStart', 'ASC']]
+        });
+
+        return result;
+
     }
 
     async putScheduling(scheduling: Scheduling, req: string) {
@@ -89,6 +107,16 @@ export class SchedulingService {
         if (!schedulingOld) {
             throw new BadRequestException('Agendamento não encontrado.');
         }
+
+        if (!scheduling.schedulingStart) {
+            scheduling.schedulingStart = schedulingOld.schedulingStart;
+        }
+        if (!scheduling.schedulingEnd) {
+            scheduling.schedulingEnd = schedulingOld.schedulingEnd;
+        }
+
+        await this.schedulingValidator.verifyScheduling(scheduling);
+
 
         const updatedScheduling = {
             schedulingStart: scheduling.schedulingStart ?? schedulingOld.schedulingStart,

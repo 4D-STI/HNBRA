@@ -45,7 +45,7 @@ export default function FileList({ files }: FileListProps) {
 
     const handleDownload = (params: iHandleDownload) => {
         const FILE_URL_DOWNLOAD = `${process.env.NEXT_PUBLIC_API_BACK}/files/${params.idFile}/download/`;
-        const FILE_URL_VIEW = `https://www.hnbra.mb:3002/files/${params.nameFile}/view`;
+        const FILE_URL_VIEW = `${process.env.NEXT_PUBLIC_API_BACK}/files/${params.nameFile}/view`;
         if (params.previewOnly) {
             window.open(FILE_URL_VIEW, "_blank");
         } else {
