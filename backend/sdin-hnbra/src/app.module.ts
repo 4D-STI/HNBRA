@@ -22,6 +22,7 @@ import { PatentModule } from './modules/patent/patent.module';
 import { UserPermissionModule } from './modules/userPermission/user-permission.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SchedulingModule } from './modules/scheduling/scheduling.module';
+import { InformationModule } from './modules/information/information.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { SchedulingModule } from './modules/scheduling/scheduling.module';
     PatentModule,
     UserPermissionModule,
     SchedulingModule,
+    InformationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
