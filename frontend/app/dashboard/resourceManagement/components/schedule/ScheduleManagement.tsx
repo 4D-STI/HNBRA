@@ -1,36 +1,79 @@
 'use client'
 
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, 
+    useContext,
+     useEffect, useState } from "react"
 import {CalendarPlus, RefreshCw} from 'lucide-react'
 import ScheduleForm from "./ScheduleForm"
 import ScheduleItemContent from "./ScheduleItemContent"
 import { ScheduleType, IScheduleItem, OrderType } from "./schedule_interface/scheduleInterface"
 import * as filters from "./utils/filters"
+import { handleScheduleTypeButtonToggle } from "./utils/handlerScheduleTypeToggle"
+import { useToast } from "@/hooks/use-toast"
+import { ToastAction } from "@radix-ui/react-toast"
+import ScheduleContext from '@/app/context/ScheduleContext'
 
 const url ='http://localhost:3002/scheduling'
 
 export const ScheduleManagement = () => {
-    // gerencia o tipo dos agendamentos listados
-    const handleScheduleTypeButtonToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const target = event.target as HTMLButtonElement
-        if (target.value === ScheduleType.auditorium) {
-            setCreateSchedule(false)
-            setContentType(target.value)
-            setScheduleType(target.value)
-        }
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(true)
+    const [reload, setReload] = useState(false)
+    const [data, setData] = useState<IScheduleItem[]>([])
+    const [contentType,setContentType] = useState<ScheduleType | null>(ScheduleType.auditorium)
+    const [createSchedule, setCreateSchedule] = useState(false)
+    const [order, setOrder] = useState(OrderType.asc)
+    const [search_term, setSearch_Term] = useState('')
+    const [scheduleType, setScheduleType] = useState<ScheduleType | null>(ScheduleType.auditorium)
+    const [token, setToken] = useState<React.SetStateAction<string | null>>(null)
+    const [param_for_filter, setParam_For_Filter] = useState<keyof IScheduleItem>('schedulingStart')
+    const {scheduleData} = useContext(ScheduleContext)
+    const {toast} = useToast()
 
-        if (target.value === ScheduleType.meeting_room) {
-            setCreateSchedule(false)
-            setContentType(target.value)
-            setScheduleType(target.value)
-        }
+    // parametros não utilizados
+    console.log(error, loading, setSearch_Term, setParam_For_Filter);
+
+    // filtros de processamento dos dados
+    const filteredData = filters.filteredData({data, order, param_for_filter, scheduleType, search_term})
+
+    // Executa a busca ao carregar
+    useEffect(() => {
+        setToken(localStorage.getItem('token'))
+        if (scheduleData) setData(scheduleData)
+        // fetchData();
+    },[scheduleData]);
+
+    // gerencia o tipo dos agendamentos listados
+    const scheduleTypeToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+        handleScheduleTypeButtonToggle({
+            event,
+            setCreateSchedule,
+            setContentType,
+            setScheduleType
+        })
     }
 
     // gerencia o conteudo (criar ou listar)
     const handleScheduleContent = () => {
-        setCreateSchedule(!createSchedule)
-        setContentType(null)
-        setScheduleType(null)
+        if (token) {
+            setCreateSchedule(!createSchedule)
+            setContentType(null)
+            setScheduleType(null)
+            console.log('tem tokem:', token);
+            return
+        }
+        
+        // ERRO: acessar edição sem logar
+        toast(
+            {
+                variant: 'destructive',
+                title: 'Recurso protegido!',
+                description: 'Faça o login para acessar este recurso!',
+                action: <ToastAction 
+                            className="bg-white/80 text-black rounded-md py-2 px-4 hover:border-none transition-border-color ease-in" altText="Logar"> Fechar
+                        </ToastAction>
+            }
+        )
     }
 
     // gerencia ordenação do conteúdo
@@ -46,20 +89,6 @@ export const ScheduleManagement = () => {
             return
         }
     }
-
-    const [error, setError] = useState('')
-    const [loading, setLoading] = useState(true)
-    const [reload, setReload] = useState(false)
-    const [data, setData] = useState<IScheduleItem[]>([])
-    const [contentType,setContentType] = useState<ScheduleType | null>(null)
-    const [createSchedule, setCreateSchedule] = useState(true)
-    const [order, setOrder] = useState(OrderType.asc)
-    const [search_term, setSearch_Term] = useState('')
-    const [scheduleType, setScheduleType] = useState<ScheduleType | null>(null)
-    const [param_for_filter, setParam_For_Filter] = useState<keyof IScheduleItem>('schedulingStart')
-
-    // filtros de processamento dos dados
-    const filteredData = filters.filteredData({data, order, param_for_filter, scheduleType, search_term})
     
     const fetchData = useCallback(async () => {
         console.log('entrou no fetchdata');
@@ -68,11 +97,6 @@ export const ScheduleManagement = () => {
         
         if (!url) {
             setError("Erro: Url inexistente!");
-            console.log(error);
-            console.log(loading);
-            console.log(setSearch_Term);
-            
-            
             setLoading(false);
             return;
         }
@@ -82,7 +106,6 @@ export const ScheduleManagement = () => {
                 const res = await fetch(url, { cache: "no-store" });
                 if (!res.ok) throw new Error("Erro ao buscar conteúdo.");
                 const data = await res.json();
-                // setData(filters.filteredData({data, order, param_for_filter, scheduleType, search_term}));
                 setData(data);
                 setReload(false)
             }, 1000);
@@ -91,14 +114,7 @@ export const ScheduleManagement = () => {
         } finally {
             setLoading(false);
         }
-    }, []); // estado derivado <<<
-
-    // Executa a busca ao carregar
-    useEffect(() => {
-        console.log('entrou em effect');
-                
-        fetchData();
-    },[]); // estado derivado <<<
+    }, []);
 
     return (
         <div
@@ -126,7 +142,7 @@ export const ScheduleManagement = () => {
                             rounded-2xl p-2 text-white font-bold text-sm
                             ${contentType === 'auditorium' ? "bg-blue-600" : "bg-gray-600"}
                         `}
-                        onClick={(e) => handleScheduleTypeButtonToggle(e)}
+                        onClick={(e) => scheduleTypeToggle(e)}
                         value='auditorium'
                     >
                         Auditório
@@ -137,7 +153,7 @@ export const ScheduleManagement = () => {
                             rounded-2xl p-2 text-white font-bold text-sm
                             ${contentType === 'meeting-room' ? "bg-blue-600" : "bg-gray-600"}
                         `}
-                        onClick={(e) => handleScheduleTypeButtonToggle(e)}
+                        onClick={(e) => scheduleTypeToggle(e)}
                         value='meeting-room'
                     >
                         Sala de Reuniões
@@ -199,7 +215,7 @@ export const ScheduleManagement = () => {
                 {
                     createSchedule &&
                     (
-                        <div className="overflow-y-auto h-full mt-2 pl-8 pr-20 pb-12">
+                        <div className="overflow-y-auto h-full mt-2 pl-8 pr-20 pb-12 mx-44">
                             <ScheduleForm />
                         </div>
                     )
