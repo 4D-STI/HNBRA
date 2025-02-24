@@ -160,7 +160,7 @@ export class FileService {
             throw new BadRequestException('Usuário não encontrado!');
         }
         const file = await this.fileValidator.existsFile(idFile);
-        const permission = await this.permissionModel.findOne({ where: { nip: user.nip, idPermission: file.idSubSession } })
+        const permission = await this.permissionModel.findOne({ where: { nip: user.nip, idSubSession: file.idSubSession } })
         if (!permission && user.permission != 'admin') {
             throw new BadRequestException('Usuário sem permissão')
         }
