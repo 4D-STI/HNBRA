@@ -123,7 +123,7 @@ const CCIH = [
 ]
 
 const schedule = [
-  {name: 'Auditório/Sala de Reuniões', title: 'schedule', href:'/dashboard/resourceManagement'},
+  {name: 'Auditório/Sala de Reuniões', title: 'schedule', href:'/dashboard/resourceManagement/components/schedule'},
   // {name: 'Consultas', title: 'schedule', href:'/dashboard/resourceManagement'}
 ]
 
