@@ -1,5 +1,3 @@
-"use client";
-import { CardForAdvertisementWithoutLink } from './components/utils/shadcn_demo_components/card_with_ad_without_link';
 import { CardWithMultiMedia } from './components/utils/shadcn_demo_components/card_with_multimedia';
 import { CardWithHighlights } from './components/utils/shadcn_demo_components/card_with_highlights';
 import ShortcutsOtherApps from '@/app/components/shortcuts/ShortcutsOtherApps'
@@ -11,7 +9,6 @@ import PlanoDoDiaPage from './components/shortcuts/PlanoDoDiaPage';
 import CardapioButton from './components/shortcuts/CardapioButton';
 import Slidebar from "@/app/components/sidebar/Slidebar";
 import Search from "@/app/components/search/Search";
-import AddIcon from '@mui/icons-material/Add';
 
 // contexto
 import { PDF_DataProvider } from '@/app/context/files_pdf_Context'
@@ -19,44 +16,10 @@ import { PDF_DataProvider } from '@/app/context/files_pdf_Context'
 // data
 import { pracaPadrao, servidorCivilPadrao } from '@/app/components/utils/shadcn_demo_components/data/card_with_highlights_data'
 import SwiperCarousel from './components/carousel/carousel_swiper';
-import { InformationType } from './types/informationType';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { ClientComponent } from './components/InformationClientComponent';
+
 
 export default function Home() {
-  const [information, setInformation] = useState<InformationType[]>([]);
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    // Verifica login
-    if (localStorage.getItem('token')) {
-      setIsLogin(true);
-    }
-
-    // Busca informações da API
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/information`, {
-          cache: "no-store",
-        });
-        const data = await response.json();
-        setInformation(data);
-      } catch (error) {
-        console.error("Erro ao buscar informações:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-
-  // const information: InformationType[] = await response.json();
-
-  // const ANUNCIO_TI = "Os chamados para suporte de informática deverão ser acompanhados pelos respectivos solicitantes. A cada alteração no ciclo de atendimento do chamado, o sistema - de forma automática - envia um e-mail ao requisitante que, poderá conter informações fundamentais para a resolução do problema relatado."
-
-  // const ANUNCIO_ADMINISTRACAO = "As vagas de estacionamento do HNBra são de uso exclusivo das viaturas administrativas da MB e da tripulação do HNBra, distribuídas conforme a OI 20-32A, exceto para as situações previstas na legislação (idosos por exemplo). Para acesso, o veículo deverá obrigatoriamente portar o cartão de estacionamento ou de utilização de vaga exclusiva."
-
-  // const ANUNCIO_SAUDE = "O agendamento de atendimento do PME (Programa de Medicamentos Especiais) será realizado pelo telefone 3445-7340 - RETELMA 8916 (Farmácia)."
 
   return (
     <PDF_DataProvider>
@@ -168,7 +131,8 @@ export default function Home() {
             </div>
 
             {/* anuncios textos*/}
-            <div id="anuncios-texto" className="flex-col w-4/12 px-6 h-96 overflow-y-scroll">
+            <ClientComponent />
+            {/* <div id="anuncios-texto" className="flex-col w-4/12 px-6 h-96 overflow-y-scroll">
 
               <div id="advertisement-title-container" className="mb-2 font-bold flex items-center justify-between">
                 <h1>Informações Gerais</h1>
@@ -181,16 +145,6 @@ export default function Home() {
 
               <div id="anuncio-texto-container" className="flex flex-col gap-3">
 
-                {/* <CardForAdvertisement session='TI' content={ANUNCIO_TI} link='https://siscsrecim.ctim.mb'/> */}
-
-                {/* <CardForAdvertisementWithoutLink session='TI' content={ANUNCIO_TI} />
-
-                <CardForAdvertisementWithoutLink session='Administração' content={ANUNCIO_ADMINISTRACAO} />
-
-                <CardForAdvertisementWithoutLink session='Saúde' content={ANUNCIO_SAUDE} />
-
-                <CardForAdvertisementWithoutLink session='Saúaaaaaaaaade' content={ANUNCIO_SAUDE} /> */}
-
                 <div id="anuncio-texto-container" className="flex flex-col gap-3">
                   {information.map((anuncio, i) => (
                     <CardForAdvertisementWithoutLink key={i} session={anuncio.nameDepartament} content={anuncio.description} />
@@ -199,7 +153,7 @@ export default function Home() {
 
               </div>
 
-            </div >
+            </div > */}
           </div >
 
 

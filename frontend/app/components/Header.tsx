@@ -116,7 +116,9 @@ export default function Header() {
                     {!isLogin ? (
                         <div id="button_login" className="flex items-center mx-4">
                             <Login />
+                            <div className="flex items-center mx-4"><a href='/dashboard/register'>   Cadastre-se</a></div>
                         </div>
+
                     ) :
                         (
                             <div>
