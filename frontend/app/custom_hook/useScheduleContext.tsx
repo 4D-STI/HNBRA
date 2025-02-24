@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import ScheduleContext from '@/app/context/ScheduleContext'; // Importe o contexto
 
-function useScheduleContext() {
+export function useScheduleContext() {
   const contexto = useContext(ScheduleContext);
   if (!contexto) {
     throw new Error(

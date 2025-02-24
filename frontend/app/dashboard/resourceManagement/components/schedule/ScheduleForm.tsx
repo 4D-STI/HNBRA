@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import {useScheduleContext} from '@/app/custom_hook/useScheduleContext'
 import {jwtDecode} from 'jwt-decode'
 import * as z from 'zod';
 import axios from 'axios'
@@ -59,6 +60,7 @@ const handlerUserLoggedData = (): IUserData | undefined => {
 const ScheduleForm: React.FC = () => {
   const [scheduleType, setScheduleType] = useState(ScheduleType.auditorium);
   const [userData, setUserData] = useState<IUserData | null >(null)
+  const {updateScheduleData} = useScheduleContext()
 
   useEffect(() => {
     const data = handlerUserLoggedData()    
@@ -90,6 +92,7 @@ const ScheduleForm: React.FC = () => {
         window.alert('Agendamento realizado com sucesso!')
         console.log('resposta servidor: ', response.data);
         reset()
+        updateScheduleData()
       }
 
     } catch (error: unknown) {
