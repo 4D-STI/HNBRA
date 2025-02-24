@@ -44,6 +44,7 @@ export class AuthService {
             lastName: user.dataValues.lastName,
             patent: user.dataValues.idPatent,
             warName: user.dataValues.warName,
+            permission: user.dataValues.permission,
         };
 
         const secretKey = process.env.JWT_SECRET_KEY || 'default_secret_key';

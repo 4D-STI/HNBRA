@@ -86,11 +86,11 @@ export class CreateUserDto {
     @IsString({ message: IS_STRING_MSG('password') })
     password: string;
 
-    @ApiPropertyOptional({
-        description: 'Email pessoal do usuário (opcional).',
-        example: 'usuario@email.com'
-    })
-    @IsString({ message: IS_STRING_MSG('emailPersonal') })
+    // @ApiPropertyOptional({
+    //     description: 'Email pessoal do usuário (opcional).',
+    //     example: 'usuario@email.com'
+    // })
+    // @IsString({ message: IS_STRING_MSG('emailPersonal') })
     emailPersonal?: string;
 
     @ApiPropertyOptional({

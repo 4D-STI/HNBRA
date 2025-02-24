@@ -13,7 +13,16 @@ export class PatentService {
 
 
     async getPatent() {
-        return await this.patentRepository.findAll();
+        return await this.patentRepository.findAll({ order: [['idPatent', 'DESC']] });
+    }
+
+    async putPatent(patent: Patent) {
+        try {
+            this.patentRepository.update(patent, { where: { idPatent: patent.idPatent } });
+        } catch (e) {
+            throw new Error(`Erro ao atualizar Posto/Grad: ${e}`)
+        }
+        return this.patentRepository.findByPk(patent.idPatent);
     }
 
     async createPatent(patent: Patent, nip: string) {
