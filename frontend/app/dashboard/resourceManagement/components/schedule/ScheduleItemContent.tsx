@@ -9,19 +9,20 @@ interface IscheduleItemContent {
 const ScheduleItemContent = ({data}: IscheduleItemContent) => {
     const scheduleData = [...data]    
     return (
-        <table className="table-auto w-full bg-white/40">
+        <table className="table-fixed w-full bg-white/40">
             
             <thead>
-                <tr className="bg-gray-100 text-nowrap text-center text-sm">
+                <tr className="bg-gray-100 text-wrap text-center text-sm">
+                    <th className="px-4 py-2 w-[60px] text-xs">Editar/Excluir</th>
                     <th
                         onClick={(e) => console.log('quer filtar: ', e.currentTarget.innerText)}
-                        className="px-4 py-2 w-[100px] ">Data do Agendamento</th>
+                        className="px-4 py-2 w-[70px] ">Data do Agendamento</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
-                        className="px-4 py-2 w-[120px] ">Horário</th>
+                        className="px-4 py-2 w-[100px] ">Horário</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
-                        className="px-4 py-2 w-[80px] ">Responsável</th>
+                        className="px-4 py-2 w-[100px] ">Responsável</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
                         className="px-4 py-2 w-[70px] ">NIP</th>
@@ -30,10 +31,10 @@ const ScheduleItemContent = ({data}: IscheduleItemContent) => {
                         className="px-4 py-2 w-[60px] ">Ramal</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
-                        className="px-4 py-2 w-[120px] ">Data de criação</th>
+                        className="px-4 py-2 w-[100px] ">Data de criação</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
-                        className="px-4 py-2 w-[120px] ">Tema</th>
+                        className="px-4 py-2 w-[200px] ">Tema</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
                         className="px-4 py-2 w-[200px] ">Descrição</th>
