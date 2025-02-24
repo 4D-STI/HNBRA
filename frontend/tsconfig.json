@@ -35,11 +35,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/components/utils/shadcn_demo_components/types/card_with_highlights_type.js",
-    "app/components/utils/shadcn_demo_components/types/card_with_highlights_type.js",
+    "app/components/utils/shadcn_demo_components/types/card_with_highlights_type.js",  
     "app/components/carousel/carousel_swiper.tsx",
-    "app/components/carousel/carousel_swiper.tsx"
-  ],
+    "app/dashboard/resourceManagement/components/schedule/utils/handleEditDelete.jsx"  ],
   "exclude": [
     "node_modules"
   ]
