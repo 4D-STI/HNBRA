@@ -111,7 +111,10 @@ const pharmacyLaboratoryDivision = [
   { name: 'Serviço de Análises Clínicas', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/ServicoAnalisesClinicas' },
   { name: 'Serviço de Farmácia Hospitalar', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/subSessionFileList?SubSessionFileList_name=SERVICO_DE_FARMACIA_HOSPITALAR' },
   {
-    name: 'Setor de Dispensação de Medicamentos (SeDiMe)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=167`
+    name: 'SeDiMe', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=167`
+  },
+  {
+    name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=172`
   },
 ]
 
