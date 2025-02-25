@@ -160,7 +160,7 @@ const shortcutsOtherAppsData = [
         name: 'netuno',
         // icon_path_jpg: '/icons/hino_icon/26.jpg',
         icon_path_jpg: '/icons/netuno_icon/logo_netuno.jpg',
-        link: 'https://sisnetuno.dadm.mb/principal'
+        link: 'https://sisnetuno.dadm.mb/logar'
     },
 ]
 
