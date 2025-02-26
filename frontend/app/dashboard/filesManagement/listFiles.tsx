@@ -62,7 +62,7 @@ function UploadPage() {
 
   const fetchData = useCallback(async () => {
     if (!url) {
-      setError("Erro: Parâmetro 'item' ou 'teste' não fornecido.");
+      setError("Erro: Parâmetro 'item' ou 'name' não fornecido.");
 
       return;
     }
