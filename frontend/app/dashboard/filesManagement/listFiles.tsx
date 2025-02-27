@@ -5,8 +5,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import FileList from '../listSubSessionSession/file';
 import { File as files } from "../../types/file";
 
-
-
 function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [idSubSession] = useState('');
@@ -27,6 +25,30 @@ function UploadPage() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target.files?.[0] || null);
   };
+
+  const url = React.useMemo(() => {
+    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=6`;
+    return null;
+  }, [apiBack, SUBSESSION_ID]);
+
+  const fetchData = useCallback(async () => {
+    if (!url) {
+      setError("Erro: Parâmetro 'item' ou 'name' não fornecido.");
+
+      return;
+    }
+
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("Erro ao buscar arquivos");
+      const data = await res.json();
+      setFiless(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro desconhecido");
+    } finally {
+    }
+  }, [url]);
+  
   useEffect(() => {
     const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
     setToken(storedToken);
@@ -53,32 +75,7 @@ function UploadPage() {
       })
     fetchData();
     // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
-  });
-
-  const url = React.useMemo(() => {
-    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=6`;
-    return null;
-  }, [apiBack, SUBSESSION_ID]);
-
-  const fetchData = useCallback(async () => {
-    if (!url) {
-      setError("Erro: Parâmetro 'item' ou 'name' não fornecido.");
-
-      return;
-    }
-
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error("Erro ao buscar arquivos");
-      const data = await res.json();
-      setFiless(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro desconhecido");
-    } finally {
-    }
-  }, [url]);
-
-
+  }, [apiBack, fetchData]);
 
   const handleUpload = async () => {
 
@@ -113,8 +110,6 @@ function UploadPage() {
       // window.reportError(error)
     }
   };
-
-
 
   // const clearLocal = () => {
   //   localStorage.removeItem('token');
