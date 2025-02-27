@@ -1,4 +1,6 @@
-// Example usage in a parent component
+'use client'
+
+import { useEffect, useState } from 'react';
 import ScheduleItemTable from './ScheduleItemTable';
 import { IScheduleItem } from './schedule_interface/scheduleInterface'
 
@@ -7,16 +9,26 @@ interface IscheduleItemContent {
 }
 
 const ScheduleItemContent = ({data}: IscheduleItemContent) => {
-    const scheduleData = [...data]    
+    const [token, setToken] = useState('')
+    const scheduleData = [...data]   
+
+    useEffect(() => {
+        const token = localStorage?.getItem('token') ?? ''
+        
+        if (token) setToken(token)
+    }, [])
+    
     return (
         <table className="table-fixed w-full bg-white/40">
             
             <thead>
                 <tr className="bg-gray-100 text-wrap text-center text-sm">
-                    <th className="px-4 py-2 w-[60px] text-xs">Editar/Excluir</th>
+                    {token && 
+                        <th className="px-4 py-2 w-[60px] text-xs">Editar/Excluir</th>
+                    }
                     <th
                         onClick={(e) => console.log('quer filtar: ', e.currentTarget.innerText)}
-                        className="px-4 py-2 w-[70px] ">Data do Agendamento</th>
+                        className="px-4 py-2 w-[150px] text-nowrap">Data do Agendamento</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
                         className="px-4 py-2 w-[100px] ">Horário</th>
