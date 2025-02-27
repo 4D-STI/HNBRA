@@ -14,9 +14,9 @@ import { Input } from "@/components/ui/input";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { User2Icon } from "lucide-react";
 import NipValidation from '@/app/components/utils/validations/nip_validation';
-import PasswordValidation from "../utils/validations/password_validation";
+// import PasswordValidation from "../utils/validations/password_validation";
 import loginNip from "./LoginValidator";
-import router from "next/router";
+// import router from "next/router";
 
 export default function Login() {
   const [nip, setNip] = useState<string>('');
@@ -29,15 +29,14 @@ export default function Login() {
   const handleNipInput = (event: ChangeEvent<HTMLInputElement>) => {
     // adiciona o valor ao estado a partir do onChange do input do nip
     setNip(event.target.value)
-    console.log('estado fora da callback: ',nip);
-    
+
     // realiza as validações do nip
     const NipValidationErrors = NipValidation(nip);
     // limpa o estado do erros do input nip caso
     // 1 - não haja erros nas validações
     // 2 - não haja valor em nip
     if (NipValidationErrors.length === 0 || nip === '') setNipErrors([])
-    
+
     if (NipValidationErrors.length > 0) setNipErrors(NipValidationErrors)
   }
 
@@ -45,21 +44,20 @@ export default function Login() {
   const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     // adiciona o valor ao estado a partir do onChange do input do nip
     setPassword(event.target.value)
-    console.log('estado password: ', password);
-    
+
     // realiza as validações do nip
-    const PasswordValidationErrors = PasswordValidation(password);
+    // const PasswordValidationErrors = PasswordValidation(password);
     // limpa o estado do erros do input nip caso
     // 1 - não haja erros nas validações
     // 2 - não haja valor em nip
-    if (PasswordValidationErrors.length === 0 || nip === '') setNipErrors([])
-    
-    if (PasswordValidationErrors.length > 0) {
-      setPasswordErrors(PasswordValidationErrors);
-      return;
-    }
+    // if (PasswordValidationErrors.length === 0 || nip === '') setNipErrors([])
+
+    // if (PasswordValidationErrors.length > 0) {
+    //   setPasswordErrors(PasswordValidationErrors);
+    //   return;
+    // }
   }
-  
+
   // método envio dados
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -68,14 +66,10 @@ export default function Login() {
     setNipErrors([]);
 
     try {
-      console.log('tentou logar');
-      
-      const token = await loginNip({nip, password});
-      console.log('Login bem-sucedido! Token:', token);
-      await router.push('/dashboard/resourceManagement')
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
+
+      await loginNip({ nip, password });
+      window.location.reload();
+
     } catch {
       alert('Erro ao fazer login. Verifique suas credenciais.');
     }
@@ -91,13 +85,13 @@ export default function Login() {
 
   return (
     <Dialog onOpenChange={handleClose}>
-      
+
       <DialogTrigger asChild>
         <Button className="bg-blue-900 text-white">
           <User2Icon /> Login
         </Button>
       </DialogTrigger>
-      
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>

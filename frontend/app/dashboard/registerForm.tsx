@@ -19,93 +19,212 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import passwordValidation from "./utils/passwordValidation"; 
-import { Eye, EyeOff } from 'lucide-react'; 
+import passwordValidation from "./utils/passwordValidation";
+import { Eye, EyeOff } from 'lucide-react';
 import NipValidation from "./utils/nipValidation";
 
 export default function RegisterForm() {
-  const [name, setName] = useState<string>('');
-  const [surname, setSurname] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [warName, setWarname] = useState<string>('');
   const [nip, setNip] = useState<string>('');
-  const [department, setDepartment] = useState<string>('');
-  const [section, setSection] = useState<string>('');
-  const [cargo, setCargo] = useState<string>('');
-  const [status, setStatus] = useState<string>('');
+  const [emailMb, setEmailMb] = useState<string>('');
+  const [number, setNumber] = useState<string>('');
+  const [patents, setPatents] = useState([]);
+  const [patent, setPatent] = useState<number | null>(null);
+  // const [department, setDepartment] = useState<string>('');
+  // const [section, setSection] = useState<string>('');
+  // const [cargo, setCargo] = useState<string>('');
+  // const [status, setStatus] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [permissions, setPermissions] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [successMessage, setSuccessMessage] = useState<string>(''); 
+  const [successMessage, setSuccessMessage] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false); 
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [nipValidationErrors, setNipValidationErrors] = useState<string[]>([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/patent`, {
+          cache: "no-store",
+        });
+        const data = await response.json();
+        setPatents(data);
+        if (data.length > 0) {
+          setPatent(data[0].idPatent);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar informações:", error);
+      }
+    };
+
+
+    fetchData();
+
     const errors = NipValidation(nip);
     setNipValidationErrors(errors);
   }, [nip]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!name || !surname || !nip || !department || !section || !cargo || !status || !password || !confirmPassword) {
+    if (!firstName || !lastName || !nip
+      // || !department || !section || !cargo || !status 
+      || !password || !confirmPassword) {
       setErrorMessage("Por favor, preencha todos os campos obrigatórios.");
-      setSuccessMessage(''); 
+      setSuccessMessage('');
       return;
     }
 
     const passwordErrors = passwordValidation(password);
     if (passwordErrors.length > 0) {
       setErrorMessage(passwordErrors.join(", "));
-      setSuccessMessage(''); 
+      setSuccessMessage('');
       return;
     }
 
     if (password !== confirmPassword) {
       setErrorMessage("As senhas não coincidem.");
-      setSuccessMessage(''); 
+      setSuccessMessage('');
       return;
     }
 
     if (nipValidationErrors.length > 0) {
       setErrorMessage(nipValidationErrors.join(", "));
-      setSuccessMessage(''); 
+      setSuccessMessage('');
       return;
     }
+    const errors = NipValidation(nip);
+    setNipValidationErrors(errors);
+    await NipValidation(nip);
 
-    console.log({
-      name,
-      surname,
-      nip,
-      department,
-      section,
-      cargo,
-      status,
-      permissions,
-      password,
-    });
-
-    setName('');
-    setSurname('');
+    setFirstName('');
+    setLastName('');
     setNip('');
-    setDepartment('');
-    setSection('');
-    setCargo('');
-    setStatus('');
+    // setDepartment('');
+    // setSection('');
+    // setCargo('');
+    // setStatus('');
     setPassword('');
     setConfirmPassword('');
     setPermissions([]);
     setErrorMessage('');
-    setSuccessMessage('Usuário cadastrado com sucesso!'); 
+
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/users`, {
+        method: 'POST',
+        cache: 'no-store',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nip,
+          "idPatent": 1,
+          warName,
+          firstName,
+          lastName,
+          "role": "user",
+          "status": "active",
+          "permission": "user",
+          password,
+          "emailPersonal": emailMb,
+          "emailMb": emailMb,
+          "contactNumber": number
+        }),
+      });
+
+      if (response.ok) {
+        // const data = await response.json();
+        // console.log('Upload concluído com sucesso:', data);
+        setSuccessMessage('Usuário cadastrado com sucesso!');
+        window.alert('Pessoa cadastrada');
+        setFirstName('');
+        setLastName('');
+        setNip('');
+        setWarname('');
+        setNumber('');
+        // setSection('');
+        // setCargo('');
+        // setStatus('');
+        setPassword('');
+        setConfirmPassword('');
+        setPermissions([]);
+        setErrorMessage('');
+        // window.location.reload();
+
+      } else {
+        const data = await response.json();
+        // console.error('Erro no upload:', response);
+        confirm(data.message)
+      }
+    } catch (err) {
+      console.error('Erro de rede durante o upload:', err);
+      // window.reportError(error)
+    }
+
+
   };
 
-  const handlePermissionChange = (permission: string) => {
-    setPermissions(prev => 
-      prev.includes(permission) 
-        ? prev.filter(p => p !== permission) 
-        : [...prev, permission]
-    );
+  const handleUpload = async () => {
+
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('nip', nip);
+    // formData.append('patents', patents);
+    formData.append('lastName', lastName);
+    formData.append('password', password);
+
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/users`, {
+        method: 'POST',
+        cache: 'no-store',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nip,
+          "idPatent": 1,
+          warName,
+          firstName,
+          lastName,
+          "role": "user",
+          "status": "active",
+          "permission": "user",
+          password,
+          "emailPersonal": emailMb,
+          "emailMb": emailMb,
+          "contactNumber": number
+        }),
+      });
+
+      if (response.ok) {
+        // const data = await response.json();
+        // console.log('Upload concluído com sucesso:', data);
+        window.alert('Pessoa cadastrada');
+        window.location.reload();
+
+      } else {
+        const data = await response.json();
+        // console.error('Erro no upload:', response);
+        confirm(data.message)
+      }
+    } catch (err) {
+      console.error('Erro de rede durante o upload:', err);
+      // window.reportError(error)
+    }
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setPatent(Number(event.target.value));
+  };
+
 
   return (
     <Card className="w-max text-blue-900">
@@ -123,8 +242,20 @@ export default function RegisterForm() {
                 alt="formulario de cadastro de usuário: campo para inserir nome do usuário"
                 id="create_user_form_firstname"
                 placeholder="Insira o nome do usuário"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+            {/* NOME DE GUERRA*/}
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="name">Nome de guerra</Label>
+              <Input
+                alt="formulario de cadastro de usuário: campo para inserir nome de guerra do usuário"
+                id="create_user_form_warname"
+                placeholder="Insira o nome de guerra"
+                value={warName}
+                onChange={(e) => setWarname(e.target.value)}
                 required
               />
             </div>
@@ -136,8 +267,8 @@ export default function RegisterForm() {
                 alt="formulario de cadastro de usuário: campo para inserir sobrenome do usuário"
                 id="create_user_form_lastname"
                 placeholder="Insira o sobrenome do usuário"
-                value={surname}
-                onChange={(e) => setSurname(e.target.value)}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
               />
             </div>
@@ -147,7 +278,7 @@ export default function RegisterForm() {
               <Label htmlFor="nip">NIP</Label>
               <Input
                 alt="formulario de cadastro de usuário: campo para inserir NIP (número identificador pessoal) do usuário"
-                type="text" 
+                type="text"
                 id="create_user_form_nip"
                 placeholder="Insira o NIP do usuário"
                 value={nip}
@@ -155,9 +286,51 @@ export default function RegisterForm() {
                 required
               />
             </div>
+            {/* EMAIL MB */}
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="nip">Email</Label>
+              <Input
+                alt="formulario de cadastro de usuário: campo para inserir email do usuário"
+                type="text"
+                id="create_user_form_emailMb"
+                placeholder="Insira o Email MB do usuário"
+                value={emailMb}
+                onChange={(e) => setEmailMb(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* NUMERO CONTATO */}
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="nip">Telefone</Label>
+              <Input
+                alt="formulario de cadastro de usuário: campo para inserir Telefone  do usuário"
+                type="text"
+                id="create_user_form_relefone"
+                placeholder="Insira o Telefone do usuário"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="patent">Selecione Posto/Grad: </label>
+              <select id="patent" className="border p-2 rounded" onChange={handleChange}>
+                {patents.length > 0 ? (
+                  patents.map((patent: any) => (
+                    <option key={patent.idPatent} value={patent.idPatent}>
+                      {patent.patent}
+                    </option>
+                  ))
+                ) : (
+                  <option>Carregando...</option>
+                )}
+              </select>
+            </div>
 
             {/* DEPARTAMENTO */}
-            <div className="flex flex-col space-y-1.5">
+            {/* <div className="flex flex-col space-y-1.5">
               <Label htmlFor="department">Departamento</Label>
               <Select onValueChange={setDepartment}>
                 <SelectTrigger id="create_user_form_department">
@@ -170,10 +343,10 @@ export default function RegisterForm() {
                   <SelectItem value="administracao">Departamento de Administração</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
             {/* SEÇÃO */}
-            <div className="flex flex-col space-y-1.5">
+            {/* <div className="flex flex-col space-y-1.5">
               <Label htmlFor="section">Seção</Label>
               <Select onValueChange={setSection}>
                 <SelectTrigger id="create_user_form_section">
@@ -186,10 +359,10 @@ export default function RegisterForm() {
                   <SelectItem value="execucao-financeira">Seção de Execução Financeira</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
             {/* CARGO */}
-            <div className="flex flex-col space-y-1.5">
+            {/* <div className="flex flex-col space-y-1.5">
               <Label htmlFor="cargo">Cargo</Label>
               <Select onValueChange={setCargo}>
                 <SelectTrigger id="create_user_form_role">
@@ -200,10 +373,10 @@ export default function RegisterForm() {
                   <SelectItem value="usuario">Usuário</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
             {/* STATUS */}
-            <div className="flex flex-col space-y-1.5">
+            {/* <div className="flex flex-col space-y-1.5">
               <Label htmlFor="status">Status</Label>
               <Select onValueChange={setStatus}>
                 <SelectTrigger id="create_user_form_status">
@@ -214,10 +387,10 @@ export default function RegisterForm() {
                   <SelectItem value="inativo">Inativo</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
             {/* PERMISSÕES */}
-            <div className="flex flex-col space-y-1.5 col-span-2">
+            {/* <div className="flex flex-col space-y-1.5 col-span-2">
               <Label>Permissões</Label>
               <div className="flex space-x-6 p-2">
                 <div className="flex items-center">
@@ -249,8 +422,8 @@ export default function RegisterForm() {
                   <Label htmlFor="download" className="ml-2">Baixar</Label>
                 </div>
               </div>
-            </div>
-            
+            </div> */}
+
             {/* SENHA */}
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Senha</Label>
@@ -267,9 +440,9 @@ export default function RegisterForm() {
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 flex items-center pr-3"
-                  onClick={() => setShowPassword(!showPassword)} 
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <EyeOff /> : <Eye />} 
+                  {showPassword ? <EyeOff /> : <Eye />}
                 </button>
               </div>
             </div>
@@ -281,7 +454,7 @@ export default function RegisterForm() {
                 <Input
                   alt="formulario de cadastro de usuário: campo para inserir confirmar senha"
                   id="create_user_form_confirm_password"
-                  type={showConfirmPassword ? "text" : "password"} 
+                  type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirme a senha"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -290,10 +463,16 @@ export default function RegisterForm() {
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 flex items-center pr-3"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showConfirmPassword ? <EyeOff /> : <Eye />} 
+                  {showConfirmPassword ? <EyeOff /> : <Eye />}
                 </button>
+                {/* <div>
+                  <p></p>
+                  <h2>Plano do dia</h2>
+                  <button onClick={() => uploadInputRef.current?.click()}>Selecionar Arquivo</button>
+                  <button type='submit' className="bg-blue-900 text-white" onClick={handleUpload}>Enviar</button>
+                </div> */}
               </div>
             </div>
           </div>
@@ -301,23 +480,24 @@ export default function RegisterForm() {
             <div className="text-red-600 text-sm mt-2">{errorMessage}</div>
           )}
           {successMessage && (
-            <div className="text-green-600 text-sm mt-2">{successMessage}</div> 
+            <div className="text-green-600 text-sm mt-2">{successMessage}</div>
           )}
 
           {/* FOOTER - BOTÕES */}
           <CardFooter className="flex justify-between mt-4">
-            
+
             {/* BOTÃO CANCELAR */}
-            <Button 
-            id="create_user_form_cancel_button"
-            variant="outline">Cancelar</Button>
+            {/* <Button
+              id="create_user_form_cancel_button"
+              variant="outline">Cancelar</Button> */}
 
             {/* BOTÃO FAZER CADASTRO */}
             <Button
-            id="create_user_form_register_button"
-             variant="outline"
-             type="submit"
-             className="bg-blue-900 text-white">
+              id="create_user_form_register_button"
+              variant="outline"
+              type="submit"
+              className="bg-blue-900 text-white justify-end items-end"
+              onClick={handleUpload}>
               Fazer Cadastro
             </Button>
           </CardFooter>
