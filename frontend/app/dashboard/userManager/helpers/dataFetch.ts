@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { IUser } from "../../utils/mocks/users_mock";
 
 // Variaveis
-const API_URL_BASE = 'http://localhost:3002'
+const API_URL_BASE = `${process.env.NEXT_PUBLIC_API_BACK}`
 
 
 export default function useGetAllUsers() {

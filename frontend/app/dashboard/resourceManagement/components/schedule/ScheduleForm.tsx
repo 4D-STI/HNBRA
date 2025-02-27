@@ -81,7 +81,7 @@ const ScheduleForm: React.FC = () => {
     console.log('DATA > ', data);
     // extrai token do localstorage
     const token = localStorage?.getItem('token') ?? ''
-    const API_URL = 'http://localhost:3002/scheduling'
+    const API_URL = `${process.env.NEXT_PUBLIC_API_BACK}/scheduling`
     try {
       const response = await axios.post(API_URL,data,{
         headers: { Authorization: `Bearer ${token}`}

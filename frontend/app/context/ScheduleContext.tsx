@@ -27,7 +27,7 @@ export const ScheduleProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     try {
       console.log('fez o fetch no contexto');
       
-      const response = await fetch(`http://localhost:3002/scheduling`, {cache: 'no-cache'});
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/scheduling`, {cache: 'no-cache'});
       if (!response.ok) {
         return console.log(`Erro na requisição: ${response.status}`);
       }

@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@radix-ui/react-toast"
 import ScheduleContext from '@/app/context/ScheduleContext'
 
-const url ='http://localhost:3002/scheduling'
+const url = `${process.env.NEXT_PUBLIC_API_BACK}/scheduling`
 
 export const ScheduleManagement = () => {
     const [error, setError] = useState('')
