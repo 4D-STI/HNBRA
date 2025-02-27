@@ -53,7 +53,7 @@ function UploadPage() {
       })
     fetchData();
     // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
-  }, []);
+  });
 
   const url = React.useMemo(() => {
     if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=6`;
