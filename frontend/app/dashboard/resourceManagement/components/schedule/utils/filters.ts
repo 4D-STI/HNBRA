@@ -14,6 +14,8 @@ export interface IScheduleFilterParams {
 export const filteredData = ({ data, order, scheduleType, param_for_filter }: IScheduleFilterParams) => {
     // filtra por tipo
     const dataByType = typeScheduleFilter({ data, scheduleType })
+    if (false) console.log(order, param_for_filter);
+
     // filtra por parametro
 
     return dataByType
@@ -25,7 +27,7 @@ export const dateScheduleStartOrdering = ({ data, order }: IScheduleFilterParams
     // crescente
     if (order === 'asc') return data.sort((a, b) => a.schedulingStart.getTime() - b.schedulingStart.getTime())
     // decrescente
-    if (order === 'dec') return data.sort((a, b) => b.schedulingStart.getTime() - a.schedulingStart.getTime())
+    if (order === 'des') return data.sort((a, b) => b.schedulingStart.getTime() - a.schedulingStart.getTime())
 }
 
 // Ordena por data de finalização do agendamento
@@ -33,7 +35,7 @@ export const dateScheduleEndtOrdering = ({ data, order }: IScheduleFilterParams)
     // crescente
     if (order === 'asc') return data.sort((a, b) => a.schedulingEnd.getTime() - b.schedulingEnd.getTime())
     // decrescente
-    if (order === 'dec') return data.sort((a, b) => b.schedulingEnd.getTime() - a.schedulingEnd.getTime())
+    if (order === 'des') return data.sort((a, b) => b.schedulingEnd.getTime() - a.schedulingEnd.getTime())
 }
 
 // Ordena por data de criação do agendamento
@@ -41,7 +43,7 @@ export const dateCreateScheduleOrdering = ({ data, order }: IScheduleFilterParam
     // crescente
     if (order === 'asc') return data.sort((a, b) => a.schedulingStart.getTime() - b.schedulingStart.getTime())
     // decrescente
-    if (order === 'dec') return data.sort((a, b) => b.schedulingStart.getTime() - a.schedulingStart.getTime())
+    if (order === 'des') return data.sort((a, b) => b.schedulingStart.getTime() - a.schedulingStart.getTime())
 }
 
 // FILTROS DE COMPARAÇÃO
@@ -60,14 +62,14 @@ export const typeScheduleFilter = ({ data, scheduleType }: IScheduleFilterParams
     return data
 }
 
-// filtra por nip
-export const nipScheduleFilter = ({ data, param_for_filter }: IScheduleFilterParams) => data.filter(item => item.nip === param_for_filter?.nip)
+// // filtra por nip
+// export const nipScheduleFilter = ({ data, param_for_filter }: IScheduleFilterParams) => data.filter(item => item.nip === param_for_filter?.nip)
 
-// filtra por dia de inicio
-export const startDayScheduleFilter = ({ data, param_for_filter }: IScheduleFilterParams) => data.filter(item => item.schedulingStart.getDay() === param_for_filter?.schedulingStart.getDay())
+// // filtra por dia de inicio
+// export const startDayScheduleFilter = ({ data, param_for_filter }: IScheduleFilterParams) => data.filter(item => item.schedulingStart.getDay() === param_for_filter?.schedulingStart.getDay())
 
-// filtra por dia de inicio
-export const endDayScheduleFilter = ({ data, param_for_filter }: IScheduleFilterParams) => data.filter(item => item.schedulingEnd.getDay() === param_for_filter?.schedulingEnd.getDay())
+// // filtra por dia de inicio
+// export const endDayScheduleFilter = ({ data, param_for_filter }: IScheduleFilterParams) => data.filter(item => item.schedulingEnd.getDay() === param_for_filter?.schedulingEnd.getDay())
 
 // filtra por termo de busca em tema ou descrição
 export const searchScheduleThemeDescription = ({ data, search_term }: IScheduleFilterParams) => (
