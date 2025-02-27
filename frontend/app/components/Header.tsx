@@ -5,6 +5,7 @@ import Image from "next/image";
 import LogoHnbra from "@/public/images/Logo_HNBra.png";
 import React, { useEffect, useState } from 'react';
 import MobileMenu from './mobilemenu/Mobilemenu';
+import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 
 export default function Header() {
@@ -21,7 +22,7 @@ export default function Header() {
     //     }
     // }, []);
     useEffect(() => {
-        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+        const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
         if (storedToken != '') {
             fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
                 method: 'POST',
@@ -34,7 +35,7 @@ export default function Header() {
             }).then((res) => {
                 if (!res.ok) {
                     setIslogin(false);
-                    localStorage.removeItem('token');
+                    localStorage?.removeItem('token');
                     alert("Login inválido!");
                     window.location.href = '/';
                     throw new Error("jwt Inválido ou Expirado!");
@@ -49,7 +50,7 @@ export default function Header() {
     }, []);
 
     const clearLocal = () => {
-        localStorage.removeItem('token');
+        localStorage?.removeItem('token');
         window.location.reload();
         setIslogin(false);
     }
@@ -114,9 +115,15 @@ export default function Header() {
                         <ContrastIcon />
                     </div>
                     {!isLogin ? (
-                        <div id="button_login" className="flex items-center mx-4">
+                        <div id="button_login" className="flex items-center mx-4 gap-2">
                             <Login />
-                            <div className="flex items-center mx-4"><a href='/dashboard/register'>   Cadastre-se</a></div>
+                            <div className="">
+                                <Button className='bg-blue-900 text-white'>
+                                    <a href='/dashboard/register'> 
+                                        Cadastre-se
+                                    </a>
+                                </Button>
+                            </div>
                         </div>
 
                     ) :

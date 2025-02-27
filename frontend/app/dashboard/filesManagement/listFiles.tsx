@@ -28,7 +28,7 @@ function UploadPage() {
     setSelectedFile(event.target.files?.[0] || null);
   };
   useEffect(() => {
-    const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+    const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
     setToken(storedToken);
     fetch(`${apiBack}/auth/verifyJwt`, {
       method: 'POST',
@@ -47,7 +47,7 @@ function UploadPage() {
       .then(() => setTokenExpiered(true))
       .catch(() => {
         setTokenExpiered(false);
-        localStorage.removeItem('token');
+        localStorage?.removeItem('token');
         alert("Login inválido!");
         window.location.href = '/';
       })

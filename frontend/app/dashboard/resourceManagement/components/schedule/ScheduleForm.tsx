@@ -53,7 +53,7 @@ const scheduleSchema = z.object({
 });
 
 const handlerUserLoggedData = (): IUserData | undefined => {
-  const token = localStorage.getItem('token')
+  const token = localStorage?.getItem('token') ?? ''
   if (token !== null) return jwtDecode(token)
 }
 
@@ -80,7 +80,7 @@ const ScheduleForm: React.FC = () => {
   const onSubmit: SubmitHandler<IScheduleItem> = async (data) => {
     console.log('DATA > ', data);
     // extrai token do localstorage
-    const token = localStorage.getItem('token')
+    const token = localStorage?.getItem('token') ?? ''
     const API_URL = 'http://localhost:3002/scheduling'
     try {
       const response = await axios.post(API_URL,data,{

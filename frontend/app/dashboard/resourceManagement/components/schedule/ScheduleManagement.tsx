@@ -38,7 +38,8 @@ export const ScheduleManagement = () => {
 
     // Executa a busca ao carregar
     useEffect(() => {
-        setToken(localStorage.getItem('token'))
+        const token = localStorage?.getItem('token') ?? ''
+        setToken(token)
         if (scheduleData) setData(scheduleData)
         // fetchData();
     },[scheduleData]);
@@ -89,6 +90,9 @@ export const ScheduleManagement = () => {
             return
         }
     }
+
+    console.log(handlerOrder);
+    
     
     const fetchData = useCallback(async () => {
         console.log('entrou no fetchdata');
@@ -163,13 +167,13 @@ export const ScheduleManagement = () => {
                 {/* botoes direita */}
                 <div className="flex flex-row gap-4">
                     {/* ordenação */}
-                    <button
+                    {/* <button
                         className="flex flex-row bg-green-500 rounded-2xl 2-auto px-4 items-center"
                         onClick={handlerOrder}
                     >
                         <p className="mr-2">{"Filtro ID: "}</p>
                         <p>{order.toLocaleUpperCase()}</p>
-                    </button>
+                    </button> */}
 
                     {/* atualizar conteúdo */}
                     <button

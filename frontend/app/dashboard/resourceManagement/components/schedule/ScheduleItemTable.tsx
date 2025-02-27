@@ -16,7 +16,7 @@ export const ScheduleItemTable = ({item}: IScheduleItemComponent) => {
     const [token, setToken] = useState('')
 
     useEffect(() => {
-        const token = localStorage.getItem('token') ?? ''
+        const token = localStorage?.getItem('token') ?? ''
         setToken(token)
         if (token.length !== 0) setNipDecoded(jwtDecode(token))
     }, [])
@@ -25,12 +25,16 @@ export const ScheduleItemTable = ({item}: IScheduleItemComponent) => {
         <tr className="border-b border-gray-200 hover:bg-gray-50 text-xs text-center text-nowrap">
             
 
-            {/* editar/excluir | condição ter o memso nip do agendamento*/}
-            <td>
-                {
-                    Number(nipDecoded?.nip) === Number(item.nip) && <HandleEditDelete scheduleId={item.idScheduling} token={token}/>
-                }
-            </td>
+            {/* editar/excluir | condição ter o mesmo nip do agendamento*/}
+            {
+                token && (
+                    <td>
+                        {
+                            Number(nipDecoded?.nip) === Number(item.nip) && <HandleEditDelete scheduleId={item.idScheduling} token={token}/>
+                        }
+                    </td>
+                )
+            }
             
             {/* data do agendamento */}
             <td className="px-4 py-2">
@@ -70,7 +74,7 @@ export const ScheduleItemTable = ({item}: IScheduleItemComponent) => {
                 onClick={() => setExpandTheme(!expandTheme)}
                 title={item.theme}
             >
-                {`tipo: ${item.typeScheduling.toUpperCase()} - ${item.theme}`}
+                {`${item.theme}`}
             </td>
             {/* descrição do agendamento */}
             <td 

@@ -46,7 +46,7 @@ export default function FileList({ files }: FileListProps) {
     };
 
     const handleDelete = async (params: iHandleDownload, nameFiles: string) => {
-        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+        const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
         const FILE_URL_DELETE = `${process.env.NEXT_PUBLIC_API_BACK}/files/${params.idFile}`;
         if (window.confirm(`Deseja apagar o arquivo: ${nameFiles}`)) {
             try {
@@ -71,7 +71,7 @@ export default function FileList({ files }: FileListProps) {
     };
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+        const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
         if (storedToken != '') {
             fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
                 method: 'POST',
@@ -84,7 +84,7 @@ export default function FileList({ files }: FileListProps) {
             }).then((res) => {
                 if (!res.ok) {
                     setIslogin(false);
-                    localStorage.removeItem('token');
+                    localStorage?.removeItem('token');
                 } else {
                     setIslogin(true);
                 }

@@ -9,7 +9,7 @@ export function useInformation() {
 
     useEffect(() => {
         // Verifica login
-        if (localStorage.getItem("token")) {
+        if (localStorage?.getItem("token")) {
             setIsLogin(true);
         }
 
