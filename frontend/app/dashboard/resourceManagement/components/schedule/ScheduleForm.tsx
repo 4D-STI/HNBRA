@@ -207,7 +207,7 @@ const ScheduleForm: React.FC = () => {
 
       {/* tipo do agendamento */}
       <div>
-        <label className="block text-gray-700 font-bold">Tipo de Agendamento:</label>
+        <label className="block text-gray-700 font-bold text-white">Tipo de Agendamento:</label>
         <div>
           {Object.values(ScheduleType).map((type) => (
             <label key={type} className="inline-flex items-center mr-4">
