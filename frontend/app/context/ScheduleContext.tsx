@@ -25,24 +25,24 @@ export const ScheduleProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const fetchData = useCallback( async () => {
     setLoading(true);
     try {
-      console.log('fez o fetch no contexto');
-      
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/scheduling`, {cache: 'no-cache'});
+      
       if (!response.ok) {
         return console.log(`Erro na requisição: ${response.status}`);
       }
-      console.log('recebeu resposta');
       
       const data: IScheduleItem[] = await response.json();
-      console.log('converteu data: ', data);
       
       setScheduleData(data);
+
     } catch (err: unknown) {
+      
       if (err instanceof Error) {
         setError(err.message);
       } else {
         setError(`Erro desconhecido: \n${err}`)
       }
+      
     } finally {
       setLoading(false);
     }
