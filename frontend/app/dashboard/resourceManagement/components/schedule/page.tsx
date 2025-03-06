@@ -23,7 +23,7 @@ export default function RegisterPage() {
             
           <div
             id='content-container'
-            className={`flex flex-col bg-purple-300 rounded-3xl h-full items-center`}
+            className={`flex flex-col bg-blue-900 rounded-3xl h-full items-center`}
           >
 
             {/* conteudo */}
