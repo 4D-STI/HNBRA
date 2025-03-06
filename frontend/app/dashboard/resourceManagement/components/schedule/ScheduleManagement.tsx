@@ -166,14 +166,6 @@ export const ScheduleManagement = () => {
 
                 {/* botoes direita */}
                 <div className="flex flex-row gap-4">
-                    {/* ordenação */}
-                    {/* <button
-                        className="flex flex-row bg-green-500 rounded-2xl 2-auto px-4 items-center"
-                        onClick={handlerOrder}
-                    >
-                        <p className="mr-2">{"Filtro ID: "}</p>
-                        <p>{order.toLocaleUpperCase()}</p>
-                    </button> */}
 
                     {/* atualizar conteúdo */}
                     <button
@@ -195,7 +187,7 @@ export const ScheduleManagement = () => {
 
                 <div
                     id="content-title-container"
-                    className="font-bold"
+                    className="font-bold text-white"
                 >
                     {(contentType === 'auditorium') && 'Agendamentos do Auditório'}
                     {(contentType === 'meeting-room') && 'Agendamentos da Sala de Reuniões'}
