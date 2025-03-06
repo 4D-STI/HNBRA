@@ -17,7 +17,9 @@
     "front": "cd frontend/ && npm run dev",
     "back": "cd backend/sdin-hnbra/ && npm run start:dev",
     "db:reset": "cd backend/sdin-hnbra/ && npm run db:reset",
-    "db:up": "docker compose up -d db-dev --build"
+    "db:reset-schedule": "cd backend/sdin-hnbra/ && npx -y tsc && npx sequelize-cli db:seed:undo --seed 06-seed-schedule.js && npx sequelize-cli db:seed --seed 06-seed-schedule.js && cd ../../ && npm run back",
+    "db:up": "docker compose up -d db-dev --build",
+    "build:fe": "cd frontend && npm run build"
   },
   "author": "devHB",
   "devDependencies": {
