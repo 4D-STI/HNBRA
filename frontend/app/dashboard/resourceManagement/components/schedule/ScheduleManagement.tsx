@@ -183,7 +183,7 @@ export const ScheduleManagement = () => {
             </div>
 
             {/* container do conteúdo dos agendamentos */}
-            <div id="schedule-content-container" className="border-2 border-black mt-2 h-full w-full rounded-2xl p-2 overflow-hidden">
+            <div id="schedule-content-container" className="border-2 border-gray-500 mt-2 h-full w-full rounded-2xl p-2 overflow-hidden">
 
                 <div
                     id="content-title-container"
