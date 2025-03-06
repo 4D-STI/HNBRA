@@ -20,9 +20,9 @@ export const ScheduleItemTable = ({item}: IScheduleItemComponent) => {
         setToken(token)
         if (token.length !== 0) setNipDecoded(jwtDecode(token))
     }, [])
-    
+
     return (
-        <tr className="border-b border-gray-200 hover:bg-gray-50 text-xs text-center text-nowrap">
+        <tr className="border-b border-gray-200 hover:bg-gray-50 text-xs text-center text-nowrap font-bold">
             
 
             {/* editar/excluir | condição ter o mesmo nip do agendamento*/}
@@ -39,17 +39,17 @@ export const ScheduleItemTable = ({item}: IScheduleItemComponent) => {
             {/* data do agendamento */}
             <td className="px-4 py-2">
                 {
-                    `${new Date(item.schedulingStart).toLocaleString('pt-br', {day:'2-digit'}).toUpperCase()}
-                    ${new Date(item.schedulingStart).toLocaleString('pt-br', {month:'short'}).toUpperCase().replace('.','')}`
+                    `${new Date(item.schedulingStart).toLocaleString('pt-br', {day:'2-digit', timeZone: 'utc'}).toUpperCase()}
+                    ${new Date(item.schedulingStart).toLocaleString('pt-br', {month:'short', timeZone: 'utc'}).toUpperCase().replace('.','')}`
                 }
             </td>
             {/* horario inicio/fim */}
             <td className="flex flex-row px-4 py-2 justify-center">
                     <td className="bg-green-200 px-2 py-1 rounded-xl mr-2">
-                        {new Date(item.schedulingStart).toLocaleString('pt-br', {timeStyle:'short'})}h
+                        {new Date(item.schedulingStart).toLocaleString('pt-br', {timeStyle:'short', timeZone: 'utc'})}h
                     </td>
                     <td className="bg-red-200 px-2 py-1 rounded-xl">
-                        {new Date(item.schedulingEnd).toLocaleString('pt-br', {timeStyle:'short'})}h
+                        {new Date(item.schedulingEnd).toLocaleString('pt-br', {timeStyle:'short', timeZone: 'utc'})}h
                     </td>
             </td>
             {/* nome do resposável */}
