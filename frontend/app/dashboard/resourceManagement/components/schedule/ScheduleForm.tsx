@@ -63,22 +63,25 @@ const ScheduleForm: React.FC = () => {
   const {updateScheduleData} = useScheduleContext()
 
   useEffect(() => {
-    const data = handlerUserLoggedData()    
+    const data = handlerUserLoggedData()
     if (data !== undefined) setUserData(data)
   }, [])
 
+  // calcula data atual
+  const now = new Date()
+  const startDateTime = new Date(now.getTime() - 180 * 60 * 1000).toISOString().slice(0,16)
+  const endDateTime = new Date(now.getTime() - 120 * 60 * 1000).toISOString().slice(0, 16)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<IScheduleItem>({
     resolver: zodResolver(scheduleSchema),
   });
 
   const onSubmit: SubmitHandler<IScheduleItem> = async (data) => {
-    console.log('DATA > ', data);
     // extrai token do localstorage
     const token = localStorage?.getItem('token') ?? ''
     const API_URL = `${process.env.NEXT_PUBLIC_API_BACK}/scheduling`
@@ -119,7 +122,7 @@ const ScheduleForm: React.FC = () => {
         className='flex flex-row justify-between mt-2'
       >
         <div>
-          <label htmlFor="nip" className="block text-gray-700 font-bold">
+          <label htmlFor="nip" className="block text-gray-700 font-bold text-white">
             NIP:
           </label>
           <input
@@ -134,7 +137,7 @@ const ScheduleForm: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="schedulingStart" className="block text-gray-700 font-bold">
+          <label htmlFor="schedulingStart" className="block text-gray-700 font-bold text-white">
             Início do Agendamento:
           </label>
           <input
@@ -143,12 +146,13 @@ const ScheduleForm: React.FC = () => {
             {...register('schedulingStart')}
             className="w-auto border border-gray-300 px-3 py-2 rounded-md"
             autoFocus
+            value={startDateTime}
           />
           {errors.schedulingStart && <p className="text-red-500">{errors.schedulingStart.message}</p>}
         </div>
 
         <div>
-          <label htmlFor="schedulingEnd" className="block text-gray-700 font-bold">
+          <label htmlFor="schedulingEnd" className="block text-gray-700 font-bold text-white">
             Fim do Agendamento:
           </label>
           <input
@@ -156,12 +160,13 @@ const ScheduleForm: React.FC = () => {
             id="schedulingEnd"
             {...register('schedulingEnd')}
             className="w-auto border border-gray-300 px-3 py-2 rounded-md"
+            value={endDateTime}
           />
           {errors.schedulingEnd && <p className="text-red-500">{errors.schedulingEnd.message}</p>}
         </div>
 
         <div>
-          <label htmlFor="ramal" className="block text-gray-700 font-bold">
+          <label htmlFor="ramal" className="block text-gray-700 font-bold text-white">
             Ramal:
           </label>
           <input
@@ -178,7 +183,7 @@ const ScheduleForm: React.FC = () => {
       
       {/* tema */}
       <div>
-        <label htmlFor="theme" className="block text-gray-700 font-bold">
+        <label htmlFor="theme" className="block text-gray-700 font-bold text-white">
           Tema:
         </label>
         <input
@@ -193,7 +198,7 @@ const ScheduleForm: React.FC = () => {
 
       {/* descrição */}
       <div>
-        <label htmlFor="description" className="block text-gray-700 font-bold">
+        <label htmlFor="description" className="block text-gray-700 font-bold text-white">
           Descrição:
         </label>
         <textarea
@@ -219,7 +224,7 @@ const ScheduleForm: React.FC = () => {
                 checked={scheduleType === type}
                 onChange={() => setScheduleType(type)}
               />
-              <span>{dataTranslate[type]}</span>
+              <span className='text-white'>{dataTranslate[type]}</span>
             </label>
           ))}
         </div>
