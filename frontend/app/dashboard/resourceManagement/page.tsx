@@ -30,9 +30,6 @@ export default function RegisterPage() {
     const target = event.target as HTMLButtonElement
     const value = target.value
 
-    console.log('value: ', target);
-    
-  
     if (value) {
       setContent(value)
     } else {
