@@ -60,7 +60,6 @@ export const ScheduleManagement = () => {
             setCreateSchedule(!createSchedule)
             setContentType(null)
             setScheduleType(null)
-            console.log('tem tokem:', token);
             return
         }
         
@@ -95,7 +94,6 @@ export const ScheduleManagement = () => {
     
     
     const fetchData = useCallback(async () => {
-        console.log('entrou no fetchdata');
         
         setReload(true)
         
