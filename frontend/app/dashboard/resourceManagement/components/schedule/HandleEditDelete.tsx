@@ -35,7 +35,7 @@ export const HandleEditDelete: React.FC<HandleEditDeleteProps> = ({scheduleId, t
                                 action: <ToastAction 
                                             className="bg-white/80 text-black rounded-md py-2 px-4 hover:border-none transition-border-color ease-in" altText="Logar"
                                             onClick={async () =>  (
-                                                handleDelete(scheduleId, token),
+                                                await handleDelete(scheduleId, token),
                                                 await updateScheduleData()   
                                             )}
                                             > DELETAR
