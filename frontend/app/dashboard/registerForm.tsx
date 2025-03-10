@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,19 +10,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FormEvent, useEffect, useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import passwordValidation from "./utils/passwordValidation";
 import { Eye, EyeOff } from 'lucide-react';
 import NipValidation from "./utils/nipValidation";
+
+interface IPatent {
+  idPatent: number;
+  patent: string;
+}
 
 export default function RegisterForm() {
   const [firstName, setFirstName] = useState<string>('');
@@ -30,7 +28,7 @@ export default function RegisterForm() {
   const [nip, setNip] = useState<string>('');
   const [emailMb, setEmailMb] = useState<string>('');
   const [number, setNumber] = useState<string>('');
-  const [patents, setPatents] = useState([]);
+  const [patents, setPatents] = useState<IPatent[]>([]);
   const [patent, setPatent] = useState<number | null>(null);
   // const [department, setDepartment] = useState<string>('');
   // const [section, setSection] = useState<string>('');
@@ -54,7 +52,7 @@ export default function RegisterForm() {
         const data = await response.json();
         setPatents(data);
         if (data.length > 0) {
-          setPatent(data[0].idPatent);
+          setPatent(data[0].idPatent); // porque salva em patent?
         }
       } catch (error) {
         console.error("Erro ao buscar informações:", error);
@@ -124,7 +122,7 @@ export default function RegisterForm() {
         },
         body: JSON.stringify({
           nip,
-          "idPatent": 1,
+          "idPatent": patent, // implementar estado aqui
           warName,
           firstName,
           lastName,
@@ -190,7 +188,7 @@ export default function RegisterForm() {
         },
         body: JSON.stringify({
           nip,
-          "idPatent": 1,
+          "idPatent": patent, // colocar estado aqui
           warName,
           firstName,
           lastName,
@@ -224,6 +222,9 @@ export default function RegisterForm() {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPatent(Number(event.target.value));
   };
+
+  console.log(permissions);
+  
 
 
   return (
@@ -314,11 +315,12 @@ export default function RegisterForm() {
               />
             </div>
 
+            {/* PATENTE */}
             <div>
               <label htmlFor="patent">Selecione Posto/Grad: </label>
               <select id="patent" className="border p-2 rounded" onChange={handleChange}>
                 {patents.length > 0 ? (
-                  patents.map((patent: any) => (
+                  patents.map((patent: IPatent) => (
                     <option key={patent.idPatent} value={patent.idPatent}>
                       {patent.patent}
                     </option>

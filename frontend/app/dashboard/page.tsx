@@ -1,10 +1,15 @@
-// import { Separator } from "@/components/ui/separator"
 export default function RegisterPage() {
   return (
-      <div>
-        <h1>
+      
+      <div 
+        id="dashboard-main-container"
+        className="border-2 border-blue-600 flex flex-row flex-grow w-screen h-96 p-4 justify-center gap-12"
+      >
+        
+        <div className="self-start p-8">
           DASHBOARD
-        </h1>
+        </div>
+
       </div>
   )
 }

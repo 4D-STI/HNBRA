@@ -32,7 +32,7 @@ const loginNip = async (loginData: ILoginData) => {
         const token = data.access_token;
 
         // Armazenar o token no Local Storage (ou Session Storage)
-        localStorage.setItem('token', token);
+        localStorage?.setItem('token', token);
 
         return token;
     } catch (error) {

@@ -36,8 +36,8 @@ export const PDF_DataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const fetchData = async () => {
       setLoading(true);
       try {
-        // const response = await fetch(`http://localhost:3002/files`); // Endpoint da API
-        const response = await fetch(`https://www.hnbra.mb:3002/files`); // Endpoint da API
+        // const response = await fetch(`https://www.hnbra.mb:3002/files`); // Endpoint da API
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/files`); // Endpoint da API
         if (!response.ok) {
           console.log(`Erro na requisição: ${response.status}`);
           // throw new Error(`Erro na requisição: ${response.status}`);

@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/app/components/Footer"
 import Header from "./components/Header";
 import { Suspense } from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 const Rawline = localFont({
   src: "./fonts/rawline-300.ttf",
@@ -42,6 +43,8 @@ export default function RootLayout({
             {children}
           </Suspense>
         </main>
+
+        <Toaster />
         
         <footer id="layout-default-footer-container" className="">
           {/* footer padrão */}

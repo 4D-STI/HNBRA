@@ -23,13 +23,14 @@ function ShortcutsOtherApps() {
                     >
                         <Button
                             key={index}
-                            className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 hover:border-2 hover:border-blue-300 rounded-full shadow-xl mt-2'
+                            className='items-center h-20 w-20 bg-blue-200 hover:bg-blue-300 hover:border-blue-300 rounded-full shadow-xl mt-2 hover:border-2'
                         >
                             <Image
                                 alt={`logo_${index}`}
                                 src={ app.icon_path_svg ||  app.icon_path_jpg || DEFAULT_ICON}
                                 width={100}
                                 height={100}
+                                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                             />
                         </Button>
                     </Link>

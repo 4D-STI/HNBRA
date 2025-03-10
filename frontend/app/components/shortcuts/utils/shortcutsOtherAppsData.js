@@ -104,7 +104,7 @@ const shortcutsOtherAppsData = [
     {
         name: 'BP Online',
         icon_path_jpg: '/icons/payment_ticket_icon/17.jpg',
-        icon_path_svg: '/icons/payment_ticket_icon/payment_ticket_icon.svg',
+        icon_path_svg: '/icons/payment_ticket_icon/papem_icon.svg',
         link: 'https://bponline.papem.mar.mil.br/bponline/pages'
     },
     {
@@ -158,9 +158,9 @@ const shortcutsOtherAppsData = [
     },
     {
         name: 'netuno',
-        // icon_path_jpg: '/icons/hino_icon/26.jpg',
-        icon_path_jpg: '/icons/netuno_icon/logo_netuno.jpg',
-        link: 'https://sisnetuno.dadm.mb/principal'
+        icon_path_jpg: '/icons/netuno_icon/27.jpg',
+        icon_path_svg: '/icons/netuno_icon/logo_netuno.svg',
+        link: 'https://sisnetuno.dadm.mb/logar'
     },
 ]
 

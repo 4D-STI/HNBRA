@@ -56,7 +56,7 @@ export default function ListPage() {
 
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+        const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
         if (storedToken != '') {
 
             fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
@@ -76,7 +76,7 @@ export default function ListPage() {
                 .then(() => setTokenExpiered(true))
                 .catch(() => {
                     setTokenExpiered(false);
-                    localStorage.removeItem('token');
+                    localStorage?.removeItem('token');
                     alert("Login inválido!");
                     window.location.href = '/';
                 })

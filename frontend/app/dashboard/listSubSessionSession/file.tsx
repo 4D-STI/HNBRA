@@ -14,17 +14,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {
-    Pagination,
-    PaginationContent,
-    // PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
 import Link from "next/link";
-// import Link from "next/link";
+import PaginationComponent from "@/app/components/pagination/PaginationComponent";
 
 interface FileListProps {
     files: File[];
@@ -38,7 +29,7 @@ interface iHandleDownload {
 
 export default function FileList({ files }: FileListProps) {
     const [currentPage, setCurrentPage] = useState(1);
-    const filesPerPage = 15;
+    const filesPerPage = 10;
     const totalPages = Math.ceil(files.length / filesPerPage);
     const [isLogin, setIslogin] = useState(false);
 
@@ -55,7 +46,7 @@ export default function FileList({ files }: FileListProps) {
     };
 
     const handleDelete = async (params: iHandleDownload, nameFiles: string) => {
-        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+        const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
         const FILE_URL_DELETE = `${process.env.NEXT_PUBLIC_API_BACK}/files/${params.idFile}`;
         if (window.confirm(`Deseja apagar o arquivo: ${nameFiles}`)) {
             try {
@@ -80,7 +71,7 @@ export default function FileList({ files }: FileListProps) {
     };
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+        const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
         if (storedToken != '') {
             fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
                 method: 'POST',
@@ -93,7 +84,7 @@ export default function FileList({ files }: FileListProps) {
             }).then((res) => {
                 if (!res.ok) {
                     setIslogin(false);
-                    localStorage.removeItem('token');
+                    localStorage?.removeItem('token');
                 } else {
                     setIslogin(true);
                 }
@@ -118,8 +109,8 @@ export default function FileList({ files }: FileListProps) {
     }
 
     return (
-        <div id="lis-file-comp">
-            <Table className="w-full">
+        <div id="lis-file-comp" className="">
+            <Table className="w-auto">
                 <TableHeader className="bg-gray-100">
                     <TableRow>
                         {/* <TableCell className="text-left px-4 py-2 font-bold">Arquivo</TableCell>
@@ -127,6 +118,7 @@ export default function FileList({ files }: FileListProps) {
                     </TableRow>
                 </TableHeader>
                 <TableBody className="flex flex-col">
+
                     {paginatedFiles.map((file, index) => (
 
                         <TableRow key={index} className="flex bg-white rounded-xl mb-1">
@@ -183,42 +175,11 @@ export default function FileList({ files }: FileListProps) {
                 </TableBody>
             </Table>
 
-            <Pagination className="mt-4">
-                <PaginationContent>
-                    {/* Botão anterior */}
-                    {currentPage > 1 && (
-                        <PaginationItem>
-                            <PaginationPrevious
-                                href="#"
-                                onClick={() => handlePageChange(currentPage - 1)}
-                            />
-                        </PaginationItem>
-                    )}
-
-                    {/* Links das páginas */}
-                    {Array.from({ length: totalPages }).map((_, index) => (
-                        <PaginationItem key={index}>
-                            <PaginationLink
-                                href="#"
-                                className={currentPage === index + 1 ? "font-bold text-blue-600" : ""}
-                                onClick={() => handlePageChange(index + 1)}
-                            >
-                                {index + 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    ))}
-
-                    {/* Botão próximo */}
-                    {currentPage < totalPages && (
-                        <PaginationItem>
-                            <PaginationNext
-                                href="#"
-                                onClick={() => handlePageChange(currentPage + 1)}
-                            />
-                        </PaginationItem>
-                    )}
-                </PaginationContent>
-            </Pagination>
+            <PaginationComponent 
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                totalPages={totalPages}
+            />
 
         </div >
     );

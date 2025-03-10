@@ -99,8 +99,8 @@ const MyComponent: React.FC = () => {
                 
                 <Link 
                   key={doc.idFile}
-                  href={`https://www.hnbra.mb:3002/files/${doc.nameFile}/view`}
-                  // href={`http://localhost:3002/files/${doc.nameFile}/view`}
+                  // href={`https://www.hnbra.mb:3002/files/${doc.nameFile}/view`}
+                  href={`${process.env.NEXT_PUBLIC_API_BACK}/files/${doc.nameFile}/view`}
                   target='_blank'
                 >
                   <div

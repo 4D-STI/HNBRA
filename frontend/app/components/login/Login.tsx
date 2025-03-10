@@ -11,11 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { User2Icon } from "lucide-react";
-import NipValidation from '@/app/components/utils/validations/nip_validation';
-import PasswordValidation from "../utils/validations/password_validation";
 import loginNip from "./LoginValidator";
+// import router from "next/router";
 
 export default function Login() {
   const [nip, setNip] = useState<string>('');
@@ -24,49 +23,23 @@ export default function Login() {
   const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
   const [NipErrors, setNipErrors] = useState<string[]>([]);
 
-  // método input Nip
-  const handleNipInput = (event: ChangeEvent<HTMLInputElement>) => {
-    // adiciona o valor ao estado a partir do onChange do input do nip
-    setNip(event.target.value)
-
-    // realiza as validações do nip
-    const NipValidationErrors = NipValidation(nip);
-    // limpa o estado do erros do input nip caso
-    // 1 - não haja erros nas validações
-    // 2 - não haja valor em nip
-    if (NipValidationErrors.length === 0 || nip === '') setNipErrors([])
-
-    if (NipValidationErrors.length > 0) setNipErrors(NipValidationErrors)
+  const handleLoginVerification = () => {
+    if (nip.length < 8) {
+      setNipErrors(['NIP deve conter 8 digitos'])
+      return true
+    }
+    setNipErrors([])
   }
-
-  // método envio password
-  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // adiciona o valor ao estado a partir do onChange do input do nip
-    setPassword(event.target.value)
-
-    // realiza as validações do nip
-    // const PasswordValidationErrors = PasswordValidation(password);
-    // limpa o estado do erros do input nip caso
-    // 1 - não haja erros nas validações
-    // 2 - não haja valor em nip
-    // if (PasswordValidationErrors.length === 0 || nip === '') setNipErrors([])
-
-    // if (PasswordValidationErrors.length > 0) {
-    //   setPasswordErrors(PasswordValidationErrors);
-    //   return;
-    // }
-  }
-
+  
   // método envio dados
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErrorMessage('');
-    setPasswordErrors([]);
-    setNipErrors([]);
+    if (handleLoginVerification()) return
+    
 
     try {
 
-      const token = await loginNip({ nip, password });
+      await loginNip({ nip, password });
       window.location.reload();
 
     } catch {
@@ -109,9 +82,11 @@ export default function Login() {
                 id="nip-input"
                 name="nip"
                 value={nip}
-                onChange={(event) => handleNipInput(event)}
+                onChange={(event) =>setNip(event.target.value)}
                 required
                 className="col-span-3"
+                maxLength={11}
+                autoComplete="off"
               />
             </div>
             {NipErrors.length > 0 && (
@@ -132,7 +107,7 @@ export default function Login() {
                 id="password"
                 name="password"
                 value={password}
-                onChange={(e) => handlePasswordInput(e)}
+                onChange={(event) => setPassword(event.target.value)}
                 required
                 className="col-span-3"
               />

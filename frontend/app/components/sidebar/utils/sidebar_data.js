@@ -111,7 +111,12 @@ const pharmacyLaboratoryDivision = [
   { name: 'Serviço de Análises Clínicas', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/ServicoAnalisesClinicas' },
   { name: 'Serviço de Farmácia Hospitalar', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/subSessionFileList?SubSessionFileList_name=SERVICO_DE_FARMACIA_HOSPITALAR' },
   {
-    name: 'Setor de Dispensação de Medicamentos (SeDiMe)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=167`
+    // name: 'SeDiMe', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=167`
+    name: 'SeDiMe', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_name=SEDIME`
+  },
+  {
+    name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_name=PROGRAMA DE MEDICAMENTOS ESPECIAIS`
+    // name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=172`
   },
 ]
 
@@ -120,6 +125,11 @@ const CCIH = [
   { name: 'Protocolos', title: 'CCIH', href: `/dashboard/subSessionFileList?SubSessionFileList_id=163` },
   { name: 'Comissão de Óbito', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=COMISSAO_DE_OBITO' },
   { name: 'NSP', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=NSP' },
+]
+
+const schedule = [
+  {name: 'Auditório/Sala de Reuniões', title: 'schedule', href:'/dashboard/resourceManagement/components/schedule'},
+  // {name: 'Consultas', title: 'schedule', href:'/dashboard/resourceManagement'}
 ]
 
 const menuTitles = [
@@ -132,7 +142,8 @@ const menuTitles = [
   { name: 'Seção de Informática', ref: itSection },
   { name: 'Serviços de Apoio a Saúde', ref: healthSupportService },
   { name: 'Divisão de Farmácia e Laboratório', ref: pharmacyLaboratoryDivision },
-  { name: 'CCIH', ref: CCIH }
+  { name: 'CCIH', ref: CCIH },
+  {name: 'Agendamentos', ref: schedule}
 ]
 
 
@@ -147,5 +158,6 @@ export {
   itSection,
   healthSupportService,
   pharmacyLaboratoryDivision,
-  CCIH
+  CCIH,
+  schedule
 }
