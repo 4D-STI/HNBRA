@@ -9,8 +9,8 @@ import axios from 'axios'
 interface IScheduleItem {
   idScheduling: number;
   nip: string;
-  schedulingStart: Date;
-  schedulingEnd: Date;
+  schedulingStart: string;
+  schedulingEnd: string;
   nameResponsible: string;
   theme: string;
   description: string;
@@ -61,22 +61,39 @@ const ScheduleForm: React.FC = () => {
   const [scheduleType, setScheduleType] = useState(ScheduleType.auditorium);
   const [userData, setUserData] = useState<IUserData | null >(null)
   const {updateScheduleData} = useScheduleContext()
+  const [schedulingStart, setSchedulingStart] = useState('');
+  const [schedulingEnd, setSchedulingEnd] = useState('');
 
   useEffect(() => {
+    // dados do agendamento
     const data = handlerUserLoggedData()
     if (data !== undefined) setUserData(data)
+    // data e hora inicial
+    setSchedulingStart(startDateTime)
+    setSchedulingEnd(endDateTime)
   }, [])
 
   // calcula data atual
   const now = new Date()
   const startDateTime = new Date(now.getTime() - 180 * 60 * 1000).toISOString().slice(0,16)
   const endDateTime = new Date(now.getTime() - 120 * 60 * 1000).toISOString().slice(0, 16)
+  // handler para alterar estado da data/hora
+  const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSchedulingStart(e.target.value);
+    setValue('schedulingStart', e.target.value);
+  };
+
+  const handleEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSchedulingEnd(e.target.value);
+    setValue('schedulingEnd', e.target.value);
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue
   } = useForm<IScheduleItem>({
     resolver: zodResolver(scheduleSchema),
   });
@@ -146,7 +163,8 @@ const ScheduleForm: React.FC = () => {
             {...register('schedulingStart')}
             className="w-auto border border-gray-300 px-3 py-2 rounded-md"
             autoFocus
-            value={startDateTime}
+            value={schedulingStart}
+            onChange={handleStartChange}
           />
           {errors.schedulingStart && <p className="text-red-500">{errors.schedulingStart.message}</p>}
         </div>
@@ -160,7 +178,8 @@ const ScheduleForm: React.FC = () => {
             id="schedulingEnd"
             {...register('schedulingEnd')}
             className="w-auto border border-gray-300 px-3 py-2 rounded-md"
-            value={endDateTime}
+            value={schedulingEnd}
+            onChange={handleEndChange}
           />
           {errors.schedulingEnd && <p className="text-red-500">{errors.schedulingEnd.message}</p>}
         </div>
