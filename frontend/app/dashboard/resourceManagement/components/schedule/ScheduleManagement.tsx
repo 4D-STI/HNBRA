@@ -4,7 +4,7 @@ import React, { useCallback,
     useContext,
      useEffect, useState } from "react"
 import {CalendarPlus, RefreshCw} from 'lucide-react'
-import ScheduleForm from "./ScheduleForm"
+import ScheduleForm from "./ScheduleForm_mui"
 import ScheduleItemContent from "./ScheduleItemContent"
 import { ScheduleType, IScheduleItem, OrderType } from "./schedule_interface/scheduleInterface"
 import * as filters from "./utils/filters"
@@ -181,7 +181,7 @@ export const ScheduleManagement = () => {
             </div>
 
             {/* container do conteúdo dos agendamentos */}
-            <div id="schedule-content-container" className="border-2 border-gray-500 mt-2 h-full w-full rounded-2xl p-2 overflow-hidden">
+            <div id="schedule-content-container" className="border-4 border-gray-500 mt-2 h-full w-full rounded-2xl p-2 overflow-hidden">
 
                 <div
                     id="content-title-container"
