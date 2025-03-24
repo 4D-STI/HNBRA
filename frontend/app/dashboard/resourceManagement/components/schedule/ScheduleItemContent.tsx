@@ -19,7 +19,8 @@ const ScheduleItemContent = ({data}: IscheduleItemContent) => {
     }, [])
     
     return (
-        <table className="table-fixed w-full bg-white/40">
+        // container da tabela
+        <table id='table-main-container' className="table-fixed w-full bg-white/60">
             
             <thead>
                 <tr className="bg-gray-100 text-wrap text-center text-sm">
@@ -28,16 +29,16 @@ const ScheduleItemContent = ({data}: IscheduleItemContent) => {
                     }
                     <th
                         onClick={(e) => console.log('quer filtar: ', e.currentTarget.innerText)}
-                        className="px-4 py-2 w-[150px] text-nowrap">Data do Agendamento</th>
+                        className="px-4 py-2 w-[150px] text-nowrap">Data</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
                         className="px-4 py-2 w-[100px] ">Horário</th>
                     <th
                         onClick={() => console.log('quer filtrar')}
                         className="px-4 py-2 w-[100px] ">Responsável</th>
-                    <th
+                    {/* <th
                         onClick={() => console.log('quer filtrar')}
-                        className="px-4 py-2 w-[70px] ">NIP</th>
+                        className="px-4 py-2 w-[70px] ">NIP</th> */}
                     <th
                         onClick={() => console.log('quer filtrar')}
                         className="px-4 py-2 w-[60px] ">Ramal</th>
