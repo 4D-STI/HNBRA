@@ -19,7 +19,6 @@ const loginNip = async (loginData: ILoginData) => {
             },
             body: JSON.stringify({ nip, password }),
         });
-        console.log(JSON.stringify({ nip, password }))
         
         if (!response.ok) {
             // return 'Senha ou nip invalido'
