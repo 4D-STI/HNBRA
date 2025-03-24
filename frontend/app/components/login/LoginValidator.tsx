@@ -7,9 +7,6 @@ const loginNip = async (loginData: ILoginData) => {
     const nip = loginData.nip
     const password = loginData.password
     try {
-        console.log('entrou em loginNip');
-        console.log('tentou logar com  :', {nip, password});
-        
         
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/login`, {
             method: 'POST',
@@ -19,7 +16,6 @@ const loginNip = async (loginData: ILoginData) => {
             },
             body: JSON.stringify({ nip, password }),
         });
-        console.log(JSON.stringify({ nip, password }))
         
         if (!response.ok) {
             // return 'Senha ou nip invalido'

@@ -52,9 +52,6 @@ export default function ListPage() {
     if (loading) return <div>Carregando...</div>;
     if (error) return <div>{error}</div>;
 
-    console.log('NOME SUB: ', SUBSESSION_NAME);
-    
-
     return (
         <div id="div-list-file" className="flex flex-col">
             
