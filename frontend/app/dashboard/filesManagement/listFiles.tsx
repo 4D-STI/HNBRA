@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import FileList from '../listSubSessionSession/file';
 import { File as files } from "../../types/file";
@@ -16,7 +16,9 @@ function UploadPage() {
   const router = useRouter();
   // const [files, setFiles] = React.useState<File[]>([]);
   const [filess, setFiless] = React.useState<files[]>([]);
-  const SUBSESSION_ID = 6;
+  // const SUBSESSION_ID = 6;
+  const searchParams = useSearchParams();
+  const SUBSESSION_ID = searchParams.get("SubSessionFileList_id") || "";
   const apiBack = process.env.NEXT_PUBLIC_API_BACK;
   // const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -48,7 +50,7 @@ function UploadPage() {
     } finally {
     }
   }, [url]);
-  
+
   useEffect(() => {
     const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
     setToken(storedToken);
@@ -85,7 +87,7 @@ function UploadPage() {
     formData.append('description', description);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/files/6/upload`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/files/${SUBSESSION_ID}/upload`, {
         method: 'POST',
         cache: 'no-store',
         headers: {
@@ -148,7 +150,7 @@ function UploadPage() {
         >
           voltar
         </button>
-        <FileList files={filess} />
+        <FileList files={filess} idSubSession={SUBSESSION_ID} />
       </div>
     </div>
   );

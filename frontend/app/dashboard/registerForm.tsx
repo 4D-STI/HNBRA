@@ -168,63 +168,63 @@ export default function RegisterForm() {
 
   };
 
-  const handleUpload = async () => {
+  // const handleUpload = async () => {
 
-    const formData = new FormData();
-    formData.append('firstName', firstName);
-    formData.append('nip', nip);
-    // formData.append('patents', patents);
-    formData.append('lastName', lastName);
-    formData.append('password', password);
+  //   const formData = new FormData();
+  //   formData.append('firstName', firstName);
+  //   formData.append('nip', nip);
+  //   // formData.append('patents', patents);
+  //   formData.append('lastName', lastName);
+  //   formData.append('password', password);
 
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/users`, {
-        method: 'POST',
-        cache: 'no-store',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nip,
-          "idPatent": patent, // colocar estado aqui
-          warName,
-          firstName,
-          lastName,
-          "role": "user",
-          "status": "active",
-          "permission": "user",
-          password,
-          "emailPersonal": emailMb,
-          "emailMb": emailMb,
-          "contactNumber": number
-        }),
-      });
+  //   try {
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/users`, {
+  //       method: 'POST',
+  //       cache: 'no-store',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         nip,
+  //         "idPatent": 1,
+  //         warName,
+  //         firstName,
+  //         lastName,
+  //         "role": "user",
+  //         "status": "active",
+  //         "permission": "user",
+  //         password,
+  //         "emailPersonal": emailMb,
+  //         "emailMb": emailMb,
+  //         "contactNumber": number
+  //       }),
+  //     });
 
-      if (response.ok) {
-        // const data = await response.json();
-        // console.log('Upload concluído com sucesso:', data);
-        window.alert('Pessoa cadastrada');
-        window.location.reload();
+  //     if (response.ok) {
+  //       // const data = await response.json();
+  //       // console.log('Upload concluído com sucesso:', data);
+  //       window.alert('Pessoa cadastrada');
+  //       window.location.reload();
 
-      } else {
-        const data = await response.json();
-        // console.error('Erro no upload:', response);
-        confirm(data.message)
-      }
-    } catch (err) {
-      console.error('Erro de rede durante o upload:', err);
-      // window.reportError(error)
-    }
-  };
+  //     } else {
+  //       const data = await response.json();
+  //       // console.error('Erro no upload:', response);
+  //       confirm(data.message)
+  //     }
+  //   } catch (err) {
+  //     console.error('Erro de rede durante o upload:', err);
+  //     // window.reportError(error)
+  //   }
+  // };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPatent(Number(event.target.value));
   };
 
   console.log(permissions);
-  
+
 
 
   return (
@@ -499,7 +499,7 @@ export default function RegisterForm() {
               variant="outline"
               type="submit"
               className="bg-blue-900 text-white justify-end items-end"
-              onClick={handleUpload}>
+              onClick={handleSubmit}>
               Fazer Cadastro
             </Button>
           </CardFooter>

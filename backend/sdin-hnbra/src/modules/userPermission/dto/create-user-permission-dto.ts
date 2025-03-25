@@ -8,8 +8,6 @@ const IS_EMPTY_MSG = (attr) => `O atributo ${attr} deve ser vazio`
 
 export class CreateUserPermissionDTO {
 
-    @ApiProperty({})
-    idPermission?: number;
 
     @ApiProperty({})
     @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('nomeDivision') })
