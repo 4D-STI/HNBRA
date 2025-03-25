@@ -1,23 +1,36 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, Inject, UnauthorizedException, ForbiddenException, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserPermissionDTO } from './dto/create-user-permission-dto';
 import { UserPermission } from 'src/repository/models/permission.model';
 import { UserPermissionType } from 'src/repository/types/userPermissionType ';
+import { Users } from 'src/repository/models/user.model';
+import { SubSession } from 'src/repository/models/subSession.model ';
 
 @Injectable()
 export class UserPermissionService {
     constructor(
         @InjectModel(UserPermission)
         private readonly userPermissionModel: typeof UserPermission,
+        @Inject('USERS_REPOSITORY') private readonly usersRepository: typeof Users,
     ) { }
 
-    async createUserPermission(create: CreateUserPermissionDTO) {
-
+    async createUserPermission(create: CreateUserPermissionDTO, nip: string) {
+        const user = await this.usersRepository.findByPk(nip);
+        if (user.permission !== 'admin') {
+            throw new ForbiddenException("Usuario não tem permissão para conceder acessos!");
+        }
+        const permission = await this.userPermissionModel.findOne({ where: { nip: user.nip, status: 'true', idSubSession: create.idSubSession } });
+        if (permission) {
+            throw new ConflictException("Permissão ja concedida anteriormente!")
+        }
+        if (!create.idSubSession) {
+            throw new BadRequestException("Erro")
+        }
         try {
             return await this.userPermissionModel.create(create);
         } catch (error) {
-            console.error("Erro ao criar divisão:", error);
-            throw new BadRequestException('Erro ao criar divisão', error);
+            console.error("Erro ao criar permissão:", error);
+            throw new BadRequestException('Erro ao criar permissão', error);
         }
     }
 
@@ -26,19 +39,31 @@ export class UserPermissionService {
     }
 
     async getAllPermissionNip(nip: string) {
-        const user = await this.userPermissionModel.findOne({ where: { nip: nip } })
-        if (!user) {
-            throw new BadRequestException('não foram encontrados permissão para esse nip');
-        }
+        // const user = await this.userPermissionModel.findOne({ where: { nip: nip } })
+        // if (!user) {
+        //     throw new BadRequestException('não foram encontrados permissão para esse nip');
+        // }
         try {
-            return this.userPermissionModel.findAll({ where: { nip: nip } })
+            return this.userPermissionModel.findAll({
+                where: { nip: nip },
+                include: [
+                    {
+                        model: SubSession,
+                        attributes: ['nameSubSession']
+                    }
+                ]
+            })
         }
         catch (e) {
             throw new BadRequestException('não foram encontrados permissão para esse nip ', e);
         }
     }
 
-    async updatePermission(userPermission: UserPermissionType) {
+    async updatePermission(userPermission: UserPermissionType, nip: string) {
+        const user = await this.usersRepository.findByPk(nip);
+        if (user.permission !== 'admin') {
+            throw new ForbiddenException("Usuario não tem permissão para conceder acessos!");
+        }
         const userPermissionOld = await this.userPermissionModel.findByPk(userPermission.idPermission);
         if (!userPermissionOld) {
             throw new BadRequestException('Não encontrado permissão para o usuário!');
@@ -61,7 +86,11 @@ export class UserPermissionService {
 
     }
 
-    async deletePermission(idPermission: number) {
+    async deletePermission(idPermission: number, nip: string) {
+        const user = await this.usersRepository.findByPk(nip);
+        if (user.permission !== 'admin') {
+            throw new ForbiddenException("Usuario não tem permissão para conceder acessos!");
+        }
         const permission = await this.userPermissionModel.findByPk(idPermission);
         if (!permission) {
             throw new BadRequestException('Permissão não encontrada!');

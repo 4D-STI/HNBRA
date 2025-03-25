@@ -5,6 +5,10 @@ import { useSearchParams, useRouter } from "next/navigation";
 import FileList from "@/app/dashboard/listSubSessionSession/file";
 import { File } from "@/app/types/file";
 import Link from "next/link";
+import EditIcon from '@mui/icons-material/Edit';
+import { verifyJwt } from "../dashboard/utils/verifyjwt";
+import { decodeJWT } from "../dashboard/utils/decoderjwt";
+
 
 
 export default function ListPage() {
@@ -56,31 +60,8 @@ export default function ListPage() {
 
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
-        if (storedToken != '') {
-
-            fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
-                method: 'POST',
-                // cache: 'no-store',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ jwt: storedToken }),
-            }).then((res) => {
-                if (!res.ok) {
-                    throw new Error("jwt Inválido ou Expirado!");
-                }
-                return res.json();
-            })
-                .then(() => setTokenExpiered(true))
-                .catch(() => {
-                    setTokenExpiered(false);
-                    localStorage.removeItem('token');
-                    alert("Login inválido!");
-                    window.location.href = '/';
-                })
-        }
+        decodeJWT();
+        verifyJwt(setTokenExpiered, PLANO_DO_DIA_ID);
         // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
     }, []);
     if (loading) return <div>Carregando...</div>;
@@ -90,8 +71,8 @@ export default function ListPage() {
             {edition && (
                 <div className="flex flex-col justify-end items-end -translate-x-6">
                     <h2>Edição Plano do Dia</h2>
-                    <Link href={"/dashboard/filesManagement"}>
-                        <p id="plano-do-dia-text" className='truncate'>Plano do Dia</p>
+                    <Link href={"/dashboard/filesManagement?SubSessionFileList_id=6"}>
+                        <EditIcon id="plano-do-dia-text" className='truncate'></EditIcon>
                     </Link>
                 </div>
             )}
@@ -108,7 +89,7 @@ export default function ListPage() {
                     voltar
                 </button>
 
-                <FileList files={files} />
+                <FileList files={files} idSubSession={PLANO_DO_DIA_ID} />
             </div>
 
 

@@ -24,10 +24,12 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import Link from "next/link";
+import { verifyJwt } from "../utils/verifyjwt";
 // import Link from "next/link";
 
 interface FileListProps {
     files: File[];
+    idSubSession: string;
 }
 
 interface iHandleDownload {
@@ -36,7 +38,7 @@ interface iHandleDownload {
     previewOnly?: boolean
 }
 
-export default function FileList({ files }: FileListProps) {
+export default function FileList({ files, idSubSession }: FileListProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const filesPerPage = 15;
     const totalPages = Math.ceil(files.length / filesPerPage);
@@ -82,25 +84,26 @@ export default function FileList({ files }: FileListProps) {
     useEffect(() => {
         const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
         if (storedToken != '') {
-            fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
-                method: 'POST',
-                // cache: 'no-store',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ jwt: storedToken }),
-            }).then((res) => {
-                if (!res.ok) {
-                    setIslogin(false);
-                    localStorage.removeItem('token');
-                } else {
-                    setIslogin(true);
-                }
-                return res.json();
-            })
-            // .then((data) => console.log('Token verificado:', data))
-            // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+            // fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
+            //     method: 'POST',
+            //     // cache: 'no-store',
+            //     headers: {
+            //         Accept: 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({ jwt: storedToken }),
+            // }).then((res) => {
+            //     if (!res.ok) {
+            //         setIslogin(false);
+            //         localStorage.removeItem('token');
+            //     } else {
+            //         setIslogin(true);
+            //     }
+            //     return res.json();
+            // })
+            // // .then((data) => console.log('Token verificado:', data))
+            // // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+            verifyJwt(setIslogin, idSubSession);
         }
     }, []);
 
