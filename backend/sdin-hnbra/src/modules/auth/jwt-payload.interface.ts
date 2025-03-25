@@ -7,4 +7,5 @@ export interface JwtPayload {
     patent: string;
     warName: string;
     permission: string;
+    permissionUsers: string[];
 }
