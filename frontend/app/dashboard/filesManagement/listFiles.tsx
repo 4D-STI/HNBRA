@@ -23,19 +23,14 @@ function UploadPage() {
   // const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(event.target.files?.[0] || null);
-  };
-
   const url = React.useMemo(() => {
-    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=6`;
+    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
     return null;
   }, [apiBack, SUBSESSION_ID]);
 
   const fetchData = useCallback(async () => {
     if (!url) {
-      setError("Erro: Parâmetro 'item' ou 'name' não fornecido.");
+      setError("Erro: Parâmetro 'item' ou 'teste' não fornecido.");
 
       return;
     }
@@ -50,6 +45,11 @@ function UploadPage() {
     } finally {
     }
   }, [url]);
+
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(event.target.files?.[0] || null);
+  };
 
   useEffect(() => {
     const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio

@@ -98,7 +98,7 @@ export default function FileList({ files, idSubSession }: FileListProps) {
             // // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
             verifyJwt(setIslogin, idSubSession);
         }
-    }, []);
+    }, [idSubSession]);
 
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= totalPages) {

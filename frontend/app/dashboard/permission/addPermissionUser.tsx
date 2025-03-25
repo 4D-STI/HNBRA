@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { error } from "console";
 import { useState, useEffect } from "react";
 
 interface Permission {
@@ -21,12 +20,12 @@ interface UserPermissionsProps {
     userPermissions: string[];
 }
 
-export default function AddPermissionUser({ userId: nip, userPermissions }: UserPermissionsProps) {
+export default function AddPermissionUser({ userId: nip }: UserPermissionsProps) {
     const [permissions, setPermissions] = useState<Permission[]>([]);
     const [permissionsUser, setPermissionsUser] = useState<PermissionUser[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredPermissions, setFilteredPermissions] = useState<Permission[]>([]);
-    const [filteredPermissionsUser, setFilteredPermissionsUser] = useState<PermissionUser[]>([]);
+    // const [filteredPermissionsUser, setFilteredPermissionsUser] = useState<PermissionUser[]>([]);
     const [selectedPermission, setSelectedPermission] = useState<number | null>(null);
     const token = localStorage.getItem("token") || "";
 
@@ -44,14 +43,14 @@ export default function AddPermissionUser({ userId: nip, userPermissions }: User
             .then((data) => {
                 if (Array.isArray(data)) {
                     setPermissionsUser(data);
-                    setFilteredPermissionsUser(data);
+                    // setFilteredPermissionsUser(data);
                 } else {
                     setPermissionsUser([]);
-                    setFilteredPermissionsUser([]);
+                    // setFilteredPermissionsUser([]);
                 }
             })
             .catch((err) => console.error("Error ao buscar permissões do usuário: ", err));
-    }, []);
+    }, [nip]);
 
     useEffect(() => {
         if (searchTerm) {
@@ -66,13 +65,9 @@ export default function AddPermissionUser({ userId: nip, userPermissions }: User
 
     const addPermission = (permissionId: string) => {
         const permissionIdNumber = Number(permissionId);
-        console.log("Permissão selecionada:", permissionIdNumber);
         setSelectedPermission(permissionIdNumber || null);
     };
 
-    const PermissionUser = (permission: PermissionUser) => {
-        setFilteredPermissionsUser((prevState) => [...prevState, permission]);
-    };
 
     const removePermissionUser = async (idPermission: number) => {
         const storedToken = localStorage.getItem("token") || "";
@@ -103,14 +98,13 @@ export default function AddPermissionUser({ userId: nip, userPermissions }: User
             }
 
             // Atualizando o estado com as permissões atualizadas
-            console.log(response)
             const updatedPermissions = await responseGet.json();
             setPermissionsUser(updatedPermissions);
-            setFilteredPermissionsUser(updatedPermissions);
+            // setFilteredPermissionsUser(updatedPermissions);
 
-            setFilteredPermissionsUser((prevState) =>
-                prevState.filter((perm) => perm.idPermission !== idPermission)
-            );
+            // setFilteredPermissionsUser((prevState) =>
+            //     prevState.filter((perm) => perm.idPermission !== idPermission)
+            // );
 
 
         }
@@ -148,22 +142,31 @@ export default function AddPermissionUser({ userId: nip, userPermissions }: User
 
 
             if (response.ok) {
-                fetch(`${process.env.NEXT_PUBLIC_API_BACK}/user-permission/${nip}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (Array.isArray(data)) {
-                            setPermissionsUser(data);
-                            setFilteredPermissionsUser(data);
-                        } else {
-                            setPermissionsUser([]);
-                            setFilteredPermissionsUser([]);
-                        }
-                    })
-                    .catch((err) => console.error("Error ao buscar permissões do usuário: ", err));
-                alert("Permissão adicionada com sucesso!");
+                try {
+
+                    fetch(`${process.env.NEXT_PUBLIC_API_BACK}/user-permission/${nip}`)
+                        .then((res) => res.json())
+                        .then((data) => {
+                            if (Array.isArray(data)) {
+                                setPermissionsUser(data);
+                                // setFilteredPermissionsUser(data);
+                            } else {
+                                setPermissionsUser([]);
+                                // setFilteredPermissionsUser([]);
+                            }
+                        })
+                        .catch((err) => console.error("Error ao buscar permissões do usuário: ", err));
+                    alert("Permissão adicionada com sucesso!");
+                }
+                catch (error) {
+                    alert("Erro ao adicionar permissão." + error);
+                }
             } else {
-                console.log(response);
-                alert("Erro ao adicionar permissão.");
+                response.json().then((errorData) => {
+                    alert("Erro ao adicionar permissão: " + (errorData.message || "Erro desconhecido."));
+                }).catch(() => {
+                    alert("Erro ao adicionar permissão: Erro ao processar a resposta do servidor.");
+                });
             }
         } catch (error) {
             console.error("Erro ao adicionar permissão:", error);
@@ -205,25 +208,6 @@ export default function AddPermissionUser({ userId: nip, userPermissions }: User
                 </select>
             </div>
 
-            {/* Select de Permissões
-            <div className="mb-4">
-                <select
-                    className="p-2 border rounded w-full"
-                    onChange={(e) => {
-                        addPermission(e.target.value);
-                    }}
-                    value={selectedPermission !== null ? selectedPermission.toString() : ""} // Valor do select
-                >
-                    <option value="" disabled>
-                        Selecione uma permissão
-                    </option>
-                    {filteredPermissionsUser.map((perm) => (
-                        <option key={perm.idSubSession} value={perm.idSubSession}>
-                            {perm.subSession.nameSubSession}
-                        </option>
-                    ))}
-                </select>
-            </div> */}
 
             {/* Exibe as permissões do usuário */}
             <div className="mb-4">

@@ -19,7 +19,7 @@ export class UserPermissionService {
         if (user.permission !== 'admin') {
             throw new ForbiddenException("Usuario não tem permissão para conceder acessos!");
         }
-        const permission = await this.userPermissionModel.findOne({ where: { nip: user.nip, status: 'true', idSubSession: create.idSubSession } });
+        const permission = await this.userPermissionModel.findOne({ where: { nip: create.nip, status: 'true', idSubSession: create.idSubSession } });
         if (permission) {
             throw new ConflictException("Permissão ja concedida anteriormente!")
         }

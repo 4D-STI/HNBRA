@@ -56,7 +56,7 @@ export default function ListPage() {
     useEffect(() => {
         verifyJwt(setTokenExpiered, SUBSESSION_ID);
         // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
-    }, []);
+    }, [SUBSESSION_ID]);
 
     if (loading) return <div>Carregando...</div>;
     if (error) return <div>{error}</div>;

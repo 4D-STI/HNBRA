@@ -30,7 +30,7 @@ export async function verifyJwt(setTokenExpired: (value: boolean) => void, idPer
     } catch (error) {
         setTokenExpired(false);
         localStorage.removeItem("token");
-        alert("Login inválido!");
+        alert("Login inválido!" + error);
         window.location.href = "/";
     }
 }
