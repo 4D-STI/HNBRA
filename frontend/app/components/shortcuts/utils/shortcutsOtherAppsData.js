@@ -69,7 +69,7 @@ const shortcutsOtherAppsData = [
         name: 'sismat',
         icon_path_jpg: '/icons/sismat_icon/11.jpg',
         icon_path_svg: '/icons/sismat_icon/sismat_icon.svg',
-        link: 'http://www.sisbens.dfm.mb:8080/sismat/'
+        link: 'http://www.sisbens.dfm.mb'
     },
     {
         name: 'fusmaweb',
