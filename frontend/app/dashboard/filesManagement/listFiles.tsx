@@ -25,6 +25,29 @@ function UploadPage() {
   // const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
+  const url = React.useMemo(() => {
+    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
+    return null;
+  }, [apiBack, SUBSESSION_ID]);
+
+  const fetchData = useCallback(async () => {
+    if (!url) {
+      setError("Erro: Parâmetro 'item' ou 'teste' não fornecido.");
+
+      return;
+    }
+
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("Erro ao buscar arquivos");
+      const data = await res.json();
+      setFiless(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro desconhecido");
+    } finally {
+    }
+  }, [url]);
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target.files?.[0] || null);
@@ -55,30 +78,8 @@ function UploadPage() {
       })
     fetchData();
     // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
-  }, []);
+  }, [apiBack, fetchData]);
 
-  const url = React.useMemo(() => {
-    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
-    return null;
-  }, [apiBack, SUBSESSION_ID]);
-
-  const fetchData = useCallback(async () => {
-    if (!url) {
-      setError("Erro: Parâmetro 'item' ou 'teste' não fornecido.");
-
-      return;
-    }
-
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error("Erro ao buscar arquivos");
-      const data = await res.json();
-      setFiless(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro desconhecido");
-    } finally {
-    }
-  }, [url]);
 
 
 

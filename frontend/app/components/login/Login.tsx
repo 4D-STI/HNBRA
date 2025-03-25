@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { User2Icon } from "lucide-react";
 import NipValidation from '@/app/components/utils/validations/nip_validation';
-import PasswordValidation from "../utils/validations/password_validation";
 import loginNip from "./LoginValidator";
 
 export default function Login() {
@@ -66,7 +65,7 @@ export default function Login() {
 
     try {
 
-      const token = await loginNip({ nip, password });
+      await loginNip({ nip, password });
       window.location.reload();
 
     } catch {

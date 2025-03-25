@@ -6,10 +6,12 @@ import LogoHnbra from "@/public/images/Logo_HNBra.png";
 import React, { useEffect, useState } from 'react';
 import MobileMenu from './mobilemenu/Mobilemenu';
 import Link from 'next/link';
+import { decodeJWT } from '../dashboard/utils/decoderjwt';
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [isLogin, setIslogin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     // var isLogin = false;
 
     const toggleMenu = () => {
@@ -45,8 +47,18 @@ export default function Header() {
             })
             // .then((data) => console.log('Token verificado:', data))
             // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+            getPermission();
+
         }
     }, []);
+
+    const getPermission = async () => {
+        const jwt = await decodeJWT(); // Aguarda a Promise resolver
+        if (jwt.permission === 'admin') {
+            setIsAdmin(true);
+        }
+    };
+
 
     const clearLocal = () => {
         localStorage.removeItem('token');
@@ -108,6 +120,12 @@ export default function Header() {
                             <li className="mr-4"><a href="#">Acesso à informação</a></li>
                             <li className="mr-4"><a href="#">Legislação</a></li>
                             <li className="mr-4"><a href="#">Acessibilidade</a></li>
+                            {isAdmin &&
+                                (
+                                    <li>
+                                        <button onClick={clearLocal}> Gerenciador de Permissão de usuario</button>
+                                    </li>
+                                )}
                         </ul>
                     </div>
                     <div id="dark-mode" className="flex p-2 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
@@ -125,6 +143,7 @@ export default function Header() {
                                 <button onClick={clearLocal}>Sair</button>
                             </div>
                         )}
+
                 </div>
 
                 <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
