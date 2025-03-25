@@ -1,4 +1,4 @@
-import { Table, Column, Model, PrimaryKey, DataType, Unique, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, DataType, Unique, ForeignKey } from 'sequelize-typescript';
 import { UserPermissionType } from '../types/userPermissionType ';
 import { SubSession } from './subSession.model ';
 import { Users } from './user.model';
@@ -13,9 +13,6 @@ export class UserPermission extends Model<UserPermissionType> {
     @ForeignKey(() => SubSession)
     @Column
     idSubSession: number;
-
-    @BelongsTo(() => SubSession, { foreignKey: 'idSubSession' })
-    subSession: SubSession;
 
     @ForeignKey(() => Users)
     @Column

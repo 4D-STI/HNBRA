@@ -24,7 +24,7 @@ async function bootstrap() {
     origin: [
       "http://localhost:3001", "http://localhost:3002", "http://hnbra.mb:3000",
       "http://172.21.44.24:3000", "https://172.21.44.24", "http://172.21.44.24:3011",
-      "https://hnbra.mb", "https://www.hnbra.mb",
+      "https://hnbra.com", "https://www.hnbra.com",
 
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',

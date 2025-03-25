@@ -100,9 +100,9 @@ export class SchedulingService {
     async putScheduling(scheduling: Scheduling, req: string) {
         const schedulingOld = await this.schedulingModel.findByPk(scheduling.idScheduling);
         const user = await this.usersRepository.findByPk(req);
-        if (schedulingOld.nip != req.toString() && (user.permission != 'admin' && user.permission != 'adminScheduling')) {
-            console.log(schedulingOld.nip, req.toString());
-            throw new BadRequestException('Erro na atualização, Nip diferente do cadastro do agendamento');
+        if (schedulingOld.nip != req.toString() || user.permission != 'admin') {
+            console.log(scheduling.nip, req.toString())
+            throw new BadRequestException('Error na atualização, Nip diferente de cadastro do agendamento')
         }
         if (!schedulingOld) {
             throw new BadRequestException('Agendamento não encontrado.');
@@ -142,7 +142,7 @@ export class SchedulingService {
             throw new BadRequestException('Agendamento não encontrado!')
         }
         const user = await this.usersRepository.findByPk(req);
-        if (schedulingOld.nip != req.toString() && (user.permission != 'admin' && user.permission != 'adminScheduling')) {
+        if (schedulingOld.nip != req && user.permission != 'admin') {
             throw new BadRequestException('Error ao apagar, Nip diferente de cadastro do agendamento')
         }
         try {

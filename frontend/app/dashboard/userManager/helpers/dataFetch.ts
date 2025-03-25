@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { IUser } from "../../utils/mocks/users_mock";
 
 // Variaveis
-const API_URL_BASE = process.env.NEXT_PUBLIC_API_BACK;
+const API_URL_BASE = `${process.env.NEXT_PUBLIC_API_BACK}`
 
 
 export default function useGetAllUsers() {
@@ -24,6 +24,8 @@ export default function useGetAllUsers() {
         }
         fetchUsers()
     }, []);
+
+    console.log('Buscou usuario VVV \r', users);
 
     return { users }
 

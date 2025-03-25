@@ -27,8 +27,8 @@ export class UserPermissionController {
         description: 'Permissão de usuário criada com sucesso',
         type: UserPermission,
     })
-    async createUserPermission(@Body() createPermission: CreateUserPermissionDTO, @Request() req): Promise<UserPermission> {
-        return this.userPermissionService.createUserPermission(createPermission, req.user.nip);
+    async createUserPermission(@Body() createPermission: CreateUserPermissionDTO): Promise<UserPermission> {
+        return this.userPermissionService.createUserPermission(createPermission);
     }
 
     /**
@@ -99,8 +99,8 @@ export class UserPermissionController {
             required: ['schedulingStart', 'schedulingEnd', 'theme', 'description', 'typeScheduling', 'ramal'],
         },
     })
-    async updatePermission(@Body() deletePermission: UserPermissionType, @Request() req) {
-        return this.userPermissionService.updatePermission(deletePermission, req.user.nip);
+    async updatePermission(@Body() deletePermission: UserPermissionType) {
+        return this.userPermissionService.updatePermission(deletePermission);
     }
 
     @Delete(':idPermission')
@@ -111,10 +111,9 @@ export class UserPermissionController {
         description: 'Permissão deletado com sucesso!',
     })
     async deleteScheduling(@Param
-        ('idPermission') idPermission: number,
-        @Request() req
+        ('idPermission') idPermission: number
     ) {
-        await this.userPermissionService.deletePermission(idPermission, req.user.nip);
+        await this.userPermissionService.deletePermission(idPermission);
         return { message: 'Agendamento excluído com sucesso.' };
     }
 }

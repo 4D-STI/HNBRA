@@ -4,16 +4,12 @@ import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
 import { Users } from 'src/repository/models/user.model';
 import { error } from 'console';
-import { UserPermission } from 'src/repository/models/permission.model';
-import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class AuthService {
     constructor(
         @Inject('USERS_REPOSITORY') private readonly usersRepository: typeof Users,
         private readonly jwtService: JwtService,
-        @InjectModel(UserPermission)
-        private readonly userPermissionModel: typeof UserPermission,
     ) { }
 
     async findByEmail(emailMb: string): Promise<Users | null> {
@@ -41,10 +37,6 @@ export class AuthService {
 
 
     async login(user: Users) {
-        const permissions = await this.userPermissionModel.findAll({
-            where: { nip: user.dataValues.nip, status: 'true' },
-        });
-
         const payload = {
             nip: user.dataValues.nip,
             email: user.dataValues.emailPersonal,
@@ -52,8 +44,6 @@ export class AuthService {
             lastName: user.dataValues.lastName,
             patent: user.dataValues.idPatent,
             warName: user.dataValues.warName,
-            permission: user.dataValues.permission,
-            permissionUsers: permissions.map(p => p.idSubSession)
         };
 
         const secretKey = process.env.JWT_SECRET_KEY || 'default_secret_key';

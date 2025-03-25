@@ -1,11 +1,9 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import FileList from '../listSubSessionSession/file';
 import { File as files } from "../../types/file";
-
-
 
 function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -18,9 +16,7 @@ function UploadPage() {
   const router = useRouter();
   // const [files, setFiles] = React.useState<File[]>([]);
   const [filess, setFiless] = React.useState<files[]>([]);
-  // const SUBSESSION_ID = 6;
-  const searchParams = useSearchParams();
-  const SUBSESSION_ID = searchParams.get("SubSessionFileList_id") || "";
+  const SUBSESSION_ID = 6;
   const apiBack = process.env.NEXT_PUBLIC_API_BACK;
   // const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -29,8 +25,32 @@ function UploadPage() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target.files?.[0] || null);
   };
+
+  const url = React.useMemo(() => {
+    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=6`;
+    return null;
+  }, [apiBack, SUBSESSION_ID]);
+
+  const fetchData = useCallback(async () => {
+    if (!url) {
+      setError("Erro: Parâmetro 'item' ou 'name' não fornecido.");
+
+      return;
+    }
+
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("Erro ao buscar arquivos");
+      const data = await res.json();
+      setFiless(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro desconhecido");
+    } finally {
+    }
+  }, [url]);
+  
   useEffect(() => {
-    const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
+    const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
     setToken(storedToken);
     fetch(`${apiBack}/auth/verifyJwt`, {
       method: 'POST',
@@ -49,38 +69,13 @@ function UploadPage() {
       .then(() => setTokenExpiered(true))
       .catch(() => {
         setTokenExpiered(false);
-        localStorage.removeItem('token');
+        localStorage?.removeItem('token');
         alert("Login inválido!");
         window.location.href = '/';
       })
     fetchData();
     // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
   }, [apiBack, fetchData]);
-
-  const url = React.useMemo(() => {
-    if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
-    return null;
-  }, [apiBack, SUBSESSION_ID]);
-
-  const fetchData = useCallback(async () => {
-    if (!url) {
-      setError("Erro: Parâmetro 'item' ou 'teste' não fornecido.");
-
-      return;
-    }
-
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error("Erro ao buscar arquivos");
-      const data = await res.json();
-      setFiless(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro desconhecido");
-    } finally {
-    }
-  }, [url]);
-
-
 
   const handleUpload = async () => {
 
@@ -90,7 +85,7 @@ function UploadPage() {
     formData.append('description', description);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/files/${SUBSESSION_ID}/upload`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACK}/files/6/upload`, {
         method: 'POST',
         cache: 'no-store',
         headers: {
@@ -115,8 +110,6 @@ function UploadPage() {
       // window.reportError(error)
     }
   };
-
-
 
   // const clearLocal = () => {
   //   localStorage.removeItem('token');
@@ -155,7 +148,7 @@ function UploadPage() {
         >
           voltar
         </button>
-        <FileList files={filess} idSubSession={SUBSESSION_ID} />
+        <FileList files={filess} />
       </div>
     </div>
   );

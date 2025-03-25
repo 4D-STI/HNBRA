@@ -30,12 +30,12 @@ export default function Login() {
     }
     setNipErrors([])
   }
-
+  
   // método envio dados
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (handleLoginVerification()) return
-
+    
 
     try {
 
@@ -82,7 +82,7 @@ export default function Login() {
                 id="nip-input"
                 name="nip"
                 value={nip}
-                onChange={(event) => setNip(event.target.value)}
+                onChange={(event) =>setNip(event.target.value)}
                 required
                 className="col-span-3"
                 maxLength={11}

@@ -3,10 +3,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UserPermissionService } from './user-permission.service';
 import { UserPermissionController } from './user-permission.controller';
 import { UserPermission } from 'src/repository/models/permission.model';
-import { UsersModule } from '../users/users.module';
 
 @Module({
-    imports: [SequelizeModule.forFeature([UserPermission]), UsersModule],
+    imports: [SequelizeModule.forFeature([UserPermission])],
     controllers: [UserPermissionController],
     providers: [UserPermissionService],
     exports: [SequelizeModule],
