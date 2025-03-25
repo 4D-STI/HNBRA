@@ -14,6 +14,9 @@ export class UsersValidator {
         private readonly patentRepository: typeof Patent,) { }
 
     async validateCreateUser(createUserDto: any) {
+        if (createUserDto.nip <= 8 && createUserDto.nip >= 11) {
+            throw new BadRequestException('O NIP/CPF deve ser maior que 8 e menor que 11');
+        }
         const user = await this.userRepository.findOne({
             where: {
                 [Op.or]: [

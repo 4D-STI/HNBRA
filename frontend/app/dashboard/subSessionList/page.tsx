@@ -9,7 +9,7 @@ import { File } from "../../types/file";
 export default function ListPage() {
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     const searchParams = useSearchParams();
-    const item = searchParams.get("item");
+    const item = searchParams.get("item") || "";
 
 
     // busca a rela dos links na api
@@ -47,7 +47,7 @@ export default function ListPage() {
         <div id="div-list-file">
             <h1 className="text-2xl font-bold mb-4">Lista de Arquivos {item.replace(/_/g, " ")}</h1>
             <a href="/dashboard/listSubSession">voltar</a>
-            <FileList files={files} />
+            <FileList files={files} idSubSession={item} />
         </div>
     );
 }

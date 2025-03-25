@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
 import { PatentService } from './patent.service';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -36,6 +36,28 @@ export class PatentController {
         @Request() req,
     ) {
         return await this.patentService.createPatent(patent, req.user.nip);
+    }
+
+    @Put()
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({ summary: 'Atualiza patente' })
+    @ApiBody({
+        schema: {
+            properties: {
+                patent: { type: 'string', example: 'Servidor-civil' },
+            }
+        }
+    })
+    @ApiResponse({
+        status: 201,
+        description: 'Patente atualizada com sucesso!',
+        type: Patent
+    })
+    @ApiResponse({ status: 400, description: 'Requisição inválida' })
+    async updatePatent(
+        @Body() patent: Patent,
+    ) {
+        return await this.patentService.putPatent(patent);
     }
 
     @Delete(':idPatent')

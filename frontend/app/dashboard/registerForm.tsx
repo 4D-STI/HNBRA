@@ -224,7 +224,6 @@ export default function RegisterForm() {
   };
 
   console.log(permissions);
-  
 
 
   return (
