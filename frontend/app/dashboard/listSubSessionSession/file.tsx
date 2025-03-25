@@ -15,9 +15,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { verifyJwt } from "../utils/verifyjwt";
 import PaginationComponent from "@/app/components/pagination/PaginationComponent";
 import { FileSortingStrategy } from "../utils/strategy/file_sorting/FileSortingStrategy";
+import { verifyJwt } from "../utils/verifyjwt";
+// import Link from "next/link";
 
 interface FileListProps {
     files: File[];
@@ -87,7 +88,7 @@ export default function FileList({ files, idSubSession }: FileListProps) {
             // }).then((res) => {
             //     if (!res.ok) {
             //         setIslogin(false);
-            //         localStorage?.removeItem('token');
+            //         localStorage.removeItem('token');
             //     } else {
             //         setIslogin(true);
             //     }

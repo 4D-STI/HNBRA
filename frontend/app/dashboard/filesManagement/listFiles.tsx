@@ -5,8 +5,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import FileList from '../listSubSessionSession/file';
 import { File as files } from "../../types/file";
 
-
-
 function UploadPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [idSubSession] = useState('');
@@ -24,38 +22,6 @@ function UploadPage() {
   const apiBack = process.env.NEXT_PUBLIC_API_BACK;
   // const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
-
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(event.target.files?.[0] || null);
-  };
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
-    setToken(storedToken);
-    fetch(`${apiBack}/auth/verifyJwt`, {
-      method: 'POST',
-      // cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ jwt: storedToken }),
-    }).then((res) => {
-      if (!res.ok) {
-        throw new Error("jwt Inválido ou Expirado!");
-      }
-      return res.json();
-    })
-      .then(() => setTokenExpiered(true))
-      .catch(() => {
-        setTokenExpiered(false);
-        localStorage.removeItem('token');
-        alert("Login inválido!");
-        window.location.href = '/';
-      })
-    fetchData();
-    // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
-  }, [apiBack, fetchData]);
 
   const url = React.useMemo(() => {
     if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
@@ -81,6 +47,37 @@ function UploadPage() {
   }, [url]);
 
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(event.target.files?.[0] || null);
+  };
+
+  useEffect(() => {
+    const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
+    setToken(storedToken);
+    fetch(`${apiBack}/auth/verifyJwt`, {
+      method: 'POST',
+      // cache: 'no-store',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ jwt: storedToken }),
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error("jwt Inválido ou Expirado!");
+      }
+      return res.json();
+    })
+      .then(() => setTokenExpiered(true))
+      .catch(() => {
+        setTokenExpiered(false);
+        localStorage?.removeItem('token');
+        alert("Login inválido!");
+        window.location.href = '/';
+      })
+    fetchData();
+    // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+  }, [apiBack, fetchData]);
 
   const handleUpload = async () => {
 
@@ -115,8 +112,6 @@ function UploadPage() {
       // window.reportError(error)
     }
   };
-
-
 
   // const clearLocal = () => {
   //   localStorage.removeItem('token');

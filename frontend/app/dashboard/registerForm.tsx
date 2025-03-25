@@ -226,6 +226,7 @@ export default function RegisterForm() {
   console.log(permissions);
 
 
+
   return (
     <Card className="w-max text-blue-900">
       <CardHeader>
