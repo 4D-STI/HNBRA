@@ -91,7 +91,7 @@ export default function Header() {
 
                             <div id='logo-text-container' className='flex flex-col'>
                                 <h1
-                                    className="text-3xl font-bold"
+                                    className="text-3xl font-bold text-nowrap"
                                 > Hospital Naval de Brasília
                                 </h1>
 
@@ -117,9 +117,7 @@ export default function Header() {
 
                     <div className="hidden md:flex text-base">
                         <ul className="flex items-center justify-end mx-16">
-                            <li className="mr-4"><a href="#">Órgãos do governo</a></li>
                             <li className="mr-4"><a href="#">Acesso à informação</a></li>
-                            <li className="mr-4"><a href="#">Legislação</a></li>
                             <li className="mr-4"><a href="#">Acessibilidade</a></li>
                             {isAdmin &&
                                 (
@@ -127,11 +125,13 @@ export default function Header() {
                                         <button onClick={clearLocal}> Gerenciador de Permissão de usuario</button>
                                     </li>
                                 )}
+
                         </ul>
                     </div>
                     <div id="dark-mode" className="flex p-2 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
                         <ContrastIcon />
                     </div>
+                    
                     {!isLogin ? (
                         <div id="button_login" className="flex items-center mx-4 gap-2">
                             <Login />
