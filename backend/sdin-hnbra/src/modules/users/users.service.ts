@@ -1,4 +1,4 @@
-import { Injectable, Inject, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Inject, BadRequestException, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { Users } from '../../repository/models/user.model'
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,6 +15,8 @@ export class UsersService {
 
     @Inject('USERS_REPOSITORY')
     private userRepository: typeof Users,
+
+    @Inject('USERS_REPOSITORY') private readonly usersRepository: typeof Users,
   ) { }
 
 
@@ -100,7 +102,11 @@ export class UsersService {
 
 
 
-  async update(nip: string, updateUserDto: UpdateUserDto) {
+  async update(nip: string, updateUserDto: UpdateUserDto, nipAdmin: string) {
+    const user = await this.usersRepository.findByPk(nipAdmin);
+    if (user.permission !== 'admin') {
+      throw new ForbiddenException("Usuario não tem permissão para conceder acessos!");
+    }
     // pesquisar nip do usuario antes de atualizar
     await this.usersValidator.valdiateUpdate(nip, updateUserDto)
 
@@ -114,7 +120,12 @@ export class UsersService {
     return this.usersValidator.createUserResponse(await userCreate);
   }
 
-  async remove(nip: string) {
+  async remove(nip: string, nipAdmin: string) {
+    const user = await this.usersRepository.findByPk(nipAdmin);
+    if (user.permission !== 'admin') {
+      throw new ForbiddenException("Usuario não tem permissão para conceder acessos!");
+    }
+    // 
     // pesquisar nip do usuario antes de remover
     const userToDelete = await this.searchUsers({ nip })
 
