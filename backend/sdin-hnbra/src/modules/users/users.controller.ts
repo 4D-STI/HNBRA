@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, BadRequestException, UseGuards, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,10 +6,12 @@ import { SearchUserDto } from './dto/search-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 // import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 // import { ApiBearerAuth } from '@nestjs/swagger';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiCreatedResponse, ApiOkResponse, ApiBadRequestResponse, ApiNotFoundResponse, ApiInternalServerErrorResponse, ApiBody, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiCreatedResponse, ApiBadRequestResponse } from '@nestjs/swagger';
 import { Users } from 'src/repository/models/user.model';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
+@ApiBearerAuth('JWT-auth')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
@@ -54,15 +56,19 @@ export class UsersController {
   // }
 
   @Patch(':nip')
+  @UseGuards(JwtAuthGuard)
   updateUser(
     @Param('nip') nip: string,
-    @Body() updateUserDto: UpdateUserDto
+    @Body() updateUserDto: UpdateUserDto,
+    @Request() res,
   ) {
-    return this.usersService.update(nip, updateUserDto);
+    console.log('sdadadas')
+    return this.usersService.update(nip, updateUserDto, res.user.nip);
   }
 
   @Delete(':nip')
-  remove(@Param('nip') nip: string) {
-    return this.usersService.remove(nip);
+  @UseGuards(JwtAuthGuard)
+  remove(@Param('nip') nip: string, @Request() res) {
+    return this.usersService.remove(nip, res.user.nip);
   }
 }
