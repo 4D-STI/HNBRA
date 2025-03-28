@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import ScheduleItemTable from './ScheduleItemTable';
-import { IScheduleItem } from '../../../../contracts/IScheduleInterface'
+import { IScheduleItem } from '../../../../contracts/interfaces/IScheduleInterface'
 
 interface IscheduleItemContent {
     data: IScheduleItem[]
