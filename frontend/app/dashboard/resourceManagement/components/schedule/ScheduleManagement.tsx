@@ -6,12 +6,14 @@ import React, { useCallback,
 import {CalendarPlus, RefreshCw} from 'lucide-react'
 import ScheduleForm from "./ScheduleForm_mui"
 import ScheduleItemContent from "./ScheduleItemContent"
-import { ScheduleType, IScheduleItem, OrderType } from "../../../../contracts/IScheduleInterface"
 import * as filters from "./utils/filters"
 import { handleScheduleTypeButtonToggle } from "./utils/handlerScheduleTypeToggle"
 import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@radix-ui/react-toast"
 import ScheduleContext from '@/app/context/ScheduleContext'
+import { IScheduleItem } from '@/app/contracts/interfaces/IScheduleInterface'
+import { OrderType } from '@/app/contracts/types/OrderType'
+import { ScheduleType } from '@/app/contracts/types/ScheduleType'
 
 const url = `${process.env.NEXT_PUBLIC_API_BACK}/scheduling`
 

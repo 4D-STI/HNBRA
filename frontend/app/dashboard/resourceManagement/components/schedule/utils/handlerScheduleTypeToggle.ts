@@ -8,7 +8,7 @@ interface IHandleScheduleTypeToggle {
 }
 
 import React from "react"
-import { ScheduleType } from "../../../../../contracts/IScheduleInterface"
+import { ScheduleType } from "@/app/contracts/types/ScheduleType"
 
 export const handleScheduleTypeButtonToggle = ({ event, setContentType, setCreateSchedule, setScheduleType }: IHandleScheduleTypeToggle): void => {
 
