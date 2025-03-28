@@ -10,7 +10,7 @@ export default function ListPage() {
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     const searchParams = useSearchParams();
     const router = useRouter();
-    const item = searchParams.get("item");
+    const item = searchParams.get("item") || "";
     // const teste = searchParams.get("teste");
     const teste = '6';
 
@@ -62,7 +62,7 @@ export default function ListPage() {
             >
                 voltar
             </button>
-            <FileList files={files} />
+            <FileList files={files} idSubSession={item} />
         </div>
     );
 }

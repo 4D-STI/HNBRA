@@ -56,11 +56,6 @@ export const ScheduleItemTable = ({item}: IScheduleItemComponent) => {
             <td className="px-4 py-2 text-start">
                 {item.nameResponsible}
             </td>
-            {/* nip do usuario responsável */}
-            <td className="px-4 py-2">
-                {item.nip}
-            </td>
-            {/* ramal de contato do responsável */}
             <td className="px-4 py-2">
                 {item.ramal}
             </td>

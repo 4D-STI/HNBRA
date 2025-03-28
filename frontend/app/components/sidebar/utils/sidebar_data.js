@@ -57,7 +57,7 @@ const internalUse = [
   { name: 'Licitações e Contratos', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=LICITACOES_E_CONTRATOS' },
   { name: 'Credenciamento', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=105' },
   { name: 'Execução Financeira', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=EXECUCAO_FINANCEIRA' },
-  { name: 'Portarias', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=PORTARIAS' },
+  { name: 'Portarias', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=107' },
   { name: 'Gestoria Patrimonial', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=GESTORIA_PATRIMONIAL' },
   { name: 'Plano de Aplicação de Recursos (PAR)', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=PLANO_DE_APLICACAO_DE_RECURSOS' },
   { name: 'Transparência e Prestação de Contas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=12&subsession_name=TRANSPARENCIA_E_PRESTAÇÃO_DE_CONTAS' }, //ITEM = ID
@@ -128,7 +128,7 @@ const CCIH = [
 ]
 
 const schedule = [
-  {name: 'Auditório/Sala de Reuniões', title: 'schedule', href:'/dashboard/resourceManagement/components/schedule'},
+  { name: 'Auditório/Sala de Reuniões', title: 'schedule', href: '/dashboard/resourceManagement/components/schedule' },
   // {name: 'Consultas', title: 'schedule', href:'/dashboard/resourceManagement'}
 ]
 
@@ -143,7 +143,7 @@ const menuTitles = [
   { name: 'Serviços de Apoio a Saúde', ref: healthSupportService },
   { name: 'Divisão de Farmácia e Laboratório', ref: pharmacyLaboratoryDivision },
   { name: 'CCIH', ref: CCIH },
-  {name: 'Agendamentos', ref: schedule}
+  { name: 'Agendamentos', ref: schedule }
 ]
 
 

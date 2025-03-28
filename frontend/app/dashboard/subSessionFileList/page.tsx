@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import FileList from "../listSubSessionSession/file";
 import { File } from "../../types/file";
 import { SubSessionDescription } from "./SubSessionDescription";
 import descriptionMap from "./descriptions/descriptionsMap";
+import Link from "next/link";
+import EditIcon from '@mui/icons-material/Edit';
+import { verifyJwt } from "../utils/verifyjwt";
 
 export default function ListPage() {
     //Lista SubSession a partir de nome ou id
@@ -13,7 +16,7 @@ export default function ListPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const SUBSESSION_NAME = searchParams.get("SubSessionFileList_name");
-    const SUBSESSION_ID = searchParams.get("SubSessionFileList_id");
+    const SUBSESSION_ID = searchParams.get("SubSessionFileList_id") || "";
 
     const url = React.useMemo(() => {
         if (SUBSESSION_NAME) return `${apiBack}/files/nameSub?nomeSubSession=${SUBSESSION_NAME}`;
@@ -24,6 +27,7 @@ export default function ListPage() {
     const [files, setFiles] = React.useState<File[]>([]); // Inicializado como array vazio
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<string | null>(null);
+    const [edition, setTokenExpiered] = useState<boolean>(false);
 
     const fetchData = useCallback(async () => {
         if (!url) {
@@ -49,15 +53,25 @@ export default function ListPage() {
         fetchData();
     }, [fetchData]);
 
+    useEffect(() => {
+        verifyJwt(setTokenExpiered, SUBSESSION_ID);
+        // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+    }, [SUBSESSION_ID]);
+
     if (loading) return <div>Carregando...</div>;
     if (error) return <div>{error}</div>;
 
-    console.log('NOME SUB: ', SUBSESSION_NAME);
-    
-
     return (
         <div id="div-list-file" className="flex flex-col">
-            
+
+            {edition && (
+                <div className="flex flex-col justify-end items-end -translate-x-6">
+                    <h2>Edição </h2>
+                    <Link href={`/dashboard/filesManagement?SubSessionFileList_id=${SUBSESSION_ID}`}>
+                        <EditIcon id="plano-do-dia-text" className='truncate'></EditIcon>
+                    </Link>
+                </div>
+            )}
             {/* cabeçalho */}
             <div id="fileList-header-container" className="flex flex-row justify-center gap-8 items-center mb-6">
 
@@ -77,21 +91,17 @@ export default function ListPage() {
             <div id="content-container" className="flex flex-row gap-8 h-[600px]">
 
                 {/* Descrição */}
-                { (descriptionMap(SUBSESSION_NAME ?? '') ) && (
+                {(descriptionMap(SUBSESSION_NAME ?? '')) && (
                     <div className="flex w-1/2 px-8 h-auto justify-center">
-                        <SubSessionDescription title={SUBSESSION_NAME ?? ''}/>
+                        <SubSessionDescription title={SUBSESSION_NAME ?? ''} />
                     </div>
 
                 )}
-
-                {/* Arquivos */}
-                <div id="fileList-container" className={`flex overflow-y-auto px-8 justify-center ${descriptionMap(SUBSESSION_NAME ?? '') ? 'w-1/2' : 'w-auto'}`}>
-                    <FileList files={files} />
-                </div>
-
+                <FileList files={files} idSubSession={SUBSESSION_ID} />
             </div>
-
-
         </div>
+
+
+
     );
 }

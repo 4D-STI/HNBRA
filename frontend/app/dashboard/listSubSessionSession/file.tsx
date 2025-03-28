@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { File } from "../../types/file";
 import { IconButton } from '@mui/material'; // Usando Material UI como exemplo
 import DownloadIcon from '@mui/icons-material/Download';
@@ -11,14 +11,18 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableHeader,
+    // TableHeader,
     TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
 import PaginationComponent from "@/app/components/pagination/PaginationComponent";
+import { FileSortingStrategy } from "../utils/strategy/file_sorting/FileSortingStrategy";
+import { verifyJwt } from "../utils/verifyjwt";
+// import Link from "next/link";
 
 interface FileListProps {
     files: File[];
+    idSubSession: string;
 }
 
 interface iHandleDownload {
@@ -27,7 +31,7 @@ interface iHandleDownload {
     previewOnly?: boolean
 }
 
-export default function FileList({ files }: FileListProps) {
+export default function FileList({ files, idSubSession }: FileListProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const filesPerPage = 10;
     const totalPages = Math.ceil(files.length / filesPerPage);
@@ -73,27 +77,28 @@ export default function FileList({ files }: FileListProps) {
     useEffect(() => {
         const storedToken = localStorage?.getItem("token") || ""; // Valor padrão vazio
         if (storedToken != '') {
-            fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
-                method: 'POST',
-                // cache: 'no-store',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ jwt: storedToken }),
-            }).then((res) => {
-                if (!res.ok) {
-                    setIslogin(false);
-                    localStorage?.removeItem('token');
-                } else {
-                    setIslogin(true);
-                }
-                return res.json();
-            })
-            // .then((data) => console.log('Token verificado:', data))
-            // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+            // fetch(`${process.env.NEXT_PUBLIC_API_BACK}/auth/verifyJwt`, {
+            //     method: 'POST',
+            //     // cache: 'no-store',
+            //     headers: {
+            //         Accept: 'application/json',
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({ jwt: storedToken }),
+            // }).then((res) => {
+            //     if (!res.ok) {
+            //         setIslogin(false);
+            //         localStorage.removeItem('token');
+            //     } else {
+            //         setIslogin(true);
+            //     }
+            //     return res.json();
+            // })
+            // // .then((data) => console.log('Token verificado:', data))
+            // // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
+            verifyJwt(setIslogin, idSubSession);
         }
-    }, []);
+    }, [idSubSession]);
 
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= totalPages) {
@@ -102,7 +107,14 @@ export default function FileList({ files }: FileListProps) {
     };
 
     const startIndex = (currentPage - 1) * filesPerPage;
-    const paginatedFiles = files.slice(startIndex, startIndex + filesPerPage);
+    const paginatedFilesData = files.slice(startIndex, startIndex + filesPerPage);
+
+    // STRATEGY de ordenação
+    const orderedFiles = useMemo(() => {
+        // instância do contexto da estrategia de ordenação
+        const fileSorter = new FileSortingStrategy(paginatedFilesData)
+        return fileSorter.sortFiles(paginatedFilesData)
+    }, [paginatedFilesData])
 
     if (!files || files.length === 0) {
         return <div>Nenhum arquivo encontrado.</div>;
@@ -111,15 +123,9 @@ export default function FileList({ files }: FileListProps) {
     return (
         <div id="lis-file-comp" className="">
             <Table className="w-auto">
-                <TableHeader className="bg-gray-100">
-                    <TableRow>
-                        {/* <TableCell className="text-left px-4 py-2 font-bold">Arquivo</TableCell>
-                            <TableCell className="text-left px-4 py-2 font-bold">Download</TableCell> */}
-                    </TableRow>
-                </TableHeader>
                 <TableBody className="flex flex-col">
 
-                    {paginatedFiles.map((file, index) => (
+                    {orderedFiles.map((file, index) => (
 
                         <TableRow key={index} className="flex bg-white rounded-xl mb-1">
                             <Link
@@ -175,7 +181,7 @@ export default function FileList({ files }: FileListProps) {
                 </TableBody>
             </Table>
 
-            <PaginationComponent 
+            <PaginationComponent
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
                 totalPages={totalPages}

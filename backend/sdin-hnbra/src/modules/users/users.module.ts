@@ -10,7 +10,7 @@ import { UsersValidator } from './validator/user.service.validator';
 import { Users } from 'src/repository/models/user.model';
 
 @Module({
-  imports: [DatabaseModule, SequelizeModule.forFeature([Users, Patent])],
+  imports: [DatabaseModule, SequelizeModule.forFeature([Users, Patent]), UsersModule],
   controllers: [UsersController],
   providers: [
     UsersService,
