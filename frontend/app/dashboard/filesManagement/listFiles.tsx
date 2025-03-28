@@ -133,10 +133,12 @@ function UploadPage() {
               </button> */}
             {selectedFile && (
               <div>
-                <p></p>
                 <h2>Plano do dia</h2>
+                
                 {/* <button onClick={() => uploadInputRef.current?.click()}>Selecionar Arquivo</button> */}
-                <p>Arquivo selecionado: {selectedFile.name}</p>
+                
+                {/* <p className='font-bold'>Arquivo selecionado: {selectedFile.name}</p> */}
+                
                 <button type='submit' className="bg-blue-900 text-white" onClick={handleUpload}>Enviar</button>
               </div>
             )}
