@@ -18,6 +18,9 @@ export default function ListPage() {
     const SUBSESSION_NAME = searchParams.get("SubSessionFileList_name");
     const SUBSESSION_ID = searchParams.get("SubSessionFileList_id") || "";
 
+    console.log("ID >> ", SUBSESSION_ID);
+    
+
     const url = React.useMemo(() => {
         if (SUBSESSION_NAME) return `${apiBack}/files/nameSub?nomeSubSession=${SUBSESSION_NAME}`;
         if (SUBSESSION_ID) return `${apiBack}/files/nameSub?idSubSession=${SUBSESSION_ID}`;
@@ -76,7 +79,7 @@ export default function ListPage() {
             <div id="fileList-header-container" className="flex flex-row justify-center gap-8 items-center mb-6">
 
                 <h1 className="text-2xl font-bold mb-4">
-                    Lista de Arquivos {(SUBSESSION_NAME ?? "").replace(/_/g, " ")}
+                    Lista de Arquivos {(files[0]?.nomeSubSession ?? "").replace(/_/g, " ")}
                 </h1>
 
                 <button
@@ -91,13 +94,18 @@ export default function ListPage() {
             <div id="content-container" className="flex flex-row gap-8 h-[600px]">
 
                 {/* Descrição */}
-                {(descriptionMap(SUBSESSION_NAME ?? '')) && (
+                {(descriptionMap({id: SUBSESSION_ID ?? ''})) && (
                     <div className="flex w-1/2 px-8 h-auto justify-center">
-                        <SubSessionDescription title={SUBSESSION_NAME ?? ''} />
+                        <SubSessionDescription id={SUBSESSION_ID ?? ''} />
+                        {/* {descriptionMap({id: SUBSESSION_ID})} */}
                     </div>
 
                 )}
-                <FileList files={files} idSubSession={SUBSESSION_ID} />
+                {/* List de arquivos */}
+                {files ? (
+                    <FileList files={files} idSubSession={SUBSESSION_ID} />
+                ): <p>Não existem arquivos nesta sessão!</p>}
+                
             </div>
         </div>
 

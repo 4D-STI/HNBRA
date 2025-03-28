@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -56,7 +57,7 @@ export default function Login() {
   };
 
   return (
-    <Dialog onOpenChange={handleClose}>
+    <Dialog onOpenChange={handleClose} >
 
       <DialogTrigger asChild>
         <Button className="bg-blue-900 text-white">
@@ -67,6 +68,9 @@ export default function Login() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>
+          <DialogDescription>
+            Insira NIP e senha para realizar o login
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">

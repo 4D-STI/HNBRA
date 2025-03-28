@@ -1,6 +1,6 @@
 import { decodeJWT } from "./decoderjwt";
 
-export async function verifyJwt(setTokenExpired: (value: boolean) => void, idPermission: string) {
+export async function verifyJwt(setToken: (value: boolean) => void, idPermission: string) {
     const storedToken = localStorage.getItem("token") || ""; // Valor padrão vazio
 
     if (!storedToken) return;
@@ -20,15 +20,18 @@ export async function verifyJwt(setTokenExpired: (value: boolean) => void, idPer
         }
         if (response.ok) {
             const result = await decodeJWT();
+            console.log("DECODE: ", result);
+
             const resultpermission = result.permissionUsers;
+
             if (resultpermission.includes(parseInt(idPermission))) {
                 await response.json();
-                setTokenExpired(true);
+                setToken(true);
             }
         }
 
     } catch (error) {
-        setTokenExpired(false);
+        setToken(false);
         localStorage.removeItem("token");
         alert("Login inválido!" + error);
         window.location.href = "/";

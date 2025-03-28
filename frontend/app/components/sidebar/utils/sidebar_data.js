@@ -50,27 +50,27 @@ const mainMenu = [
 
 const internalUse = [
   { name: 'Modelos', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=11&subsession_name=Modelos' }, //ITEM = ID
-  { name: 'Tomada de Contas Especial (TCE)', title: 'Uso Interno', href: `/dashboard/subSessionFileList?SubSessionFileList_name=Tomada%20de%20Contas%20Especial%20(TCE)` }, //ALTERAR, PENSAR DE QUE FORMA IRA FAZER? TALVEZ OUTRO ENDPOIN
+  { name: 'Tomada de Contas Especial (TCE)', title: 'Uso Interno', href: `/dashboard/subSessionFileList?SubSessionFileList_id=159` }, //ALTERAR, PENSAR DE QUE FORMA IRA FAZER? TALVEZ OUTRO ENDPOIN
   { name: 'Ordens Internas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=10&subsession_name=ORDENS%20INTERNAS' },
   { name: 'Regimento Interno', title: 'Uso Interno', href: `https://www.hnbra.mb:3002/files/${REGIMENTO_INTERNO}/view` },
-  { name: 'Regulamento', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=REGULAMENTO HNBRA' },
-  { name: 'Licitações e Contratos', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=LICITACOES_E_CONTRATOS' },
+  { name: 'Regulamento', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=160' },
+  { name: 'Licitações e Contratos', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=103' },
   { name: 'Credenciamento', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=105' },
-  { name: 'Execução Financeira', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=EXECUCAO_FINANCEIRA' },
+  { name: 'Execução Financeira', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=106' },
   { name: 'Portarias', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=107' },
-  { name: 'Gestoria Patrimonial', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=GESTORIA_PATRIMONIAL' },
-  { name: 'Plano de Aplicação de Recursos (PAR)', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=PLANO_DE_APLICACAO_DE_RECURSOS' },
+  { name: 'Gestoria Patrimonial', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=108' },
+  { name: 'Plano de Aplicação de Recursos (PAR)', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=109' },
   { name: 'Transparência e Prestação de Contas', title: 'Uso Interno', href: '/dashboard/listSubSessionSession?item=12&subsession_name=TRANSPARENCIA_E_PRESTAÇÃO_DE_CONTAS' }, //ITEM = ID
-  { name: 'Publicações', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=PUBLICACOES' },
-  { name: 'Relação Nominal', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=RELACAO_NOMINAL' },
+  { name: 'Publicações', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=115' },
+  { name: 'Relação Nominal', title: 'Uso Interno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=116' },
 ]
 
 const netunoProgram = [
-  { name: 'Boas Praticas', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=BOAS_PRATICAS' },
-  { name: 'Exemplo de Mapeamento de Processo', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=EXEMPLO_DE_MAPEAMENTO_DE_PROCESSO' },
-  { name: 'Planejamento Estratégico', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=PLANEJAMENTO_ESTRATEGICO' },
-  { name: 'Plano de Gerenciamento de Riscos', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=PLANEJAMENTO_DE_GERENCIAMENTO_DE_RISCOS' },
-  { name: 'Plano de Melhoria da Gestão', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_name=PLANEJAMENTO_DE_MELHORIA_DE_GESTAO' },
+  { name: 'Boas Praticas', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=117' },
+  { name: 'Exemplo de Mapeamento de Processo', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=118' },
+  { name: 'Planejamento Estratégico', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=119' },
+  { name: 'Plano de Gerenciamento de Riscos', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=120' },
+  { name: 'Plano de Melhoria da Gestão', title: 'Programa Netuno', href: '/dashboard/subSessionFileList?SubSessionFileList_id=121' },
 ]
 
 const internalControl = [
@@ -109,22 +109,22 @@ const healthSupportService = [
 
 const pharmacyLaboratoryDivision = [
   { name: 'Serviço de Análises Clínicas', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/ServicoAnalisesClinicas' },
-  { name: 'Serviço de Farmácia Hospitalar', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/subSessionFileList?SubSessionFileList_name=SERVICO_DE_FARMACIA_HOSPITALAR' },
+  { name: 'Serviço de Farmácia Hospitalar', title: 'Divisão de Farmácia e Laboratório', href: '/dashboard/subSessionFileList?SubSessionFileList_id=122' },
   {
-    // name: 'SeDiMe', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=167`
-    name: 'SeDiMe', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_name=SEDIME`
+    name: 'SeDiMe', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=167`
+    // name: 'SeDiMe', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_name=SEDIME`
   },
   {
-    name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_name=PROGRAMA DE MEDICAMENTOS ESPECIAIS`
-    // name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=172`
+    // name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_name=PROGRAMA DE MEDICAMENTOS ESPECIAIS`
+    name: 'Programa de Medicamentos Especiais (PME)', title: 'Divisão de Farmácia e Laboratório', href: `/dashboard/subSessionFileList?SubSessionFileList_id=172`
   },
 ]
 
 const CCIH = [
   { name: 'Formulário de Solicitação de Antimicrobianos', title: 'CCIH', href: `https://www.hnbra.mb:3002/files/${FORMULARIO_SOLICITACAO_ANTIMICROBIANOS}/view` },
   { name: 'Protocolos', title: 'CCIH', href: `/dashboard/subSessionFileList?SubSessionFileList_id=163` },
-  { name: 'Comissão de Óbito', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=COMISSAO_DE_OBITO' },
-  { name: 'NSP', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_name=NSP' },
+  { name: 'Comissão de Óbito', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_id=123' },
+  { name: 'NSP', title: 'CCIH', href: '/dashboard/subSessionFileList?SubSessionFileList_id=124' },
 ]
 
 const schedule = [

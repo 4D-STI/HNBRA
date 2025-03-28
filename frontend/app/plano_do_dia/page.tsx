@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import FileList from "@/app/dashboard/listSubSessionSession/file";
 import { File } from "@/app/types/file";
 import Link from "next/link";
-import EditIcon from '@mui/icons-material/Edit';
 import { verifyJwt } from "../dashboard/utils/verifyjwt";
 import { decodeJWT } from "../dashboard/utils/decoderjwt";
+import { Button } from "@/components/ui/button";
+import {UploadFile} from '@/components/custom/UploadFile'
 
 
 
@@ -16,13 +17,11 @@ export default function ListPage() {
     const apiBack = process.env.NEXT_PUBLIC_API_BACK;
     // const apiBack = process.env.NEXT_PUBLIC_API_LOCAL;
     const searchParams = useSearchParams();
-    const router = useRouter();
     const item = searchParams.get("item");
     // const teste = searchParams.get("teste");
     const PLANO_DO_DIA_ID = '6';
-    const [edition, setTokenExpiered] = useState<boolean>(false);
-
-    const handleGoBack = () => window.history.length > 1 ? router.back() : router.push('/')
+    const [validToken, setValidToken] = useState<boolean>(false);
+    const [token, setToken] = useState<string>('');
 
     const url = React.useMemo(() => {
         if (item) return `${apiBack}/files/nameSub?nomeSubSession=${item}`;
@@ -53,44 +52,69 @@ export default function ListPage() {
         }
     }, [url]);
 
-    // Executa a busca ao carregar ou quando a URL muda
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+    // // Executa a busca ao carregar ou quando a URL muda
+    // useEffect(() => {
+    //     fetchData();
+    // }, [fetchData]);
 
 
     useEffect(() => {
         decodeJWT();
-        verifyJwt(setTokenExpiered, PLANO_DO_DIA_ID);
+        verifyJwt(setValidToken, PLANO_DO_DIA_ID,);
+        setToken(localStorage.getItem("token") || "")
+        fetchData()
         // .catch(() => { alert("Login inválido!"), window.location.href = '/' });
-    }, []);
+    }, [fetchData]);
+
+    const handleUploadSuccess = () => {
+        fetchData(); // Recarrega os arquivos após o upload bem-sucedido
+      };
+
     if (loading) return <div>Carregando...</div>;
+    
     if (error) return <div>{error}</div>;
+
     return (
-        <div>
-            {edition && (
-                <div className="flex flex-col justify-end items-end -translate-x-6">
-                    <h2>Edição Plano do Dia</h2>
-                    <Link href={"/dashboard/filesManagement?SubSessionFileList_id=6"}>
-                        <EditIcon id="plano-do-dia-text" className='truncate'></EditIcon>
+        <div className="flex flex-col justify-center items-center">
+            
+            <h1 className="text-2xl font-bold mt-6">
+                Lista de Arquivos {(files[0].nomeSubSession ?? "").replace(/_/g, " ")}
+            </h1>
+
+            <div id="container-plano-do-dia" className="flex flex-col items-center gap-2 my-4">
+
+
+
+                {validToken && 
+                    (
+                        <div className="">
+                            {/* <h2>Edição Plano do Dia</h2> */}
+                            <UploadFile 
+                                onUploadSuccess={handleUploadSuccess}
+                                subSessionId={PLANO_DO_DIA_ID}
+                                token={token}
+                                label="Enviar Plano do Dia"
+                            />
+
+                            
+                        </div>
+                    )
+                }  
+
+                <div>
+                    <Link href={'/'}>
+                        <Button
+                            className="bg-blue-900"
+                        >
+                            voltar
+                        </Button>
                     </Link>
                 </div>
-            )}
-            <div id="container-plano-do-dia" className="flex flex-col justify-center items-center">
 
-                <h1 className="text-2xl font-bold mb-4">
-                    Lista de Arquivos {(item ?? "").replace(/_/g, " ")}
-                </h1>
-
-                <button
-                    className="hover:text-blue-500 hover:underline mb-4"
-                    onClick={handleGoBack} // Navegar para a página anterior
-                >
-                    voltar
-                </button>
-
-                <FileList files={files} idSubSession={PLANO_DO_DIA_ID} />
             </div>
+
+        
+            <FileList files={files} idSubSession={PLANO_DO_DIA_ID} />
 
 
         </div>

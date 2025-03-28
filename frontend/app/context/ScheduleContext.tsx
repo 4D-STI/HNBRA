@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { IScheduleItem } from '../dashboard/resourceManagement/components/schedule/schedule_interface/scheduleInterface';
+import { IScheduleItem } from '../contracts/IScheduleInterface';
 
 export interface IDataContextType {
   scheduleData: IScheduleItem[] | null;

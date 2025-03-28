@@ -10,7 +10,7 @@ export class CreateUserPermissionDTO {
 
 
     @ApiProperty({})
-    @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('nomeDivision') })
+    @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('idSubSession') })
     @IsNumber({}, { message: 'idSubSession deve ser um número.' })
     idSubSession: number;
 
@@ -20,7 +20,7 @@ export class CreateUserPermissionDTO {
     nip: string;
 
     @ApiProperty({})
-    @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('nomeDivision') })
+    @IsNotEmpty({ message: `${IS_NOT_EMPTY_MSG('permission')} \nValor padrão deve ser "user"` })
     @IsNumber({}, { message: 'permission deve ser um número.' })
     permission: number;
 
