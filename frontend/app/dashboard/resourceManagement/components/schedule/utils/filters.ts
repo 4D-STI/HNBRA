@@ -1,4 +1,4 @@
-import { IScheduleItem, OrderType, ScheduleType } from '../schedule_interface/scheduleInterface'
+import { IScheduleItem, OrderType, ScheduleType } from '../../../../../contracts/IScheduleInterface'
 
 export interface IScheduleFilterParams {
     data: IScheduleItem[],
