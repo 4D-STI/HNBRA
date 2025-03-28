@@ -19,7 +19,7 @@ function ShortcutsOtherApps() {
                     <Link
 
                         href={app.link}
-                        target='blank'
+                        target='_blank'
                     >
                         <Button
                             key={index}
