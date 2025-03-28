@@ -38,9 +38,9 @@ export default function Header() {
                 if (!res.ok) {
                     setIslogin(false);
                     localStorage?.removeItem('token');
-                    alert("Login inválido!");
+                    alert("Token expirado! \nPor favor, realize o login novamente!");
                     window.location.href = '/';
-                    throw new Error("jwt Inválido ou Expirado!");
+                    // throw new Error("jwt Inválido ou Expirado!");
                 } else {
                     setIslogin(true);
                 }
@@ -119,13 +119,7 @@ export default function Header() {
                         <ul className="flex items-center justify-end mx-16">
                             <li className="mr-4"><a href="#">Acesso à informação</a></li>
                             <li className="mr-4"><a href="#">Acessibilidade</a></li>
-                            {isAdmin &&
-                                (
-                                    <li>
-                                        <button onClick={clearLocal}> Gerenciador de Permissão de usuario</button>
-                                    </li>
-                                )}
-
+                            
                         </ul>
                     </div>
                     <div id="dark-mode" className="flex p-2 hover:bg-blue-300 transition duration-200 rounded-full cursor-pointer">
@@ -144,13 +138,24 @@ export default function Header() {
                             </div>
                         </div>
 
-                    ) :
-                        (
-                            <div>
-                                <button onClick={clearLocal}>Sair</button>
-                            </div>
-                        )}
-
+                        ) :
+                            (
+                                <div>
+                                    <button onClick={clearLocal}>Sair</button>
+                                </div>
+                                
+                            )
+                    }
+                    
+                    {isAdmin &&
+                                (
+                                    <Link href={'/dashboard/userManager'}>
+                                        <Button className='bg-red-600 ml-8'>
+                                            <a>Gerenciar Usuários</a>
+                                        </Button>
+                                    </Link>
+                                )
+                    }
                 </div>
 
                 <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
