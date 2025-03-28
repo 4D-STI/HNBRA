@@ -24,10 +24,10 @@ const shortcutsOtherAppsData = [
         link: 'http://www.dabm.mb/intranet/rumb'
     },
     {
-        name: 'cardápio',
-        icon_path_jpg: '/icons/menu_icon/4.jpg',
-        icon_path_svg: '/icons/menu_icon/menu_icon.svg',
-        link: `https://www.hnbra.mb:3002/files/7/viewLast`
+        name: 'engeclinic',
+        icon_path_jpg: '/icons/engeclinic_icon/4.jpg',
+        icon_path_svg: '/icons/engeclinic_icon/engeclinic_icon.svg',
+        link: `https://engeclinicsi.arkmeds.com`
     },
     {
         name: 'safin',
