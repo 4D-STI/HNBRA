@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import {IScheduleItem} from './schedule_interface/scheduleInterface'
+import {IScheduleItem} from '../../../../contracts/IScheduleInterface'
 import {HandleEditDelete} from './HandleEditDelete'
 import { jwtDecode } from 'jwt-decode'
 
