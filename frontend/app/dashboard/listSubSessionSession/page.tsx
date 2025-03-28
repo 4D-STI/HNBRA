@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ListSubSessionSession from "./mover";
 import { SubSessionType } from "@/app/types/subSessionType ";
 import { Button } from "@/components/ui/button";
-import { IUser } from "@/app/contracts/IUser";
+import { IUser } from "@/app/contracts/interfaces/IUser";
 import { decodeJWT } from "../utils/decoderjwt";
 import {CreateSessionDialog} from "./CreateSession"; // Importe o Dialog
 

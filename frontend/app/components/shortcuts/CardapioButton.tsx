@@ -4,7 +4,7 @@ import { decodeJWT } from "@/app/dashboard/utils/decoderjwt";
 import { UploadFile } from "@/components/custom/UploadFile";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {IUser} from "@/app/contracts/IUser"
+import {IUser} from "@/app/contracts/interfaces/IUser"
 
 const CARDAPIO_SUB_SESSION_ID = 7
 const API = process.env.NEXT_PUBLIC_API_BACK
