@@ -128,7 +128,7 @@ const CCIH = [
 ]
 
 const schedule = [
-  {name: 'Auditório/Sala de Reuniões', title: 'schedule', href:'/dashboard/resourceManagement/components/schedule'},
+  { name: 'Auditório/Sala de Reuniões', title: 'schedule', href: '/dashboard/resourceManagement/components/schedule' },
   // {name: 'Consultas', title: 'schedule', href:'/dashboard/resourceManagement'}
 ]
 
@@ -143,7 +143,7 @@ const menuTitles = [
   { name: 'Serviços de Apoio a Saúde', ref: healthSupportService },
   { name: 'Divisão de Farmácia e Laboratório', ref: pharmacyLaboratoryDivision },
   { name: 'CCIH', ref: CCIH },
-  {name: 'Agendamentos', ref: schedule}
+  { name: 'Agendamentos', ref: schedule }
 ]
 
 
