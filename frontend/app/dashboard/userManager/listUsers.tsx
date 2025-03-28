@@ -5,6 +5,8 @@ import { Plus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import AddPermissionUser from "../permission/addPermissionUser";
 import useGetAllUsers from "./helpers/dataFetch";
+import {Button} from '@/components/ui/button'
+import Link from "next/link";
 
 export default function ListUsers() {
   const { users } = useGetAllUsers();
@@ -26,7 +28,13 @@ export default function ListUsers() {
   return (
     <div className="p-2">
       <div className="flex flex-col md:flex-row items-center justify-center mb-4">
-        <div className="relative w-full md:w-80">{"INPUT BUSCAR USUARIOS"}</div>
+        
+        <Link href={'/'}>
+          <Button className="bg-blue-900">
+            Voltar
+          </Button>
+        </Link>
+
         <div className="flex px-4 mt-2 md:mt-0">
           {/* Filtro */}
         </div>
