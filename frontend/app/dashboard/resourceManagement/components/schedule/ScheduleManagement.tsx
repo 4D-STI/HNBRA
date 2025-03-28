@@ -6,7 +6,7 @@ import React, { useCallback,
 import {CalendarPlus, RefreshCw} from 'lucide-react'
 import ScheduleForm from "./ScheduleForm_mui"
 import ScheduleItemContent from "./ScheduleItemContent"
-import { ScheduleType, IScheduleItem, OrderType } from "./schedule_interface/scheduleInterface"
+import { ScheduleType, IScheduleItem, OrderType } from "../../../../contracts/IScheduleInterface"
 import * as filters from "./utils/filters"
 import { handleScheduleTypeButtonToggle } from "./utils/handlerScheduleTypeToggle"
 import { useToast } from "@/hooks/use-toast"
