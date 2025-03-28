@@ -2,13 +2,17 @@ import SFH_Description from './SFH_Description'
 import SEDIME_Description from './SEDIME_Description'
 import PME_Description from './PME_Description'
 
-export const descriptionMap = (title: string) => {
-    switch (title) {
-        case 'SERVICO_DE_FARMACIA_HOSPITALAR':
+interface IDescriptionMapProps {
+    id: string
+}
+
+export const descriptionMap = ({id}: IDescriptionMapProps) => {
+    switch (id) {
+        case '122':
             return <SFH_Description/>
-        case 'SEDIME':
+        case '167':
             return <SEDIME_Description/>
-        case 'PROGRAMA DE MEDICAMENTOS ESPECIAIS':
+        case '172':
             return <PME_Description/>
         // case 'ORGANOGRAMA':
         //     return true
