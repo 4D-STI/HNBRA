@@ -1,9 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsEmpty, IsNotEmpty, IsString } from 'class-validator'
 
-const IS_NOT_EMPTY_MSG = (attr) => `O atributo ${attr} é obrigatório`
-const IS_STRING_MSG = (attr) => `O atributo ${attr} deve ser uma string`
-const IS_EMPTY_MSG = (attr) => `O atributo ${attr} deve ser vazio`
+const IS_NOT_EMPTY_MSG = (attr) => `O atributo '${attr}' é obrigatório`
+const IS_STRING_MSG = (attr) => `O atributo '${attr}' deve ser uma string`
+const IS_EMPTY_MSG = (attr) => `O atributo '${attr}' deve ser vazio`
 
 export class CreateUserDto {
     @ApiProperty({
@@ -74,7 +74,7 @@ export class CreateUserDto {
             delete: 'Permite deletar informações.'
         }
     })
-    @IsNotEmpty({ message: IS_NOT_EMPTY_MSG('permission') })
+    @IsNotEmpty({ message: `${IS_NOT_EMPTY_MSG('permission')}. Valor padrão deve ser 'user'` })
     @IsString({ message: IS_STRING_MSG('permission') })
     permission: string;
 
